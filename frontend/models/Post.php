@@ -29,14 +29,23 @@ class Post extends ActiveRecord
     public function getSimilarPosts(){
         $similarPosts = Post::find()
             ->where("MATCH(short, full, title, meta_title) AGAINST('$this->title')")
-            ->where(['approve' => static::APPROVED])
+            ->andWhere(['approve' => static::APPROVED])
             ->limit(5)
             ->all();
         return $similarPosts;
     }
 
+    /**
+     * Получение комментариев для статьи
+     *
+     * У комментариев имеется связь getUser для получения информации о пользователе, оставившем комментарий.
+     * Для минимизации кол-ва запросов к базе используется "жадная загрузка" посредством метода with() со
+     * связью user.
+     *
+     * @return $this
+     */
     public function getComments(){
-        $comments = $this->hasMany(Comment::className(), ['post_id' => 'id']);
+        $comments = $this->hasMany(Comment::className(), ['post_id' => 'id'])->with('user')->asArray();
         return $comments;
     }
 

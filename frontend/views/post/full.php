@@ -2,6 +2,7 @@
 
 /* @var $this yii\web\View */
 
+use yii\helpers\ArrayHelper;
 use app\components\PostHelper;
 use app\components\CommentsWidget;
 
@@ -71,8 +72,7 @@ if($post->meta_title){
     <?= CommentsWidget::widget(['comments' => $post->comments, 'addCommModel' => $model]) ?>
 </div>
 
-{comments}
-
 <? var_dump($post->categories); ?>
 <? //var_dump($post->similarPosts); ?>
-<? var_dump($post->comments); ?>
+<? //var_dump(ArrayHelper::toArray($post->comments)); ?>
+<? //var_dump($post->comments); ?>

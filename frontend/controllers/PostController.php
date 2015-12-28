@@ -43,16 +43,18 @@ class PostController extends Controller{
             'approve' => Post::APPROVED,
         ]);
 
-        $model = new CommentForm();
-        // Значение для hidden user_id
-        $model->user_id = Yii::$app->user->identity->getId();
-        $model->post_id = $post->id;
-        if ($model->load(Yii::$app->request->post())) {
-            if ($id = $model->addComment()) {
-                Yii::$app->session->setFlash('comment-success', $id);
-                return $this->refresh();
-            } else {
-                Yii::$app->session->setFlash('comment-error');
+        if(!Yii::$app->user->isGuest) {
+            $model = new CommentForm();
+            // Значение для hidden user_id
+            $model->user_id = Yii::$app->user->identity->getId();
+            $model->post_id = $post->id;
+            if ($model->load(Yii::$app->request->post())) {
+                if ($id = $model->addComment()) {
+                    Yii::$app->session->setFlash('comment-success', $id);
+                    return $this->refresh();
+                } else {
+                    Yii::$app->session->setFlash('comment-error');
+                }
             }
         }
 

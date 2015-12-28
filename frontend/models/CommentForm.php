@@ -51,6 +51,7 @@ class CommentForm extends Model
             $comment = new Comment();
             $comment->user_id = $this->user_id;
             $comment->post_id = $this->post_id;
+            if($this->reply_to) $comment->reply_to = $this->reply_to;
             $comment->ip = Yii::$app->request->getUserIP();
             $comment->is_register = 1;
             $comment->text_raw = $this->text;

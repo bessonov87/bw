@@ -17,7 +17,7 @@ $(document).ready(function() {
         var el = $(this).attr('href');
         $('body').animate({
             scrollTop: $(el).offset().top}, 2000);
-        return false;
+        //return false;
     });
 
 	//Каруселька
@@ -64,10 +64,19 @@ $(document).ready(function() {
         //alert(replyId);
         var block = '<div class="reply-block">' +
             '<div class="reply-info">Ответ на комментарий <strong>#'+replyId+'</strong> пользователя <strong>'+replyUserName+'</strong></div>' +
-            '<div class="reply-comm">'+replyComment+'</div>'+
+            '<div class="reply-comm">'+replyComment+'</div>' +
+			'<div class="reply-cancel">Отменить</div>'+
             '</div>';
         $(block).insertBefore('.comm-text');
         $('#commentform-reply_to').val(replyId);
+        // Навешиваем обработчик на кнопку Отменить при ответе на комментарий
+        $('.reply-cancel').bind('click', function(){
+            $('#commentform-reply_to').val('');
+            $('.reply-block').animate({opacity: 0, height: 0}, 500, function(){
+                $(this).remove();
+            });
+
+        });
     });
-	
+
 });

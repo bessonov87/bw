@@ -681,3 +681,23 @@ body {
     font-size: 14px;
     font-style: italic;
 }
+
+.reply-cancel{
+    cursor: pointer;
+    margin-top: 8px;
+    text-decoration: underline;
+    color: #555;
+    display: inline-block;
+}
+
+.comment-link{
+    cursor: pointer;
+    text-decoration: underline;
+    color: #555;
+    display: inline-block;
+}
+
+.comment-link:hover{
+    text-decoration: none;
+    color: #777;
+}
