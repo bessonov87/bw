@@ -1,15 +1,83 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\Category;
+use frontend\models\PostCategory;
 use frontend\models\CommentForm;
 use frontend\models\Post;
 use Yii;
+use yii\data\Pagination;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
+use yii\web\HttpException;
+use yii\web\NotFoundHttpException;
 
 class PostController extends Controller{
 
+    protected function postCategory($cat, $categories){
+        // Если адрес состоит из категории и подкатегории, выбираем только подкатегорию
+        if(strpos($cat, '/')){
+            $cat = end(explode('/', $cat));
+        }
+        // Переиндексируем массив категорий по значению url
+        $categories = ArrayHelper::index($categories, 'url');
+        if(is_null($categories[$cat])){
+            throw new NotFoundHttpException('Такого раздела на сайте не существует. Проверьте правильно ли вы скопировали или ввели адрес в адресную строку. Если вы перешли на эту страницу по ссылке с данного сайта, сообщите пожалуйста о неработающей ссылке нам с помощью обратной связи.');
+        }
+        //var_dump($categories[$cat]);
+        // Если у данной категории нет родительской, проверяем на наличие дочерних и добавляем их к запросу
+        if($categories[$cat]['parent_id'] == 0){
+            foreach($categories as $category){
+                if($category['parent_id'] == $categories[$cat]['id']){
+                    $categoryIds[] = $category['id'];
+                }
+            }
+        }
+        $categoryIds[] = $categories[$cat]['id'];
+        return $categoryIds;
+    }
+
+    public function actionIndex(){
+
+    }
+
     public function actionShort()
     {
+
+        $categories = Category::find()->asArray()->all();
+        // Переиндексируем по ключу id
+        $categories = ArrayHelper::index($categories, 'id');
+
+
+        $query = Post::find()->where(['approve' => Post::APPROVED])
+            ->orderBy(['date' => SORT_DESC]);
+
+        $type = Yii::$app->request->get('type');
+        if($type == 'byCat'){
+            // Получаем id категорий
+            $categoryIds = $this->postCategory(Yii::$app->request->get('cat'), $categories);
+            // Получаем список постов для данных категорий
+            $cateroryPostIds = PostCategory::find()
+                ->asArray()
+                ->where(['in', 'category_id', $categoryIds])
+                ->all();
+            // Выбираем только ID постов
+            $postIds = ArrayHelper::getColumn($cateroryPostIds, 'post_id');
+            // Добавляем условие к запросу на выборку статей
+            $query->andWhere(['in', 'id', $postIds]);
+
+        }
+
+        $countPosts = clone $query;
+        $pages = new Pagination(['totalCount' => $countPosts->count()]);
+        $posts = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->with('postCategories')
+            ->all();
+
+        return $this->render('short', ['posts' => $posts, 'pages' => $pages, 'categories' => $categories]);
+
+
         $request = Yii::$app->request;
         $format = $request->get('format');
         if($format == 'byCat'){

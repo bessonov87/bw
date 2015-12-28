@@ -28,7 +28,9 @@ class CommentsWidget extends Widget
         }
         //var_dump($comments_array);
         $comments = $this->render('comment_add', ['model' => $this->addCommModel]);
-        $comments .= $this->getCommentTree($comments_array);
+        if(is_array($comments_array)){
+            $comments .= $this->getCommentTree($comments_array);
+        }
         return $comments;
     }
 
