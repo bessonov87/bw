@@ -79,4 +79,34 @@ $(document).ready(function() {
         });
     });
 
+    // Добавляем ведущий ноль к месяцу
+    function leadZero(n) { return (n < 10 ? '0' : '') + n; }
+
+	// ЗАГРУЗКА ДРУГОГО МЕСЯЦА КАЛЕНДАРЯ
+	$('.calendar_control').on('click', function(){
+        var currentDate = $('#calendar-current-date').text();
+        var splitDate = currentDate.split('-');
+        var year = splitDate[0];
+        var month = splitDate[1];
+        if($(this).attr('id') == 'calendar-prev'){
+            if(month == '01') loadDate = (--year)+'-12';
+            else loadDate = year+'-'+leadZero(--month);
+        }
+        if($(this).attr('id') == 'calendar-next'){
+            if(month == '12') loadDate = (++year)+'-01';
+            else loadDate = year+'-'+leadZero(++month);
+        }
+		// Отправка запроса
+        $.ajax({
+			url: 'http://bw.dev/ajax/calendar',
+			type: 'GET',
+			data: {
+				'date' : loadDate,
+			},
+			success: function(data){
+				$('.calendar_body').html(data);
+			}
+		});
+	});
+
 });

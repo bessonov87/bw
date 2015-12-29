@@ -13,7 +13,7 @@ use app\components\GlobalHelper;
     </div>
     <div class="comment-foto"><img src="<?= GlobalHelper::avatarSrc($comment['user']) ?>"></div>
     <div class="comment-body">
-        <div class="comment-text"><?= $comment['text'] ?></div>
+        <div class="comment-text"><?= nl2br(Html::encode($comment['text'])) ?></div>
     </div>
     <div class="clear"></div>
     <div class="comment-info">

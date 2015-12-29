@@ -5,6 +5,7 @@
 use yii\jui\DatePicker;
 use yii\widgets\LinkPager;
 use yii\helpers\Url;
+use app\components\GlobalHelper;
 
 $this->title = Yii::$app->params['site']['title'];
 if($pages->page > 0) $this->title .= ' . Страница '. ($pages->page + 1);
@@ -14,9 +15,11 @@ if($pages->page > 0) $this->title .= ' . Страница '. ($pages->page + 1);
 <?php
 
 foreach($posts as $post):
-    $thisCategory = $categories[$post->postCategories[0]->category_id];
+    /*$thisCategory = $categories[$post->postCategories[0]->category_id];
     // Если есть родительская, ссылка на раздел будет составной, иначе только url данной категории
-    $cat = ($thisCategory['parent_id']) ? $categories[$thisCategory['parent_id']]['url'].'/'.$thisCategory['url'] : $thisCategory['url'];
+    $cat = ($thisCategory['parent_id']) ? $categories[$thisCategory['parent_id']]['url'].'/'.$thisCategory['url'] : $thisCategory['url'];*/
+    // Получаем Url категории по ее ID
+    $cat = GlobalHelper::getCategoryUrlById($post->postCategories[0]->category_id);
     $link = Url::to(['post/full', 'cat' => $cat, 'id' => $post->id, 'alt' => $post->url]);
 ?>
     <div id="content-item">

@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use app\components\GlobalHelper;
 use frontend\models\Category;
 use frontend\models\PostCategory;
 use frontend\models\CommentForm;
@@ -9,11 +10,23 @@ use Yii;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
-use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
 class PostController extends Controller{
 
+    /**
+     * Определение ID категории(й) для выборки анонсов
+     *
+     * Категория ($cat) передается в формате строки вида 'category_url' или 'category_url/subcategory_url'.
+     * Если передана одна категория, метод вернет массив с ее ID и ID всех дочерних (подкатегорий).
+     * Если передана подкатегория, метод вернет только ее ID в виде массива из одного элемента.
+     * Если в массиве категорий ($categories) нет такой категории, генерируется исключение NotFoundHttpException.
+     *
+     * @param $cat
+     * @param $categories
+     * @return array
+     * @throws NotFoundHttpException
+     */
     protected function postCategory($cat, $categories){
         // Если адрес состоит из категории и подкатегории, выбираем только подкатегорию
         if(strpos($cat, '/')){
@@ -43,11 +56,8 @@ class PostController extends Controller{
 
     public function actionShort()
     {
-
-        $categories = Category::find()->asArray()->all();
-        // Переиндексируем по ключу id
-        $categories = ArrayHelper::index($categories, 'id');
-
+        // Получаем список всех категорий, переиндексированный по id категорий
+        $categories = GlobalHelper::getCategories();
 
         $query = Post::find()->where(['approve' => Post::APPROVED])
             ->orderBy(['date' => SORT_DESC]);

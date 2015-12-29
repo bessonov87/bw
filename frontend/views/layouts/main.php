@@ -204,7 +204,7 @@ IeAsset::register($this);
             <div id="sidebar-item">
                 <div id="sidebar-item-top" class="sidebar-item-orange">Календарь</div>
                 <div id="sidebar-item-content">
-                    <div class="sidebar-calendar">{calendar}</div>
+                    <?= \app\components\CalendarWidget::widget() ?>
                 </div>
             </div>
             <!-- Конец Блок Календарь -->
@@ -213,7 +213,7 @@ IeAsset::register($this);
             <div id="sidebar-item">
                 <div id="sidebar-item-top" class="sidebar-item-pink">Популярное</div>
                 <div id="sidebar-item-content">
-                    <div class="popular">{popular}</div>
+                    <?= \app\components\PopularWidget::widget(['numPosts' => 10, 'listType' => 'ol']) ?>
                 </div>
             </div>
             <!-- Конец Популярное -->

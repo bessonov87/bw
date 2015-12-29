@@ -439,14 +439,6 @@ body {
     width:220px; padding: 5px; color: #333;
 }
 
-.popular{
-    font-size: 13px;
-}
-
-.popular a{
-    font-size: 13px;
-}
-
 .sidebar-calendar, .sidebar-stats{
     text-align: center;
 }
@@ -701,3 +693,111 @@ body {
     text-decoration: none;
     color: #777;
 }
+
+
+
+
+/* ---------- POPULAR style start ----------- */
+
+ul.popular{
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 5px;
+    font-size: 14px;
+}
+
+ol.popular {
+    counter-reset:myCounter;
+    margin-left:0;
+    padding-left:5px;
+    color: rgb(100,100,100);
+    font-size: 14px;
+}
+
+ol.popular li {
+    position: relative;
+    padding-left: 3em;
+    margin: 0.45em 0;
+    list-style: none;
+    line-height: 1.8em;
+    cursor: pointer;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+ol.popular li:hover {
+    color: rgb(0,0,0);
+}
+
+ol.popular li:before {
+    content:counter(myCounter);
+    counter-increment:myCounter;
+    position:absolute;
+    top:0;
+    left:0;
+    width: 1.8em;
+    height: 1.8em;
+    line-height: 1.8em;
+    padding:0px;
+    color:#fff;
+    background:#2980b9;
+    font-weight:bold;
+    text-align:center;
+    border-radius: .9em;
+    box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.3);
+    z-index: 1;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+ol.popular li:hover:before {
+    background-color: #2ecc71;
+}
+
+ol.popular li li:before{
+    background-color: #3498db;
+}
+
+ol.popular li:after {
+    position: absolute;
+    top: 2.1em;
+    left: 0.9em;
+    width: 2px;
+    height: calc(100% - 2em);
+    content: '';
+    background-color: rgb(203, 203, 203);
+    z-index: 0;
+}
+
+ol.popular li:hover:after {
+    background-color: #2ecc71;
+}
+
+.popular_item{
+    margin-bottom: 7px;
+}
+
+.popular_image{
+    float: left;
+    padding-right: 8px;
+    padding-top: 7px;
+}
+
+.popular_link:after{
+    content:'';
+    display:block;
+    clear: both;
+}
+
+/* ---------- style end ----------- */
+
+
+/* ============ Calendar ========== */
+
+.calendar_control{
+    font-size: 20px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+/* ================================ */

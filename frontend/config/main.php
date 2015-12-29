@@ -11,7 +11,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
-    'defaultRoute' => 'post/index',
+    'defaultRoute' => 'post/short',
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',
@@ -33,7 +33,7 @@ return [
             'class' => '\frontend\components\SlUrlManager',
             'rules' => [
                 [
-                    'pattern' => 'page/<page:\d+>',
+                    'pattern' => '<page:\d+>',
                     'route' => 'post/short',
                     'suffix' => '/',
                     'defaults' => ['page' => 1, 'type' => 'index']
@@ -47,7 +47,7 @@ return [
                     'pattern' => '<cat:[A-Za-z0-9_-]+>/<page:\d+>',
                     'route' => 'post/short',
                     'suffix' => '/',
-                    'defaults' => ['page' => 1, 'type' => 'byCat']
+                    'defaults' => ['pageroute' => '/page', 'page' => 1, 'type' => 'byCat']
                 ],
                 [
                     'pattern' => '<year:[0-9]{4}>/<month:[0-9]{2}>/<day:[0-9]{2}>/<page:\d+>',
