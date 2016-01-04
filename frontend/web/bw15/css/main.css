@@ -793,11 +793,42 @@ ol.popular li:hover:after {
 
 
 /* ============ Calendar ========== */
+.calendar_widget {
+    position: relative;
+}
 
 .calendar_control{
     font-size: 20px;
     cursor: pointer;
     display: inline-block;
+    position: absolute;
+    top: 7px;
+    z-index: 999;
+}
+
+#calendar-next {
+    left: 220px;
+}
+
+#calendar-prev {
+    left: 15px;
+}
+
+.calendar_nowmonth {
+    text-align: center;
+    padding: 10px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.calendar_table th{
+    text-align: center;
+}
+
+.calendar_table td{
+    padding: 5px 8px;
+    text-align: right;
+    border: 1px #eee solid;
 }
 
 /* ================================ */

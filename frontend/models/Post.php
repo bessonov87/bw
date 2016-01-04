@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use yii\db\ActiveRecord;
 use common\models\Comment;
+use yii\helpers\Url;
 
 class Post extends ActiveRecord
 {
@@ -47,6 +48,11 @@ class Post extends ActiveRecord
     public function getComments(){
         $comments = $this->hasMany(Comment::className(), ['post_id' => 'id'])->with('user')->asArray();
         return $comments;
+    }
+
+    public function getLink(){
+        $cat = GlobalHelper::getCategoryUrlById($this->postCategories[0]->category_id);
+        return Url::to(['post/full', 'cat' => $cat, 'id' => $this->id, 'alt' => $this->url]);
     }
 
     public static function tableName(){
