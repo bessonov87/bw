@@ -109,4 +109,21 @@ $(document).ready(function() {
 		});
 	});
 
+	// ГОРОСКОП
+	function change_znak(znak)
+	{
+		$('.goro-item').css('display', 'none');
+		$('#' + znak).css('display', 'block');
+		$('#znak').val(znak);
+	}
+
+	$('.goroskop_zodiac').on('click', function() {
+		change_znak($(this).data('zodiac'));
+	});
+
+	$('.goro-select select').on('change', function() {
+		console.log($(this).val());
+		change_znak($(this).val());
+	});
+
 });

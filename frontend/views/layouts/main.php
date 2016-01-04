@@ -140,7 +140,7 @@ IeAsset::register($this);
             <div id="sidebar-item">
                 <div id="sidebar-item-top" class="sidebar-item-pink"><a href="http://astrolis.ru/goroskop/na-den/" target="_blank">Гороскоп на сегодня</a></div>
                 <div id="sidebar-item-content">
-                    {goroskop}
+                    <?= \app\components\HoroscopeWidget::widget() ?>
                 </div>
             </div>
             <!-- Конец Блок Гороскоп -->
