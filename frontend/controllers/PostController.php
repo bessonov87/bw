@@ -121,6 +121,12 @@ class PostController extends Controller{
             'approve' => Post::APPROVED,
         ]);
 
+        if(is_null($post)){
+            throw new NotFoundHttpException('Статьи с данным адресом на сайте не существует. Проверьте правильно ли вы скопировали или ввели адрес в адресную строку. Если вы перешли на эту страницу по ссылке с данного сайта, сообщите пожалуйста о неработающей ссылке нам с помощью обратной связи.');
+        }
+
+
+
         if(!Yii::$app->user->isGuest) {
             $model = new CommentForm();
             // Значение для hidden user_id
@@ -135,6 +141,9 @@ class PostController extends Controller{
                 }
             }
         }
+
+        // Обновление количества просмотров статьи
+        $post->updateCounters(['views' => 1]);
 
         return $this->render('full', ['post' => $post, 'model' => $model]);
     }

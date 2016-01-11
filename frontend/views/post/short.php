@@ -30,7 +30,7 @@ foreach($posts as $post):
             </div>
             <div class="clear"></div>
             <div id="content-item-footer">
-                <div class="content-item-footer-left"><strong>Добавлено:</strong> <?= $post->date ?> | <strong>Просмотров:</strong> {news_read}</div>
+                <div class="content-item-footer-left"><strong>Добавлено:</strong> <?= $post->date ?> | <strong>Просмотров:</strong> <?=$post->views?></div>
                 <div class="content-item-footer-right"><a href="<?= $link ?>">Подробнее >></a></div>
             </div>
         </div>

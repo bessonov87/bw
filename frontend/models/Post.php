@@ -50,6 +50,11 @@ class Post extends ActiveRecord
         return $comments;
     }
 
+    public function getPostsRating(){
+        $rates = $this->hasMany(PostsRating::className(), ['post_id' => 'id'])->sum('score');
+        return $rates;
+    }
+
     public function getLink(){
         $cat = GlobalHelper::getCategoryUrlById($this->postCategories[0]->category_id);
         return Url::to(['post/full', 'cat' => $cat, 'id' => $this->id, 'alt' => $this->url]);
