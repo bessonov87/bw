@@ -879,3 +879,57 @@ ol.popular li:hover:after {
     padding-bottom:4px;
     font-size:12px;
 }
+
+/* ============ РЕЙТИНГ ============= */
+
+.post_rating {
+    padding: 0 5px;
+}
+
+.post_rating button:disabled {
+    cursor: not-allowed;
+}
+
+.post_rating_button_plus, .post_rating_button_minus {
+    height: 100%;
+    width: auto;
+    padding: 0 7px;
+    margin: 0;
+    overflow: hidden;
+    font-size: 24px;
+    color: #c7d4d8;
+    display: inline-block;
+    vertical-align: middle;
+    border: 0;
+    box-shadow: none;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.post_rating_score {
+    line-height: 38px;
+    margin-left: -3px;
+    height: 100%;
+    text-align: center;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.post_rating_score_positive, .post_rating_score_negative {
+    vertical-align: baseline;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.post_rating_score_positive {
+    color: #6C9203;
+}
+
+.post_rating_score_negative {
+    color: #CA6363;
+}
+
+.post_rating_info {
+    display: inline-block;
+}

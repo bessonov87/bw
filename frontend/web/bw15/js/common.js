@@ -126,4 +126,9 @@ $(document).ready(function() {
 		change_znak($(this).val());
 	});
 
+	// РЕЙТИНГ
+	$('.post_rating button').on('click', function() {
+		alert($(this).attr('class'));
+	});
+
 });
