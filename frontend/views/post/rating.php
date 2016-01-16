@@ -25,6 +25,6 @@ if(Yii::$app->user->isGuest){
         <span><i class="fa fa-thumbs-o-down"></i></span>
     </button>
 
-    <div class="post_rating_info"></div>
+    <div class="post_rating_info"><?=$message?></div>
 
 </div>

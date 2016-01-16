@@ -2,7 +2,7 @@
 /* @var $this yii\web\View */
 
 use app\components\GlobalHelper;
-//use yii\helpers\Url;
+use yii\helpers\Html;
 ?>
 
 <div class="comment-box" id="comment-<?= $comment['id'] ?>">

@@ -918,7 +918,7 @@ ol.popular li:hover:after {
 
 .post_rating_score_positive, .post_rating_score_negative {
     vertical-align: baseline;
-    font-size: 13px;
+    font-size: 18px;
     font-weight: 700;
 }
 
@@ -932,4 +932,8 @@ ol.popular li:hover:after {
 
 .post_rating_info {
     display: inline-block;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: bold;
+    color: #366;
 }

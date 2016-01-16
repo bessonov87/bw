@@ -9,6 +9,7 @@ use frontend\models\PostsRating;
 class RatingWidget extends Widget
 {
     public $post_id;
+    public $message;
 
     public function getViewPath(){
         return '@app/views/post';
@@ -44,8 +45,8 @@ class RatingWidget extends Widget
             $rating['score'] = '+'.$rating['score'];
         }
 
-        $rating['scoreClass'] = ($rating['score'] > 0) ? 'positive' : 'negative';
+        $rating['scoreClass'] = ($rating['score'] > 0) ? 'positive' : (($rating['score'] == 0) ? 'null' : 'negative');
 
-        return $this->render('rating', ['rating' => $rating]);
+        return $this->render('rating', ['rating' => $rating, 'message' => $this->message]);
     }
 }

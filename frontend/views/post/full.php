@@ -22,6 +22,7 @@ if($post->meta_title){
     $this->title = $post->title;
 }
 ?>
+<div id="post-id"><?=$post->id?></div>
 <div id="content-item">
     <div id="content-item-top" class="content-item-pink"><h1><?=$post->title?></h1></div>
     <div id="content-item-content">

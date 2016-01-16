@@ -128,7 +128,27 @@ $(document).ready(function() {
 
 	// РЕЙТИНГ
 	$('.post_rating button').on('click', function() {
-		alert($(this).attr('class'));
+		//$('.post_rating').detach();
+        var postId = $('#post-id').text();
+		var score = 0;
+		var bClass = $(this).attr('class');
+		if(bClass == 'post_rating_button_plus'){
+			score = 1;
+		} else if(bClass == 'post_rating_button_minus') {
+			score = -1;
+		}
+		// Отправка запроса
+		$.ajax({
+			url: 'http://bw.dev/ajax/rating',
+			type: 'GET',
+			data: {
+				'post_id' : postId,
+                'score' : score,
+			},
+			success: function(data){
+				$('.content-item-rating-1').html(data);
+			}
+		});
 	});
 
 });
