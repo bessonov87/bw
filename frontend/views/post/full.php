@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use app\components\PostHelper;
 use app\components\CommentsWidget;
 use app\components\RatingWidget;
+use app\components\FavoriteWidget;
 
 $this->params['breadcrumbs'][] = $post->title;
 
@@ -61,7 +62,7 @@ if($post->meta_title){
         <div class="clear"></div>
         <div id="content-item-rating">
             <div class="content-item-rating-1"><?= RatingWidget::widget(['post_id' => $post->id]) ?></div>
-            <div class="content-item-favorit">{art_to_favorit}</div>
+            <div class="content-item-favorit"><?= FavoriteWidget::widget(['post_id' => $post->id]) ?></div>
         </div>
         <div class="clear"></div>
         <div id="content-item-footer">

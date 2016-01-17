@@ -881,6 +881,9 @@ ol.popular li:hover:after {
 }
 
 /* ============ РЕЙТИНГ ============= */
+.content-item-rating-1 {
+    float: left;
+}
 
 .post_rating {
     padding: 0 5px;
@@ -936,4 +939,39 @@ ol.popular li:hover:after {
     font-style: italic;
     font-weight: bold;
     color: #366;
+}
+
+/* ДОБАВЛЕНИЕ В ИЗБРАННОЕ */
+.content-item-favorit {
+    float: right;
+    margin-right: 15px;
+    padding: 4px 0;
+}
+
+.post_favorite div {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.post_favorite_button {
+    width: 25px;
+    height: 25px;
+    border: none;
+}
+
+.favorite_button_grey {
+     background: url("/bw15/images/stars25.png") 0 -25px;
+ }
+
+.favorite_button_grey:hover {
+    background: url("/bw15/images/stars25.png");
+}
+
+.favorite_button_yellow {
+    background: url("/bw15/images/stars25.png");
+}
+
+.post_favorite_count {
+    padding-left: 5px;
+    font-size: 16px;
 }
