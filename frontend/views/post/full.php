@@ -2,12 +2,16 @@
 
 /* @var $this yii\web\View */
 
-use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 use app\components\PostHelper;
+use app\components\GlobalHelper;
 use app\components\CommentsWidget;
 use app\components\RatingWidget;
 use app\components\FavoriteWidget;
 
+foreach(GlobalHelper::getCategoryBreadcrumb(Yii::$app->params['category'][0]) as $cBreadcrumb) {
+    $this->params['breadcrumbs'][] = ['label' => Html::a($cBreadcrumb['label'], $cBreadcrumb['link']), 'encode' => false];
+}
 $this->params['breadcrumbs'][] = $post->title;
 
 // Проверяем, добавлены ли мета-тэги и включаем их в код страницы
@@ -22,6 +26,7 @@ if($post->meta_title){
 } else {
     $this->title = $post->title;
 }
+
 ?>
 <div id="post-id"><?=$post->id?></div>
 <div id="content-item">
@@ -55,14 +60,14 @@ if($post->meta_title){
                 <div class="clear"></div>
             </div>
             <div align="justify" style="color:#000000; font-size:14px; line-height: 1.5;" id="art_full"><?=$post->full?></div>
-            <div class="related">
+            <div class="related_posts">
                 <strong>Другие публикации по теме:</strong><br/><?=PostHelper::similar($post->similarPosts, ['list' => true, 'listType' => 'ol'])?>
             </div>
         </div>
         <div class="clear"></div>
         <div id="content-item-rating">
             <div class="content-item-rating-1"><?= RatingWidget::widget(['post_id' => $post->id]) ?></div>
-            <div class="content-item-favorit"><?= FavoriteWidget::widget(['post_id' => $post->id]) ?></div>
+            <div class="content-item-favorite"><?= FavoriteWidget::widget(['post_id' => $post->id]) ?></div>
         </div>
         <div class="clear"></div>
         <div id="content-item-footer">
@@ -75,7 +80,7 @@ if($post->meta_title){
     <?= CommentsWidget::widget(['comments' => $post->comments, 'addCommModel' => $model]) ?>
 </div>
 
-<? var_dump($post->categories); ?>
-<? var_dump($post->postsRating); ?>
+<? //var_dump($post->categories); ?>
+<? //var_dump($post->postsRating); ?>
 <? //var_dump(ArrayHelper::toArray($post->comments)); ?>
 <? //var_dump($post->comments); ?>

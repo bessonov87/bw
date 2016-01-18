@@ -151,4 +151,20 @@ $(document).ready(function() {
 		});
 	});
 
+	// ИЗБРАННОЕ
+	$('.post_favorite_button').on('click', function() {
+		var postId = $('#post-id').text();
+		// Отправка запроса
+		$.ajax({
+			url: 'http://bw.dev/ajax/favorite',
+			type: 'GET',
+			data: {
+				'post_id' : postId,
+			},
+			success: function(data){
+				$('.content-item-favorite').html(data);
+			}
+		});
+	});
+
 });

@@ -31,6 +31,8 @@ class Post extends ActiveRecord
         $similarPosts = Post::find()
             ->where("MATCH(short, full, title, meta_title) AGAINST('$this->title')")
             ->andWhere(['approve' => static::APPROVED])
+            ->andWhere( 'id != '.$this->id )
+            ->with('postCategories')
             ->limit(5)
             ->all();
         return $similarPosts;

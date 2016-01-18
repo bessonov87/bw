@@ -1,4 +1,4 @@
---
+﻿--
 -- Структура таблицы `posts_rating`
 --
 
@@ -18,3 +18,68 @@ ALTER TABLE posts_rating ADD CONSTRAINT fk_posts_rating
 FOREIGN KEY (post_id) REFERENCES post (id)
     ON DELETE RESTRICT
     ON UPDATE RESTRICT
+
+======================================================== 18.01.2016 ==================================================
+
+--
+-- Структура таблицы `favorite_posts`
+--
+
+CREATE TABLE IF NOT EXISTS `favorite_posts` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  `post_id` int(11) unsigned NOT NULL,
+  `link` varchar(200),
+  `title` varchar(250),
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `external` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+ALTER TABLE favorite_posts ADD CONSTRAINT fk_favorite_posts
+FOREIGN KEY (post_id) REFERENCES post (id)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT;
+
+ALTER TABLE favorite_posts ADD CONSTRAINT fk_favorite_posts_users
+FOREIGN KEY (user_id) REFERENCES user (id)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT;
+
+ALTER TABLE  `favorite_posts` ADD UNIQUE (
+`user_id` ,
+`post_id`
+);
+
+
+
+--
+-- Структура таблицы `advert`
+--
+
+CREATE TABLE IF NOT EXISTS `advert` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) NOT NULL,
+  `block_number` smallint(5) unsigned NOT NULL,
+  `code` text NOT NULL,
+  `location` varchar(10) NOT NULL,
+  `replacement_tag` varchar(20) NOT NULL DEFAULT 'none',
+  `category` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `approve` tinyint(1) NOT NULL DEFAULT '0',
+  `on_request` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `block_number` (`block_number`),
+  KEY `category` (`category`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
+--
+-- Дамп данных таблицы `advert`
+--
+
+INSERT INTO `advert` (`id`, `title`, `block_number`, `code`, `location`, `replacement_tag`, `category`, `approve`, `on_request`) VALUES
+(1, 'Яндекс.Директ в статьях', 1, '<br>\r\n<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>\r\n<!-- beauty-in-adapt -->\r\n<ins class="adsbygoogle"\r\n     style="display:block"\r\n     data-ad-client="ca-pub-6721896084353188"\r\n     data-ad-slot="8510135144"\r\n     data-ad-format="auto"></ins>\r\n<script>\r\n(adsbygoogle = window.adsbygoogle || []).push({});\r\n</script>\r\n<br>', 'inside', 'yandex', 0, 1, 0),
+(5, 'Тизеры SMACLICK внизу статей', 7, '<div id="SC_TBlock_73327" class="SC_TBlock"></div>\r\n\r\n<script type="text/javascript">var SC_CId = "73327",SC_Domain="n.andreyp5.ru";SC_Start_73327=(new Date).getTime();</script>\r\n<script type="text/javascript" src="http://st.n.andreyp5.ru/js/adv_out.js"></script>', 'bottom', 'google', 0, 1, 0),
+(6, 'Тизеры TIZERLADY внизу статей', 10, '<div id="zcbclk28861"></div><script type="text/javascript">\r\n(function(w){var l = function() {\r\n  var n = document.getElementsByTagName("script")[0],\r\n  s = document.createElement("script"),\r\n  ins = function () { n.parentNode.insertBefore(s, n); };\r\n  s.type = "text/javascript";\r\n  s.async = true;\r\n  s.src = "http://rt.tizerlady.biz/init.js?5WQhBR1kTV1xRCAcNDQME";\r\n  ins();\r\n};\r\n var i = setInterval(function(){ if (document && document.getElementById(''zcbclk28861'')) { clearInterval(i); l(); } }, 50);})(window);</script>', 'bottom', 'google', 0, 0, 0),
+(2, 'Google реклама внизу статей', 5, '<br><br><div align="center">\r\n<script type="text/javascript"><!--\r\ngoogle_ad_client = "pub-6721896084353188";\r\n/* Beauty 468x60 */\r\ngoogle_ad_slot = "6311131307";\r\ngoogle_ad_width = 468;\r\ngoogle_ad_height = 60;\r\n//-->\r\n</script>\r\n<script type="text/javascript"\r\nsrc="http://pagead2.googlesyndication.com/pagead/show_ads.js">\r\n</script>\r\n</div>', 'bottom', 'google', 0, 0, 0),
+(3, 'Тестовый блок 3', 3, 'DDDDD', 'top', 'none', 0, 0, 0),
+(4, 'Google-square', 2, '<div class="advert-2">\r\n<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>\r\n<!-- Beauty-300x250 -->\r\n<ins class="adsbygoogle"\r\n     style="display:inline-block;width:300px;height:250px"\r\n     data-ad-client="ca-pub-6721896084353188"\r\n     data-ad-slot="5023064749"></ins>\r\n<script>\r\n(adsbygoogle = window.adsbygoogle || []).push({});\r\n</script>\r\n</div>', 'inside', 'none', 0, 1, 1);

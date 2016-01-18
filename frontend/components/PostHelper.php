@@ -3,6 +3,7 @@
 namespace app\components;
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 class PostHelper {
 
@@ -26,7 +27,9 @@ class PostHelper {
         if($options['list'] === true){
             $similar .= $options['listType'] === 'ol' ? '<ol>' : '<ul>';
             foreach($posts as $post){
-                $similar .= '<li>'.$post->title.'</li>';
+                $cat = GlobalHelper::getCategoryUrlById($post->postCategories[0]->category_id);
+                $link = Url::to(['post/full', 'cat' => $cat, 'id' => $post->id, 'alt' => $post->url]);
+                $similar .= '<li>'.Html::a($post->title, $link).'</li>';
             }
             $similar .= $options['listType'] === 'ol' ? '</ol>' : '</ul>';
         } else {

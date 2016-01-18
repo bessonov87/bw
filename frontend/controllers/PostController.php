@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use app\components\GlobalHelper;
+use app\models\Advert;
 use frontend\models\Category;
 use frontend\models\PostCategory;
 use frontend\models\CommentForm;
@@ -18,16 +19,18 @@ class PostController extends Controller{
      * Определение ID категории(й) для выборки анонсов
      *
      * Категория ($cat) передается в формате строки вида 'category_url' или 'category_url/subcategory_url'.
-     * Если передана одна категория, метод вернет массив с ее ID и ID всех дочерних (подкатегорий).
+     * Если передана одна категория, метод вернет массив с ее ID и ID всех дочерних (подкатегорий) (за исключением
+     * случая, когда третьим параметром передан true; тогда метод вернет только ID данной категории без дочерних).
      * Если передана подкатегория, метод вернет только ее ID в виде массива из одного элемента.
      * Если в массиве категорий ($categories) нет такой категории, генерируется исключение NotFoundHttpException.
      *
      * @param $cat
      * @param $categories
+     * @param $noChilds
      * @return array
      * @throws NotFoundHttpException
      */
-    protected function postCategory($cat, $categories){
+    protected function postCategory($cat, $categories, $noChilds = false){
         // Если адрес состоит из категории и подкатегории, выбираем только подкатегорию
         if(strpos($cat, '/')){
             $cat = end(explode('/', $cat));
@@ -50,10 +53,6 @@ class PostController extends Controller{
         return $categoryIds;
     }
 
-    public function actionIndex(){
-
-    }
-
     public function actionShort()
     {
         // Получаем список всех категорий, переиндексированный по id категорий
@@ -66,6 +65,8 @@ class PostController extends Controller{
         if($type == 'byCat'){
             // Получаем id категорий
             $categoryIds = $this->postCategory(Yii::$app->request->get('cat'), $categories);
+            // Записываем id текущей категории в глобальный параметр
+            Yii::$app->params['category'] = GlobalHelper::getCategoryIdByUrl(Yii::$app->request->get('cat'), true);
             // Получаем список постов для данных категорий
             $cateroryPostIds = PostCategory::find()
                 ->asArray()
@@ -125,8 +126,10 @@ class PostController extends Controller{
             throw new NotFoundHttpException('Статьи с данным адресом на сайте не существует. Проверьте правильно ли вы скопировали или ввели адрес в адресную строку. Если вы перешли на эту страницу по ссылке с данного сайта, сообщите пожалуйста о неработающей ссылке нам с помощью обратной связи.');
         }
 
+        // Записываем id текущей категории в виде массива в глобальный параметр
+        Yii::$app->params['category'] = [$post->postCategories[0]->category_id];
 
-
+        // Добавление комментариев
         if(!Yii::$app->user->isGuest) {
             $model = new CommentForm();
             // Значение для hidden user_id
@@ -142,10 +145,79 @@ class PostController extends Controller{
             }
         }
 
+        // Рекламные материалы
+        $post = $this->insertAdvert($post);
+
         // Обновление количества просмотров статьи
         $post->updateCounters(['views' => 1]);
 
         return $this->render('full', ['post' => $post, 'model' => $model]);
+    }
+
+    /**
+     * Вставка рекламных материалов в текст статьи
+     *
+     * Рекламные материалы задаются в базе данных в таблице 'advert'. Они могут иметь 3 варианта расположения:
+     * bottom (под текстом статьи), top (над текстом статьи) и inside (в середине текста статьи), а также выводиться
+     * в любом месте статьи при помощи тэга подстановки, указываемого в виде произвольной строки (напр. [yandex]) или
+     * конструкцией вида [advert-<block_number>] (где block_number - номер рекламного блока), если не указан строковый
+     * тэг подстановки.
+     *
+     * @param $post
+     * @return mixed
+     */
+    protected function insertAdvert($post) {
+        $adverts = Advert::find()
+            ->where(['approve' => 1])
+            ->asArray()
+            ->all();
+
+        if(is_null($adverts))
+            return $post;
+
+        foreach($adverts as $advert) {
+            if($advert['location'] != 'various'){
+                if($advert['replacement_tag'] != 'none' && strstr($post->full, "[{$advert['replacement_tag']}]"))
+                {
+                    $post->full = str_replace("[{$advert['replacement_tag']}]", $advert['code'], $post->full);
+                }
+                else if($advert['replacement_tag'] == "none" && strstr($post->full, "[advert-{$advert['block_number']}]"))
+                {
+                    $post->full = str_replace("[advert-{$advert['block_number']}]", $advert['code'], $post->full);
+                }
+                else if($advert['location'] == "inside")
+                {
+                    if(!$advert['on_request'])
+                    {
+                        $dlina_full = strlen($post->full);
+                        $seredina_full = round($dlina_full/2);
+                        $diapazon_start = $seredina_full - 100;
+                        $diapazon_finish = $seredina_full + 100;
+
+                        $perv_chast = substr($post->full, 0, $diapazon_start-1);
+                        $sred_chast = substr($post->full, $diapazon_start, 201);
+                        $vtor_chast = substr($post->full, $diapazon_finish+1);
+
+                        $pos_tochka = strpos($sred_chast, ".");
+
+                        $sred_1 = substr($sred_chast, 0, $pos_tochka);
+                        $sred_2 = substr($sred_chast, $pos_tochka+1);
+
+                        $post->full = $perv_chast.$sred_1.'.<br />' . $advert['code'] . '<br>'.$sred_2.$vtor_chast;
+                    }
+                }
+                else if($advert['location'] == "top")
+                {
+                    $post->full = $advert['code'] . "<br>" . $post->full;
+                }
+                else if($advert['location'] == "bottom")
+                {
+                    $post->full = $post->full . "<br>" . $advert['code'];
+                }
+            }
+        }
+
+        return $post;
     }
 
 }

@@ -10,6 +10,7 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use frontend\assets\IeAsset;
 use common\widgets\Alert;
+use app\components\SidebarMenuWidget;
 
 AppAsset::register($this);
 IeAsset::register($this);
@@ -84,9 +85,12 @@ IeAsset::register($this);
         </div>
         <div id="content">
 
-
             <?= Breadcrumbs::widget([
+                'itemTemplate' => '<span>{link}</span>',
+                'activeItemTemplate' => '<span class="breadcrumbs_active">{link}</span>',
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                'options' => ['class' => 'breadcrumbs'],
+                'tag' => 'div',
             ]) ?>
 
             <!-- Блок Реклама Верх -->
@@ -150,43 +154,45 @@ IeAsset::register($this);
             <div id="sidebar-item">
                 <div id="sidebar-item-top" class="sidebar-item-blue">Разделы</div>
                 <div id="sidebar-item-content">
-                    <div class="blockmenu">
-                        <a href="http://beauty-women.ru/tests/index.php">Онлайн тесты</a>
-                        <a href="http://beauty-women.ru/beautysecrets/">Секреты красоты</a>
-                        <a href="http://beauty-women.ru/makeupsecrets/">Секреты макияжа</a>
-                        <a href="http://beauty-women.ru/fashion/">Мода и стиль</a>
-                        [category=2,3,11,12,49,61]<a href="http://beauty-women.ru/aromat/">Парфюм и ароматы</a>[/category]
-                        <a href="http://beauty-women.ru/jefirnye-masla/">Эфирные масла</a>
-                        <a href="http://beauty-women.ru/maski-dlja-lica-v-domashnih-uslovijah/">Маски для лица</a>
-                        <a href="http://beauty-women.ru/diets/">Диеты</a>
-                        [category=4,5,10,45,57]<a href="http://beauty-women.ru/diets/dieta-djukana/">Диета Дюкана</a>[/category]
-                        [category=4,5,10,45,57]<a href="http://beauty-women.ru/calculator/">Калькулятор ИМТ</a>[/category]
-                        [category=4,5,10,45,57]<a href="http://beauty-women.ru/healthyfood/">Здоровое питание</a>[/category]
-                        [category=4,5,10,45,57]<a href="http://beauty-women.ru/magnificent/">Великолепная фигура</a>[/category]
-                        [category=4,5,10,45,57]<a href="http://beauty-women.ru/cookery/">Кулинария</a>[/category]
-                        <a href="http://beauty-women.ru/femalehealth/">Женское здоровье</a>
-                        [category=6,7]<a href="http://beauty-women.ru/nationalmedicine/">Народная медицина</a>[/category]
-                        <a href="http://beauty-women.ru/pregnancy/">Беременность и роды</a>
-                        [category=6,7,8,9,27,28,52,54,55,56,58,59,60]<a href="http://beauty-women.ru/mesjachnye/">Месячные</a>[/category]
-                        [category=9,6,7,8,27,28,52,54,55,56,58,59,60]<a href="http://beauty-women.ru/ovuljacija/">Овуляция</a>[/category]
-                        [category=9,6,7,8,27,28,52,54,55,56,58,59,60]<a href="http://beauty-women.ru/pregnancy/test-na-beremennost/">Тест на беременность</a>[/category]
-                        [category=9,6,7,8,27,28,52,54,55,56,58,59,60]<a href="http://beauty-women.ru/pregnancy/bazalnaja-temperatura/">Базальная температура</a>[/category]
-                        [category=9,6,7,8,27,28,52,54,55,56,58,59,60]<a href="http://beauty-women.ru/pregnancy/pervye-priznaki-beremennosti/">Первые признаки беременности</a>[/category]
-                        [category=9,6,7,8,27,28,52,54,55,56,58,59,60]<a href="http://beauty-women.ru/pregnancy/pol-rebenka/">Определение пола ребенка</a>[/category]
-                        [category=6,7,8,9,27,28,52,54,55,56,58,59,60]<a href="http://beauty-women.ru/pregnancy/kalendar-beremennosti/">Календарь беременности</a>[/category]
-                        <a href="http://beauty-women.ru/family/">Семья и дети</a>
-                        <a href="http://beauty-women.ru/home/">Домашний очаг</a>
-                        <a href="http://beauty-women.ru/lovesex/">Любовь и секс</a>
-                        <a href="http://beauty-women.ru/psychology/">Психология отношений</a>
-                        <a href="http://beauty-women.ru/career/">Карьера и деньги</a>
-                        <a href="http://beauty-women.ru/wedding/">Свадьба</a>
-                        <a href="http://beauty-women.ru/horoscope/">Гороскоп</a>
-                        <a href="http://beauty-women.ru/horoscope/lunnyj-kalendar-na-god/">Лунный календарь на 2016 год</a>
-                        [category=19,47,51,53,21]<a href="http://beauty-women.ru/horoscope/lunnyj-kalendar-strizhek/">Лунный календарь стрижек 2016</a>[/category]
-                        [category=19,47,51,53,21]<a href="http://beauty-women.ru/horoscope/lunnyj-kalendar-ogorodnika-sadovoda/">Лунный календарь огородника 2016</a>[/category]
-
-                        <a href="http://beauty-women.ru/raznoe/">Разное</a>
-                    </div>
+                    <?= SidebarMenuWidget::widget([
+                        'items' => [
+                            ['label' => 'Онлайн тесты', 'url' => ['tests/index']],
+                            ['label' => 'Секреты красоты', 'url' => '/beautysecrets/'],
+                            ['label' => 'Секреты макияжа', 'url' => '/makeupsecrets/'],
+                            ['label' => 'Мода и стиль', 'url' => '/fashion/'],
+                            ['label' => 'Парфюм и ароматы', 'url' => '/aromat/', 'allowedOn' => '2,3,11,12,49,61'],
+                            ['label' => 'Эфирные масла', 'url' => '/jefirnye-masla/'],
+                            ['label' => 'Маски для лица', 'url' => '/maski-dlja-lica-v-domashnih-uslovijah/'],
+                            ['label' => 'Диеты', 'url' => '/diets/'],
+                            ['label' => 'Диета Дюкана', 'url' => '/diets/dieta-djukana/', 'allowedOn' => '4,5,10,45,57'],
+                            ['label' => 'Калькулятор ИМТ', 'url' => '/calculator/', 'allowedOn' => '4,5,10,45,57'],
+                            ['label' => 'Здоровое питание', 'url' => '/healthyfood/', 'allowedOn' => '4,5,10,45,57'],
+                            ['label' => 'Великолепная фигура', 'url' => '/magnificent/', 'allowedOn' => '4,5,10,45,57'],
+                            ['label' => 'Кулинария', 'url' => '/cookery/', 'allowedOn' => '4,5,10,45,57'],
+                            ['label' => 'Женское здоровье', 'url' => '/femalehealth/'],
+                            ['label' => 'Народная медицина', 'url' => '/nationalmedicine/'],
+                            ['label' => 'Беременность и роды', 'url' => '/pregnancy/'],
+                            ['label' => 'Месячные', 'url' => '/mesjachnye/', 'allowedOn' => '6,7,8,9,27,28,52,54,55,56,58,59,60'],
+                            ['label' => 'Овуляция', 'url' => '/ovuljacija/', 'allowedOn' => '6,7,8,9,27,28,52,54,55,56,58,59,60'],
+                            ['label' => 'Тест на беременность', 'url' => '/pregnancy/test-na-beremennost/', 'allowedOn' => '6,7,8,9,27,28,52,54,55,56,58,59,60'],
+                            ['label' => 'Базальная температура', 'url' => '/pregnancy/bazalnaja-temperatura/', 'allowedOn' => '6,7,8,9,27,28,52,54,55,56,58,59,60'],
+                            ['label' => 'Первые признаки беременности', 'url' => '/pregnancy/pervye-priznaki-beremennosti/', 'allowedOn' => '6,7,8,9,27,28,52,54,55,56,58,59,60'],
+                            ['label' => 'Определение пола ребенка', 'url' => '/pregnancy/pol-rebenka/', 'allowedOn' => '6,7,8,9,27,28,52,54,55,56,58,59,60'],
+                            ['label' => 'Календарь беременности', 'url' => '/pregnancy/kalendar-beremennosti/', 'allowedOn' => '6,7,8,9,27,28,52,54,55,56,58,59,60'],
+                            ['label' => 'Семья и дети', 'url' => '/family/'],
+                            ['label' => 'Домашний очаг', 'url' => '/home/'],
+                            ['label' => 'Любовь и секс', 'url' => '/lovesex/'],
+                            ['label' => 'Психология отношений', 'url' => '/psychology/'],
+                            ['label' => 'Карьера и деньги', 'url' => '/career/'],
+                            ['label' => 'Свадьба', 'url' => '/wedding/'],
+                            ['label' => 'Гороскоп', 'url' => '/horoscope/'],
+                            ['label' => 'Лунный календарь на 2016 год', 'url' => '/horoscope/lunnyj-kalendar-na-god/'],
+                            ['label' => 'Лунный календарь стрижек 2016', 'url' => '/horoscope/lunnyj-kalendar-strizhek/', 'allowedOn' => '19,47,51,53,21'],
+                            ['label' => 'Лунный календарь огородника 2016', 'url' => '/horoscope/lunnyj-kalendar-ogorodnika-sadovoda/', 'allowedOn' => '19,47,51,53,21'],
+                            ['label' => 'Разное', 'url' => '/raznoe/'],
+                        ],
+                        'cssClass' => 'blockmenu',
+                    ])?>
                 </div>
             </div>
             <!-- Конец Блок Боковое меню-->

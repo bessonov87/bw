@@ -1,6 +1,8 @@
 <?php
 namespace frontend\controllers;
 
+use app\components\FavoriteWidget;
+use app\models\FavoritePosts;
 use frontend\models\PostsRating;
 use Yii;
 use yii\web\Controller;
@@ -48,5 +50,30 @@ class AjaxController extends Controller
             return 'Ошибка';
         }
         return RatingWidget::widget(['post_id' => $postId, 'message' => $message]);
+    }
+
+    public function actionFavorite() {
+        if(!Yii::$app->request->get('post_id'))
+            return 'Ошибка';
+        if(!Yii::$app->user->isGuest) {
+            $postId = (int)Yii::$app->request->get('post_id');
+            $favorite = new FavoritePosts();
+            $favorite->post_id = $postId;
+            $favorite->user_id = Yii::$app->user->identity->getId();
+            try {
+                if ($favorite->save()) {
+                    $message = 'Статья добавлена в избранное!';
+                } else {
+                    $message = current($favorite->errors)[0];
+                }
+            } catch(yii\db\IntegrityException $e) {
+                if(strpos($e->errorInfo[2], 'foreign key')){
+                    $message = 'Ошибка. Неверный ID статьи';
+                }
+            }
+        } else {
+            $message = 'Добавлять статьи в избранное могут только зарегистрированные пользователи';
+        }
+        return FavoriteWidget::widget(['post_id' => $postId, 'message' => $message]);
     }
 }

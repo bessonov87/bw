@@ -36,7 +36,13 @@ body {
 	font-size: 16px;
 }
 
+#post-id {
+    display: none;
+}
 
+.related_posts {
+    margin-top: 15px;
+}
 
 #header{
     height: 90px;
@@ -126,10 +132,22 @@ body {
     padding: 25px 0 15px 0;
 }
 
+/* ===================== Breadcrumbs ================== */
 .breadcrumbs {
-    padding-bottom: 15px;
-    font-size: 12px;
+    padding: 8px 15px;
+    margin-bottom: 20px;
+    list-style: none;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    font-size: 14px;
 }
+
+.breadcrumbs > span + span:before {
+    padding: 0 5px;
+    color: #ccc;
+    content: "/\00a0";
+}
+/********************************************************/
 
 #content{
     width: 694px;
@@ -942,7 +960,7 @@ ol.popular li:hover:after {
 }
 
 /* ДОБАВЛЕНИЕ В ИЗБРАННОЕ */
-.content-item-favorit {
+.content-item-favorite {
     float: right;
     margin-right: 15px;
     padding: 4px 0;
@@ -974,4 +992,11 @@ ol.popular li:hover:after {
 .post_favorite_count {
     padding-left: 5px;
     font-size: 16px;
+}
+
+.post_favorite_info {
+    font-size: 14px;
+    font-style: italic;
+    font-weight: bold;
+    color: #366;
 }
