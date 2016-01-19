@@ -93,6 +93,15 @@ class GlobalHelper
         return $categoryIds;
     }
 
+    /**
+     * Добавление в breadcrumbs для статьи ее категории (подкатегории)
+     *
+     * Если статья размещена в подкатегории, результатом будет массив с двумя ссылками - на категорию и подкатегорию.
+     * Если статья размещена в категории, результатом будет массив с одной ссылкой - только на категорию.
+     *
+     * @param $id ID категории (или подкатегории)
+     * @return array Массив c относительной ссылкой(-ами) и текстом ссылки(-ок)
+     */
     public static function getCategoryBreadcrumb($id) {
         $categories = self::getCategories();
         $thisCategory = $categories[$id];
@@ -105,7 +114,6 @@ class GlobalHelper
             $breadcrumbs[1]['link'] = '/' . $thisCategory['url'] . '/';
         }
         $breadcrumbs[1]['label'] = $thisCategory['name'];
-        // Если есть родительская, ссылка на раздел будет составной, иначе только url данной категории
         return $breadcrumbs;
     }
 
@@ -120,11 +128,14 @@ class GlobalHelper
      * 't' - Творительный
      * 'p' - Предложный
      *
-     * @param $monthNum
-     * @param string $case
+     * При преобразовании названия месяца в номер падеж не имеет значения, т.к. для поиска изпользуется только корень.
+     *
+     * @param int|string $monthNum Номер месяца (1-12) или название в любом падеже
+     * @param string $case Падеж
+     * @param bool $invert  Обратное преобразование (название месяца в номер)
      * @return string
      */
-    public static function rusMonth($monthNum, $case = 'i'){
+    public static function rusMonth($monthNum, $case = 'i', $invert = false){
         $rootMonth = [1 => 'Январ', 'Феврал', 'Март', 'Апрел', 'Ма', 'Июн', 'Июл', 'Август', 'Сентябр', 'Октябр', 'Ноябр', 'Декабр'];
         $endMonth[1] =  ['i' => 'ь', 'r' => 'я', 'd' => 'ю', 'v' => 'ь', 't' => 'ем', 'p' => 'е'];
         $endMonth[2] =  ['i' => 'ь', 'r' => 'я', 'd' => 'ю', 'v' => 'ь', 't' => 'ем', 'p' => 'е'];
@@ -141,4 +152,43 @@ class GlobalHelper
 
         return $rootMonth[(int)$monthNum].$endMonth[(int)$monthNum][$case];
     }
+
+    /**
+     * Преобразование номера месяца в транслит названия
+     *
+     * Аналогично методу rusMonth(), описанному выше
+     *
+     * @param $monthNum
+     * @param string $case
+     * @param bool $invert
+     * @return string
+     */
+    public static function engMonth($monthNum, $case = 'i', $invert = false) {
+        $rootMonth = [1 => 'janvar', 'fevral', 'mart', 'aprel', 'maj', 'ijun', 'ijul', 'avgust', 'sentjabr', 'oktjabr', 'nojabr', 'dekabr'];
+        $endMonth[1] =  ['i' => '', 'r' => 'ja', 'd' => 'ju', 'v' => '', 't' => 'jem', 'p' => 'e'];
+        $endMonth[2] =  ['i' => '', 'r' => 'ja', 'd' => 'ju', 'v' => '', 't' => 'jem', 'p' => 'e'];
+        $endMonth[3] =  ['i' => '', 'r' => 'a',  'd' => 'u',  'v' => '', 't' => 'om',  'p' => 'e'];
+        $endMonth[4] =  ['i' => '', 'r' => 'ja', 'd' => 'ju', 'v' => '', 't' => 'em',  'p' => 'e'];
+        $endMonth[5] =  ['i' => '', 'r' => 'a',  'd' => 'u',  'v' => '', 't' => 'em',  'p' => 'e'];
+        $endMonth[6] =  ['i' => '', 'r' => 'ja', 'd' => 'ju', 'v' => '', 't' => 'em',  'p' => 'e'];
+        $endMonth[7] =  ['i' => '', 'r' => 'ja', 'd' => 'ju', 'v' => '', 't' => 'em',  'p' => 'e'];
+        $endMonth[8] =  ['i' => '', 'r' => 'a',  'd' => 'u',  'v' => '', 't' => 'om',  'p' => 'e'];
+        $endMonth[9] =  ['i' => '', 'r' => 'ja', 'd' => 'ju', 'v' => '', 't' => 'jem', 'p' => 'e'];
+        $endMonth[10] = ['i' => '', 'r' => 'ja', 'd' => 'ju', 'v' => '', 't' => 'jem', 'p' => 'e'];
+        $endMonth[11] = ['i' => '', 'r' => 'ja', 'd' => 'ju', 'v' => '', 't' => 'jem', 'p' => 'e'];
+        $endMonth[12] = ['i' => '', 'r' => 'ja', 'd' => 'ju', 'v' => '', 't' => 'jem', 'p' => 'e'];
+
+        if(!$invert) {
+            // Возвращаем название месяца
+            return $rootMonth[(int)$monthNum] . $endMonth[(int)$monthNum][$case];
+        } else {
+            // Ищем и возвращаем номер месяца
+            foreach($rootMonth as $key => $root){
+                if(strpos($root, $monthNum) !== false){
+                    return $key;
+                }
+            }
+        }
+    }
+
 }

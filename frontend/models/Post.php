@@ -6,9 +6,90 @@ use yii\db\ActiveRecord;
 use common\models\Comment;
 use yii\helpers\Url;
 
+/**
+ * This is the model class for table "post".
+ *
+ * @property string $id
+ * @property string $author_id
+ * @property string $date
+ * @property string $short
+ * @property string $full
+ * @property string $title
+ * @property string $meta_title
+ * @property string $meta_descr
+ * @property string $meta_keywords
+ * @property string $url
+ * @property string $views
+ * @property string $edit_date
+ * @property string $edit_user
+ * @property string $edit_reason
+ * @property integer $allow_comm
+ * @property integer $allow_main
+ * @property integer $allow_catlink
+ * @property integer $allow_similar
+ * @property integer $allow_rate
+ * @property integer $approve
+ * @property integer $fixed
+ * @property integer $category_art
+ * @property integer $inm
+ * @property integer $not_in_related
+ *
+ * @property Comment[] $comments
+ * @property FavoritePosts[] $favoritePosts
+ * @property User $author
+ * @property PostsRating[] $postsRatings
+ */
 class Post extends ActiveRecord
 {
     const APPROVED = 1;
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['author_id', 'short', 'full', 'title', 'url'], 'required'],
+            [['author_id', 'views', 'edit_user', 'allow_comm', 'allow_main', 'allow_catlink', 'allow_similar', 'allow_rate', 'approve', 'fixed', 'category_art', 'inm', 'not_in_related'], 'integer'],
+            [['date', 'edit_date'], 'safe'],
+            [['short', 'full'], 'string'],
+            [['title', 'meta_title', 'meta_descr', 'meta_keywords', 'edit_reason'], 'string', 'max' => 255],
+            [['url'], 'string', 'max' => 100]
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'author_id' => 'Author ID',
+            'date' => 'Date',
+            'short' => 'Short',
+            'full' => 'Full',
+            'title' => 'Title',
+            'meta_title' => 'Meta Title',
+            'meta_descr' => 'Meta Descr',
+            'meta_keywords' => 'Meta Keywords',
+            'url' => 'Url',
+            'views' => 'Views',
+            'edit_date' => 'Edit Date',
+            'edit_user' => 'Edit User',
+            'edit_reason' => 'Edit Reason',
+            'allow_comm' => 'Allow Comm',
+            'allow_main' => 'Allow Main',
+            'allow_catlink' => 'Allow Catlink',
+            'allow_similar' => 'Allow Similar',
+            'allow_rate' => 'Allow Rate',
+            'approve' => 'Approve',
+            'fixed' => 'Fixed',
+            'category_art' => 'Category Art',
+            'inm' => 'Inm',
+            'not_in_related' => 'Not In Related',
+        ];
+    }
 
     // Первый способ связи
     /*public function getCategories(){
@@ -50,6 +131,22 @@ class Post extends ActiveRecord
     public function getComments(){
         $comments = $this->hasMany(Comment::className(), ['post_id' => 'id'])->with('user')->asArray();
         return $comments;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFavoritePosts()
+    {
+        return $this->hasMany(FavoritePosts::className(), ['post_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAuthor()
+    {
+        return $this->hasOne(User::className(), ['id' => 'author_id']);
     }
 
     public function getPostsRating(){
