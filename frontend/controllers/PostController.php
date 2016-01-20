@@ -66,7 +66,13 @@ class PostController extends Controller{
             // Получаем id категорий
             $categoryIds = $this->postCategory(Yii::$app->request->get('cat'), $categories);
             // Записываем id текущей категории в глобальный параметр
-            Yii::$app->params['category'] = GlobalHelper::getCategoryIdByUrl(Yii::$app->request->get('cat'), true);
+            $categoryId = GlobalHelper::getCategoryIdByUrl(Yii::$app->request->get('cat'), true);
+            Yii::$app->params['category'] = $categoryId;
+            // Проверяем, является ли категория статьей и если да, запускаем метод actionFull
+            if($categories[$categoryId[0]]['category_art'] != 0) {
+                Yii::$app->params['category_art'] = $categories[$categoryId[0]]['category_art'];
+                return $this->actionFull();
+            }
             // Получаем список постов для данных категорий
             $cateroryPostIds = PostCategory::find()
                 ->asArray()
@@ -112,13 +118,18 @@ class PostController extends Controller{
 
     public function actionFull()
     {
-        $request = Yii::$app->request;
+        //$request = Yii::$app->request;
         //$post = Post::find()->where(['id' => $request->get('id'), 'approve' => Post::APPROVED])->one();
         // или можно без approve
         //$post = Post::findOne($request->get('id'));
         // или
+
+        // Определяем Id
+        // Если это статья-категория, берем из params, иначе из request->get
+        $postId = (Yii::$app->params['category_art']) ? Yii::$app->params['category_art'] : Yii::$app->request->get('id');
+
         $post = Post::findOne([
-            'id' => $request->get('id'),
+            'id' => $postId,
             'approve' => Post::APPROVED,
         ]);
 
@@ -151,7 +162,10 @@ class PostController extends Controller{
         // Обновление количества просмотров статьи
         $post->updateCounters(['views' => 1]);
 
-        return $this->render('full', ['post' => $post, 'model' => $model]);
+        // Если статья-категория, используем представление full_cat.php, иначе full.php
+        $viewFile = Yii::$app->params['category_art'] ? 'full_cat' : 'full';
+
+        return $this->render($viewFile, ['post' => $post, 'model' => $model]);
     }
 
     /**

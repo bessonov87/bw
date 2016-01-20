@@ -37,12 +37,33 @@ class AppData
         ],
     ];
 
-    public static function getMoonHairLinks($year) {
-        return array_map(
+    /**
+     * Ссылки на лунные календари стрижек
+     *
+     * В зависимости от переданного года ($year) формируется и передается массив с полными ссылками на лунные календари
+     * стрижек по месяцам.
+     *
+     * Если вторым параметром передать номер месяца
+     *
+     * @param $year
+     * @param null $month
+     * @return array
+     */
+    public static function getMoonHairLinks($year, $month = null) {
+        $mappedArray = array_map(
             function($val){
                 return self::$moonHairLinksBase . $val;
             },
             self::$moonHairMonthLinks[$year]
         );
+
+        // Если указан месяц, возвращаем ссылку на данный месяц
+        if($month) {
+            if($month < 1 || $month > 12)
+                return '';
+            return $mappedArray[$month];
+        }
+
+        return $mappedArray;
     }
 }

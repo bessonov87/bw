@@ -17,6 +17,8 @@ class PostHelper {
      * boolean list - формировать упорядоченный/неупорядоченный список
      * string list_type - тип списка: упорядоченный (ol) или неупорядоченный (ul) (по умолчанию ul, если list = true)
      * string class - класс div обертки (по умолчанию similar_posts)
+     * boolean manual - ручная установка ссылок на статьи (в данном случае в $post->similarPosts вручную в свойстве url
+     * указывается полностью вся ссылка). Таким образом, для формирования ссылки берется только title и url.
      */
     public static function similar($posts, $options = []){
         if(!is_array($posts)){
@@ -27,8 +29,12 @@ class PostHelper {
         if($options['list'] === true){
             $similar .= $options['listType'] === 'ol' ? '<ol>' : '<ul>';
             foreach($posts as $post){
-                $cat = GlobalHelper::getCategoryUrlById($post->postCategories[0]->category_id);
-                $link = Url::to(['post/full', 'cat' => $cat, 'id' => $post->id, 'alt' => $post->url]);
+                if(!$options['manual']) {
+                    $cat = GlobalHelper::getCategoryUrlById($post->postCategories[0]->category_id);
+                    $link = Url::to(['post/full', 'cat' => $cat, 'id' => $post->id, 'alt' => $post->url]);
+                } else {
+                    $link = $post->url;
+                }
                 $similar .= '<li>'.Html::a($post->title, $link).'</li>';
             }
             $similar .= $options['listType'] === 'ol' ? '</ol>' : '</ul>';
