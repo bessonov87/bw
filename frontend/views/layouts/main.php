@@ -201,7 +201,7 @@ IeAsset::register($this);
             <div id="sidebar-item">
                 <div id="sidebar-item-top" class="sidebar-item-green">Вход на сайт</div>
                 <div id="sidebar-item-content">
-                    {login}
+                    <?= \app\components\LoginWidget::widget() ?>
                 </div>
             </div>
             <!-- Конец Блок Вход на сайт -->

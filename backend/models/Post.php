@@ -49,7 +49,7 @@ class Post extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['author_id', 'short', 'full', 'title', 'url', 'edit_user'], 'required'],
+            [['author_id', 'short', 'full', 'title', 'url'], 'required'],
             [['author_id', 'edit_user', 'allow_comm', 'allow_main', 'allow_catlink', 'allow_similar', 'allow_rate', 'approve', 'fixed', 'category_art', 'inm', 'not_in_related'], 'integer'],
             [['date', 'edit_date'], 'safe'],
             [['short', 'full'], 'string'],

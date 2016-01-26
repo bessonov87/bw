@@ -2,7 +2,7 @@
 namespace app\components;
 
 use Yii;
-use frontend\models\Category;
+use app\models\Category;
 use yii\helpers\ArrayHelper;
 
 class GlobalHelper
@@ -73,7 +73,8 @@ class GlobalHelper
         $categories = self::getCategories();
         // Если адрес состоит из категории и подкатегории, выбираем только подкатегорию
         if(strpos($cat, '/')){
-            $cat = end(explode('/', $cat));
+            $cats = explode('/', $cat);
+            $cat = end($cats);
         }
         // Переиндексируем массив категорий по значению url
         $categories = ArrayHelper::index($categories, 'url');

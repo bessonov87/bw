@@ -32,6 +32,7 @@
                 'items' => [
                     ['label' => 'Меню Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Статьи', 'icon' => 'fa fa-file-text-o', 'url' => ['post/index']],
+                    ['label' => 'Категории', 'icon' => 'fa fa-file-text-o', 'url' => ['category/index']],
                     ['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['/debug']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],

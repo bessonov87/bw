@@ -14,6 +14,8 @@ if($pages->page > 0) $this->title .= ' . Страница '. ($pages->page + 1);
 
 <?php
 
+echo $subCategories;
+
 foreach($posts as $post):
     /*$thisCategory = $categories[$post->postCategories[0]->category_id];
     // Если есть родительская, ссылка на раздел будет составной, иначе только url данной категории

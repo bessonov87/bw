@@ -33,7 +33,8 @@ class PostController extends Controller{
     protected function postCategory($cat, $categories, $noChilds = false){
         // Если адрес состоит из категории и подкатегории, выбираем только подкатегорию
         if(strpos($cat, '/')){
-            $cat = end(explode('/', $cat));
+            $cats = explode('/', $cat);
+            $cat = end($cats);
         }
         // Переиндексируем массив категорий по значению url
         $categories = ArrayHelper::index($categories, 'url');
@@ -58,9 +59,11 @@ class PostController extends Controller{
         // Получаем список всех категорий, переиндексированный по id категорий
         $categories = GlobalHelper::getCategories();
 
+        // Создаем объект ActiveQuery, общий для всех вариантов (категорий, поиска, вывода по датам)
         $query = Post::find()->where(['approve' => Post::APPROVED])
             ->orderBy(['date' => SORT_DESC]);
 
+        // Определяем тип
         $type = Yii::$app->request->get('type');
         if($type == 'byCat'){
             // Получаем id категорий
@@ -71,8 +74,24 @@ class PostController extends Controller{
             // Проверяем, является ли категория статьей и если да, запускаем метод actionFull
             if($categories[$categoryId[0]]['category_art'] != 0) {
                 Yii::$app->params['category_art'] = $categories[$categoryId[0]]['category_art'];
+
                 return $this->actionFull();
             }
+            // Если страница первая, проверяем, есть ли у данной категории подкатегории.
+            // Если есть, выводим их сверху
+            $subCats = [];
+            $subCategories = '';
+            if(Yii::$app->request->get('page') == 1){
+                foreach($categories as $cat){
+                    if($cat['parent_id'] == $categoryId[0] && $cat['category_art'] == 0){
+                        $subCats[] = $cat['id'];
+                    }
+                }
+                if(!empty($subCats)){
+                    $subCategories = $this->renderPartial('short_cat', ['categories' => $subCats]);
+                }
+            }
+
             // Получаем список постов для данных категорий
             $cateroryPostIds = PostCategory::find()
                 ->asArray()
@@ -92,10 +111,10 @@ class PostController extends Controller{
             ->with('postCategories')
             ->all();
 
-        return $this->render('short', ['posts' => $posts, 'pages' => $pages, 'categories' => $categories]);
+        return $this->render('short', ['posts' => $posts, 'pages' => $pages, 'categories' => $categories, 'subCategories' => $subCategories]);
 
 
-        $request = Yii::$app->request;
+        /*$request = Yii::$app->request;
         $format = $request->get('format');
         if($format == 'byCat'){
             $title = 'Статьи раздела ' . $request->get('cat');
@@ -113,7 +132,7 @@ class PostController extends Controller{
         }
         $params['page'] = $request->get('page');
         $params['title'] = $title;
-        return $this->render('short', $params);
+        return $this->render('short', $params);*/
     }
 
     public function actionFull()
@@ -138,7 +157,8 @@ class PostController extends Controller{
         }
 
         // Записываем id текущей категории в виде массива в глобальный параметр
-        Yii::$app->params['category'] = [$post->postCategories[0]->category_id];
+        $categoryId = $post->postCategories[0]->category_id;
+        Yii::$app->params['category'] = [$categoryId];
 
         // Добавление комментариев
         if(!Yii::$app->user->isGuest) {
@@ -153,6 +173,14 @@ class PostController extends Controller{
                 } else {
                     Yii::$app->session->setFlash('comment-error');
                 }
+            }
+        }
+
+        // Применение дополнительных методов для обработки полного текста статей
+        if($m = GlobalHelper::getCategories()[$categoryId]['add_method']){
+            $methodName = 'additional'.ucfirst($m);
+            if(method_exists($this, $methodName)) {
+                $post->full = $this->$methodName($post->full);
             }
         }
 
@@ -232,6 +260,16 @@ class PostController extends Controller{
         }
 
         return $post;
+    }
+
+    protected function additionalMoonHair($full){
+
+        return $full;
+    }
+
+    protected function additionalFaceMask($full) {
+        $full .= 'А!!!';
+        return $full;
     }
 
 }

@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use yii\db\ActiveRecord;
 use common\models\Comment;
+use app\models\Category;
 use yii\helpers\Url;
 
 /**

@@ -44,6 +44,11 @@ body {
     margin-top: 15px;
 }
 
+.login_block{
+    text-align: center;
+    font-size: 14px;
+}
+
 #header{
     height: 90px;
     width: 1000px;
@@ -274,6 +279,35 @@ body {
     url(../images/arrow_grey_back.jpg) repeat-x;
 }
 
+.content-item-blue{
+    background-color: #4AC8F1;
+    border: 1px solid #c2c2c2;
+}
+
+.black_link {
+    position: relative;
+}
+
+.black_link span {
+    position: absolute;
+    top: -2px;
+    left: 10px;
+    font-size: 16px;
+    color: white;
+}
+
+.black_link a {
+    color: #333333!important;
+    font-size: 16px;
+}
+
+.black_link a:hover {
+    color: #555555!important;
+}
+
+.img120 > img {
+    width: 120px;
+}
 
 #sidebar {
     color: #777777;

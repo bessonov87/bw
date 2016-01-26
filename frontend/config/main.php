@@ -44,7 +44,7 @@ return [
                     'suffix' => '.html'
                 ],
                 [
-                    'pattern' => '<cat:[A-Za-z0-9_-]+>/<page:\d+>',
+                    'pattern' => '<cat:[/A-Za-z0-9_-]+>/<page:\d+>',
                     'route' => 'post/short',
                     'suffix' => '/',
                     'defaults' => ['pageroute' => '/page', 'page' => 1, 'type' => 'byCat']
@@ -54,21 +54,6 @@ return [
                     'route' => 'post/short',
                     'suffix' => '/',
                     'defaults' => ['page' => 1, 'month' => 0, 'day' => 0, 'type' => 'byDate']
-                ],
-                [
-                    'pattern' => 'horoscope/lunnyj-kalendar-na-god/lunnyj_kalendar_na_<month:[a-z]+>',
-                    'route' => 'horoscope/month',
-                    'suffix' => '.html'
-                ],
-                [
-                    'pattern' => 'horoscope/lunnyj-kalendar-na-god/<day:[0-9]{1,2}>_<month:[a-z]+>_<year:[0-9]{4}>_goda',
-                    'route' => 'horoscope/day',
-                    'suffix' => '.html'
-                ],
-                [
-                    'pattern' => 'horoscope/lunnyj-kalendar-ogorodnika-sadovoda/lunnyj_kalendar_ogorodnika_na_<month:[a-z]+>',
-                    'route' => 'horoscope/ogorod',
-                    'suffix' => '.html'
                 ],
             ],
         ],
