@@ -6,6 +6,7 @@ return [
     'user.passwordResetTokenExpire' => 3600,
     'site' => [
         'title' => 'Beauty Women - Секреты здоровья и красоты современной женщины - Женский журнал',
+        'shortTitle' => 'Beauty Women - Женский журнал',
     ],
     'comments' => [
         'min_length' => 10,

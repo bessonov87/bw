@@ -33,7 +33,7 @@ return [
             'class' => '\frontend\components\SlUrlManager',
             'rules' => [
                 [
-                    'pattern' => '<page:\d+>',
+                    'pattern' => 'page/<page:\d+>',
                     'route' => 'post/short',
                     'suffix' => '/',
                     'defaults' => ['page' => 1, 'type' => 'index']
@@ -44,16 +44,28 @@ return [
                     'suffix' => '.html'
                 ],
                 [
-                    'pattern' => '<cat:[/A-Za-z0-9_-]+>/<page:\d+>',
-                    'route' => 'post/short',
-                    'suffix' => '/',
-                    'defaults' => ['pageroute' => '/page', 'page' => 1, 'type' => 'byCat']
-                ],
-                [
-                    'pattern' => '<year:[0-9]{4}>/<month:[0-9]{2}>/<day:[0-9]{2}>/<page:\d+>',
+                    'pattern' => '<year:[0-9]{4}>/<month:[0-9]{2}>/<day:[0-9]{2}>/page/<page:[0-9]{1,4}>',
                     'route' => 'post/short',
                     'suffix' => '/',
                     'defaults' => ['page' => 1, 'month' => 0, 'day' => 0, 'type' => 'byDate']
+                ],
+                [
+                    'pattern' => '<year:[0-9]{4}>/<month:[0-9]{2}>/<day:[0-9]{2}>',
+                    'route' => 'post/short',
+                    'suffix' => '/',
+                    'defaults' => ['page' => 1, 'month' => 0, 'day' => 0, 'type' => 'byDate']
+                ],
+                [
+                    'pattern' => '<cat:[/A-Za-z0-9_-]+>/page/<page:\d+>',
+                    'route' => 'post/short',
+                    'suffix' => '/',
+                    'defaults' => ['page' => 1, 'type' => 'byCat']
+                ],
+                [
+                    'pattern' => '<cat:[/A-Za-z0-9_-]+>/<page:\d+>',
+                    'route' => 'post/short',
+                    'suffix' => '/',
+                    'defaults' => ['page' => 1, 'type' => 'byCat']
                 ],
             ],
         ],

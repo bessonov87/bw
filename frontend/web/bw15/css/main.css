@@ -168,7 +168,6 @@ body {
 }
 
 #content-item-top{
-    height: 35px;
     width: 100%;
     color: #333;
     font-weight:bold;
@@ -201,6 +200,12 @@ body {
     padding: 5px;
     text-align: justify;
     font-size: 12px;
+}
+
+#content-small-14{
+    padding: 15px;
+    text-align: justify;
+    font-size: 14px;
 }
 
 #content-small-10 img{
@@ -269,9 +274,7 @@ body {
 
 .content-item-pink{
     background-color: #FB46A3;
-    border-left: 1px solid #c2c2c2;
-    background: url(../images/arrow_pink_end.jpg) no-repeat right,
-    url(../images/arrow_pink_back.jpg) repeat-x;
+    border: 1px solid #c2c2c2;
 }
 
 .content-item-grey{
@@ -1034,3 +1037,9 @@ ol.popular li:hover:after {
     font-weight: bold;
     color: #366;
 }
+
+/* ================= Формы регистрации, входа, восстановления пароля ===================== */
+#form-signup input[type=text], #form-signup input[type=password], #login-form input[type=text], #login-form input[type=password] {
+    max-width: 320px;
+}
+

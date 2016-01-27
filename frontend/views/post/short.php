@@ -4,17 +4,34 @@
 
 use yii\jui\DatePicker;
 use yii\widgets\LinkPager;
+use app\components\MyLinkPager;
 use yii\helpers\Url;
 use app\components\GlobalHelper;
 
-$this->title = Yii::$app->params['site']['title'];
-if($pages->page > 0) $this->title .= ' . Страница '. ($pages->page + 1);
+if($pages->page >0 || Yii::$app->params['category']){
+    $this->title = Yii::$app->params['site']['shortTitle'];
+}else{
+    $this->title = Yii::$app->params['site']['title'];
+}
+// Если не первая страница, добавляем в начало <title>
+if($pages->page > 0) $this->title = 'Страница '. ($pages->page + 1) . '. ' . $this->title;
+// Если задана категория, добавляем в начало <title> имя категории
+if(Yii::$app->params['category']){
+    $catName = GlobalHelper::getCategories()[Yii::$app->params['category'][0]]['name'];
+    $this->title = $catName . ' - ' . $this->title;
+}
+// Если задана дата
+if(Yii::$app->params['date']){
+    $this->title = 'Статьи за ' . Yii::$app->params['date'] . ' - ' . $this->title;
+}
 ?>
 
 
 <?php
-
-echo $subCategories;
+// Если заданы подкатегории, которые выводятся на первых страницах категорий, выводим их перед анонсами статей
+if($subCategories){
+    echo $subCategories;
+}
 
 foreach($posts as $post):
     /*$thisCategory = $categories[$post->postCategories[0]->category_id];
@@ -44,7 +61,7 @@ endforeach;
 
 <?
 
-echo LinkPager::widget(['pagination' => $pages]);
+echo MyLinkPager::widget(['pagination' => $pages, 'cat' => Yii::$app->params['category']]);
 
 /*echo DatePicker::widget([
     'language' => 'ru',

@@ -13,6 +13,8 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
+    public $passwordRepeat;
+    public $captcha;
 
     /**
      * @inheritdoc
@@ -22,17 +24,38 @@ class SignupForm extends Model
         return [
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Данное имя пользователя уже занято.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Этот email адрес уже зарегистрирован в системе. Возможно, вы регистрировались ранее. Попробуйте восстановить пароль для входа на сайт.'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+
+            ['passwordRepeat', 'required'],
+            ['passwordRepeat', 'string', 'min' => 6],
+            ['passwordRepeat', 'compare', 'compareAttribute' => 'password'],
+
+            ['captcha', 'captcha'],
+
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Логин',
+            'email' => 'Email',
+            'password' => 'Пароль',
+            'passwordRepeat' => 'Повтор пароля',
+            'captcha' => 'Проверочный код',
         ];
     }
 

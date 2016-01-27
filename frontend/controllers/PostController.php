@@ -65,6 +65,7 @@ class PostController extends Controller{
 
         // Определяем тип
         $type = Yii::$app->request->get('type');
+        // Если выборка по категориям
         if($type == 'byCat'){
             // Получаем id категорий
             $categoryIds = $this->postCategory(Yii::$app->request->get('cat'), $categories);
@@ -103,9 +104,34 @@ class PostController extends Controller{
             $query->andWhere(['in', 'id', $postIds]);
 
         }
+        // Если выборка по датам
+        if($type == 'byDate') {
+            //var_dump(Yii::$app->request->get('year'));
+            $y = (Yii::$app->request->get('year')) ? Yii::$app->request->get('year') : date('Y');
+            $m = Yii::$app->request->get('month');
+            $d = Yii::$app->request->get('day');
+
+            // Записываем дату в глобальный параметр для постраничной навигации
+            Yii::$app->params['date'] = $y . ($m ? '/'.$m : '') . ($d ? '/'.$d : '');
+
+            $date = $y;
+            $dateFormat = '%Y';
+
+            // Если задан месяц
+            if($m){
+                $dateFormat .= '-%m';
+                $date .= '-'.$m;
+                if($d){
+                    $dateFormat .= '-%d';
+                    $date .= '-'.$d;
+                }
+            }
+
+            $query->andWhere("DATE_FORMAT( DATE, '$dateFormat' ) = :date", [':date' => $date]);
+        }
 
         $countPosts = clone $query;
-        $pages = new Pagination(['totalCount' => $countPosts->count()]);
+        $pages = new Pagination(['totalCount' => $countPosts->count(), 'route' => 'post/short']);
         $posts = $query->offset($pages->offset)
             ->limit($pages->limit)
             ->with('postCategories')

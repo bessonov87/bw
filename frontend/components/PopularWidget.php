@@ -17,6 +17,7 @@ class PopularWidget extends Widget
     public $containerClass;
     public $tizerStyle = false;
     public $imageWidth = 70;
+    public $maxTitle = 120;
     private $_listTypes = ['ol', 'ul'];
     private $_defaultListType = 'ol';
 
@@ -26,7 +27,13 @@ class PopularWidget extends Widget
 
     public function run(){
         // Получаем список из numPosts постов отсортированных по количеству просмотров
-        $posts = Post::find()->orderBy(['views' => SORT_DESC])->limit($this->numPosts)->with('categories')->all();
+        $posts = Post::find()
+            ->where(['!=', 'category_art', '1'])
+            ->andWhere(['approve' => '1'])
+            ->orderBy(['views' => SORT_DESC])
+            ->limit($this->numPosts)
+            ->with('categories')
+            ->all();
         // Если listType не соответствует списку возможных типов из массива _listTypes, присваиваем ему значение по умолчанию
         if(!in_array($this->listType, $this->_listTypes)){
             $this->listType = $this->_defaultListType;
@@ -34,7 +41,10 @@ class PopularWidget extends Widget
         // Пробегаемся по выбранным numPosts постам
         foreach($posts as $post){
             $cat = GlobalHelper::getCategoryUrlById($post->categories[0]['id']);
-            $link = Html::a($post['title'], Url::to(['post/full', 'cat' => $cat, 'id' => $post->id, 'alt' => $post->url]));
+            // Проверяем соответствует ли заголовок статьи максимальной длине (maxTitle). Если нет, укорачиваем его
+            $linkTitle = (strlen($post['title']) <= $this->maxTitle) ? $post['title'] : $this->cutTitle($post['title']);
+            // Формируем ссылку
+            $link = Html::a($linkTitle, Url::to(['post/full', 'cat' => $cat, 'id' => $post->id, 'alt' => $post->url]));
             // Если популярные статьи нужно выводить в виде тизеров
             if($this->tizerStyle){
                 $postHtml = $post->full;
@@ -57,5 +67,16 @@ class PopularWidget extends Widget
         }
 
         return $result;
+    }
+
+    protected function cutTitle($title){
+        if(strlen($title) <= $this->maxTitle) return $title;
+        $newTitle = '';
+        foreach(explode(' ', $title) as $word){
+            if((strlen($newTitle) + strlen($word)) > $this->maxTitle){
+                return $newTitle.'...';
+            }
+            $newTitle .= $word.' ';
+        }
     }
 }

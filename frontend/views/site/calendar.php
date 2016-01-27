@@ -13,7 +13,12 @@ if(!$noControls) {
 list($year, $month) = explode('-', $date);
 $daysInMonth = date('t', strtotime($date));
 
-$calendar = '<div class="calendar_nowmonth">'.GlobalHelper::rusMonth($month).' '.$year.'</div>
+$dateOut = GlobalHelper::ucfirst(GlobalHelper::rusMonth($month)).' '.$year;
+if(!empty($posts)){
+    $dateOut = Html::a($dateOut, '/'.$year.'/'.$month.'/');
+}
+
+$calendar = '<div class="calendar_nowmonth">'.$dateOut.'</div>
 <table class="calendar_table">
 	    <tr>
 	        <th class="weekday">Пн</th>

@@ -12,6 +12,7 @@ use Yii;
 class ResetPasswordForm extends Model
 {
     public $password;
+    public $password_repeat;
 
     /**
      * @var \common\models\User
@@ -46,6 +47,7 @@ class ResetPasswordForm extends Model
         return [
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+            ['password', 'compare'],
         ];
     }
 
