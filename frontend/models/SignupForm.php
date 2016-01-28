@@ -72,7 +72,13 @@ class SignupForm extends Model
             $user->email = $this->email;
             $user->setPassword($this->password);
             $user->generateAuthKey();
-            if ($user->save()) {
+            // Если необходима активация email адресов
+            if(Yii::$app->params['emailActivation'] == true){
+                $user->status = $user::STATUS_NOT_ACTIVE;
+                $user->generateEmailConfirmToken();
+                $user->sendEmailConfirm();
+            }
+            if ($r = $user->save()) {
                 return $user;
             }
         }

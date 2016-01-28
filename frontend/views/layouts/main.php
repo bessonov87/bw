@@ -11,6 +11,7 @@ use frontend\assets\AppAsset;
 use frontend\assets\IeAsset;
 use common\widgets\Alert;
 use app\components\SidebarMenuWidget;
+use app\components\AdvertWidget;
 
 AppAsset::register($this);
 IeAsset::register($this);
@@ -69,9 +70,7 @@ IeAsset::register($this);
     </div>
     <div id="container-wrap">
         <div id="g_ads_top">
-            <!-- begin of Top100 code -->
-            <script id="top100Counter" type="text/javascript" src="http://counter.rambler.ru/top100.jcn?1630331"></script><noscript><img src="http://counter.rambler.ru/top100.cnt?1630331" alt="" width="1" height="1" border="0"></noscript>
-            <!-- end of Top100 code -->
+
             <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
             <!-- beauty_up_adapt -->
             <ins class="adsbygoogle"
@@ -93,20 +92,16 @@ IeAsset::register($this);
                 'tag' => 'div',
             ]) ?>
 
-            <!-- Блок Реклама Верх -->
-            <div id="content-item">
-                <div id="content-item-top" class="content-item-ads">Реклама</div>
-                <div id="content-item-content">
-                    <div id="content-center-10">
 
-                        <div id="SC_TBlock_73326" class="SC_TBlock"></div>
 
-                        <script type="text/javascript">var SC_CId = "73326",SC_Domain="n.andreyp6.ru";SC_Start_73326=(new Date).getTime();</script>
-                        <script type="text/javascript" src="http://st.n.andreyp6.ru/js/adv_out.js"></script>
-                    </div>
-                </div>
-            </div>
-            <!-- Конец Блок Реклама Верх -->
+
+
+            <?= AdvertWidget::widget(
+                ['block_number' => 4]
+            ) ?>
+
+
+
 
 
             <!-- Таблица контент-->
@@ -309,6 +304,9 @@ IeAsset::register($this);
     <noscript><div><img src="https://mc.yandex.ru/watch/31758281" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 	<!-- Google Analytics counter --><!-- /Google Analytics counter -->
+<!-- begin of Top100 code -->
+<script async id="top100Counter" type="text/javascript" src="http://counter.rambler.ru/top100.jcn?1630331"></script><noscript><img src="http://counter.rambler.ru/top100.cnt?1630331" alt="" width="1" height="1" border="0"></noscript>
+<!-- end of Top100 code -->
 <?php $this->endBody() ?>
 </body>
 </html>

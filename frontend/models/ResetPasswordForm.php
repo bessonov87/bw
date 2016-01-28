@@ -12,7 +12,7 @@ use Yii;
 class ResetPasswordForm extends Model
 {
     public $password;
-    public $password_repeat;
+    public $passwordRepeat;
 
     /**
      * @var \common\models\User
@@ -30,11 +30,11 @@ class ResetPasswordForm extends Model
     public function __construct($token, $config = [])
     {
         if (empty($token) || !is_string($token)) {
-            throw new InvalidParamException('Password reset token cannot be blank.');
+            throw new InvalidParamException('Код для смены пароля не может быть пустым.');
         }
         $this->_user = User::findByPasswordResetToken($token);
         if (!$this->_user) {
-            throw new InvalidParamException('Wrong password reset token.');
+            throw new InvalidParamException('Неверный код для смены пароля. Возможно, истек срок его действия. Запросите новую ссылку на восстановление пароля.');
         }
         parent::__construct($config);
     }
@@ -47,7 +47,18 @@ class ResetPasswordForm extends Model
         return [
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
-            ['password', 'compare'],
+            ['passwordRepeat', 'compare', 'compareAttribute' => 'password'],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'password' => 'Пароль',
+            'passwordRepeat' => 'Повтор пароля',
         ];
     }
 

@@ -14,6 +14,7 @@ use yii\web\IdentityInterface;
  * @property string $username
  * @property string $password_hash
  * @property string $password_reset_token
+ * @property string $email_confirm_token
  * @property string $email
  * @property string $auth_key
  * @property integer $status
@@ -24,6 +25,10 @@ use yii\web\IdentityInterface;
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
+    const STATUS_BANNED = 1;
+    const STATUS_TEMPORARY_BANNED = 2;
+    const STATUS_SUPERUSER = 7;
+    const STATUS_NOT_ACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
     /**
@@ -51,7 +56,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['status', 'integer', 'max' => self::STATUS_ACTIVE, 'min' => self::STATUS_DELETED],
         ];
     }
 
@@ -60,7 +65,11 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        //return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::find()
+            ->where(['id' => $id])
+            ->andWhere(['not in', 'status', [self::STATUS_DELETED, self::STATUS_BANNED]])
+            ->one();
     }
 
     /**
@@ -79,7 +88,10 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::find()
+            ->where(['username' => $username])
+            ->andWhere(['not in', 'status', [self::STATUS_DELETED, self::STATUS_BANNED]])
+            ->one();
     }
 
     /**
@@ -114,6 +126,42 @@ class User extends ActiveRecord implements IdentityInterface
 
         $timestamp = (int) substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
+        return $timestamp + $expire >= time();
+    }
+
+    /**
+     * Поиск пользователя по токену подтверждения email
+     *
+     * @param string $token
+     * @return null|static
+     */
+    public static function findByEmailConfirmToken($token) {
+        if(!static::isEmailConfirmTokenValid($token)) {
+            return null;
+        }
+
+        return static::findOne([
+            'email_confirm_token' => $token,
+            'status' => self::STATUS_NOT_ACTIVE,
+        ]);
+    }
+
+    /**
+     * Проверка токена подтверждения email на валидность
+     *
+     * Валидность определяется временем действия, задаваемым в параметрах приложения
+     * в свойстве user.emailConfirmTokenExpire
+     *
+     * @param $token
+     * @return bool
+     */
+    public static function isEmailConfirmTokenValid($token){
+        if (empty($token)) {
+            return false;
+        }
+
+        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $expire = Yii::$app->params['user.emailConfirmTokenExpire'];
         return $timestamp + $expire >= time();
     }
 
@@ -162,6 +210,10 @@ class User extends ActiveRecord implements IdentityInterface
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
+    public function setActive() {
+        $this->status = self::STATUS_ACTIVE;
+    }
+
     /**
      * Generates "remember me" authentication key
      */
@@ -184,6 +236,33 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * Генерация токена подтверждения email
+     */
+    public function generateEmailConfirmToken()
+    {
+        $this->email_confirm_token = Yii::$app->security->generateRandomString() . '_' . time();
+    }
+
+    /**
+     * Очистка токена подтверждения email
+     */
+    public function removeEmailConfirmToken()
+    {
+        $this->email_confirm_token = null;
+    }
+
+    public function sendEmailConfirm(){
+        if(!$this->email_confirm_token){
+            $this->generateEmailConfirmToken();
+        }
+        return \Yii::$app->mailer->compose(['html' => 'emailConfirmToken-html', 'text' => 'emailConfirmToken-text'], ['user' => $this])
+            ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name])
+            ->setTo($this->email)
+            ->setSubject('Код подтверждения email адреса для сайта ' . \Yii::$app->name)
+            ->send();
     }
 
     /**

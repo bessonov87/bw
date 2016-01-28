@@ -2,6 +2,8 @@
 namespace frontend\controllers;
 
 use app\models\Contact2Form;
+use common\models\User;
+use frontend\models\ConfirmEmailForm;
 use Yii;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
@@ -152,9 +154,13 @@ class SiteController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
+                $activation = (Yii::$app->params['emailActivation']) ? ' Ваша учетная запись пока не является активной. На адрес email, указанный вами при регистрации было отправлено письмо с данными для активации учетной записи. Проверьте свою электронную почту и следуйте инструкциям из письма.' : '';
+                Yii::$app->session->setFlash('success', 'Спасибо за регистрацию. Теперь вы можете войти на сайт используя свои имя пользователя и пароль.'.$activation);
+                return $this->goHome();
+                // Было раньше
+                /*if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
-                }
+                }*/
             }
         }
 
@@ -173,11 +179,11 @@ class SiteController extends Controller
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->session->setFlash('success', 'Проверьте свою электронную почту и следуйте инструкциям из письма.');
 
                 return $this->goHome();
             } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
+                Yii::$app->session->setFlash('error', 'Извините, мы не можем отправить письмо на ваш email. Обратитесь к администрации.');
             }
         }
 
@@ -202,7 +208,7 @@ class SiteController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password was saved.');
+            Yii::$app->session->setFlash('success', 'Новый пароль сохранен. Теперь вы можете войти на сайт, используя новый пароль.');
 
             return $this->goHome();
         }
@@ -210,6 +216,25 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    public function actionConfirmEmail($token = 'none'){
+        if(Yii::$app->user->identity->status == User::STATUS_ACTIVE){
+            return $this->goHome();
+        }
+        $model = new ConfirmEmailForm($token);
+        if($model->userFound){
+            if($model->activateUser()) {
+                Yii::$app->session->setFlash('success', 'Ваш Email адрес подтвержден. Теперь вы можете пользоваться всеми функциями, доступными для авторизованных пользователей сайта.');
+                return $this->goHome();
+            } else {
+                Yii::$app->session->setFlash('error', 'Ошибка.');
+            }
+        } elseif($token != 'none') {
+            Yii::$app->session->setFlash('error', 'Код подтверждения не найден или не является разрешенным к использованию.');
+        }
+
+        return $this->render('confirmEmail', ['model' => $model]);
     }
 
 
