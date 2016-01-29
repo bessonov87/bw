@@ -68,6 +68,11 @@ return [
                     'suffix' => '/',
                     'defaults' => ['page' => 1, 'type' => 'byCat']
                 ],
+                [
+                    'pattern' => 'sitemap',
+                    'route' => 'site/sitemap',
+                    'suffix' => '.xml'
+                ],
             ],
         ],
     ],

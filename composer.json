@@ -19,6 +19,7 @@
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
 		"yiisoft/yii2-jui": "*",
+		"yiisoft/yii2-authclient": "*",
 		"dmstr/yii2-adminlte-asset": "2.*",
 		"yiidoc/yii2-redactor": "*"
     },

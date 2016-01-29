@@ -244,6 +244,7 @@ class PostController extends Controller{
             return $post;
 
         foreach($adverts as $advert) {
+            if(!$advert['replacement_tag']) $advert['replacement_tag'] = 'none';
             if($advert['location'] != 'various'){
                 if($advert['replacement_tag'] != 'none' && strstr($post->full, "[{$advert['replacement_tag']}]"))
                 {

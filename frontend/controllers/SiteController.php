@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use app\components\TemporaryUnavailableException;
 use app\models\Contact2Form;
 use common\models\User;
 use frontend\models\ConfirmEmailForm;
@@ -10,11 +11,15 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\base\ErrorException;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
+use yii\web\HttpException;
+use yii\web\MethodNotAllowedHttpException;
 
 /**
  * Site controller
@@ -66,6 +71,42 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
+    }
+
+    /**
+     * Контроль доступа к методам, связанным с регистрацией/авторизацией пользователей
+     *
+     * В зависимости от параметров приложения в секции ['users'] запрещает доступ к тем или иным методам,
+     * связанным с регистрацией и авторизацией. В конфигурации ($config) указано, какие методы от каких параметров
+     * зависят. Чтобы метод был доступен, все параметры должны иметь значение true или любое другое значение,
+     * которое при сравнении преобразуется в true.
+     *
+     * @param \yii\base\Action $action
+     * @return bool true, если метод разрешен
+     * @throws TemporaryUnavailableException Исключение "Временно недоступно", если доступ к запрашиваемому методу не разрешен
+     */
+    public function beforeAction($action){
+        $config = [
+            'login' => ['allowModule', 'allowAuthorization'],
+            'logout' => ['allowModule', 'allowAuthorization'],
+            'signup' => ['allowModule', 'allowRegistration'],
+            'reset-password' => ['allowModule', 'allowAuthorization'],
+            'request-password-reset' => ['allowModule', 'allowAuthorization'],
+            'confirm-email' => ['allowModule', 'allowRegistration'],
+        ];
+
+        $action = $action->id;
+
+        if(array_key_exists($action, $config)){
+            foreach($config[$action] as $property){
+                if(!Yii::$app->params['users'][$property] && !in_array(Yii::$app->request->userIP, Yii::$app->params['fullAccessIps'])) {
+                    var_dump(Yii::$app->request->userIP);
+                    throw new TemporaryUnavailableException();
+                }
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -251,6 +292,10 @@ class SiteController extends Controller
         }
 
         return $this->render('contact2Form', ['model' => $model]);
+    }
+
+    public function actionSitemap(){
+        return 'Sitemap';
     }
 
 }
