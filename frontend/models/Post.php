@@ -6,6 +6,7 @@ use yii\db\ActiveRecord;
 use common\models\Comment;
 use app\models\Category;
 use yii\helpers\Url;
+use app\components\GlobalHelper;
 
 /**
  * This is the model class for table "post".
@@ -165,7 +166,7 @@ class Post extends ActiveRecord
     }
 
     public function getLink(){
-        $cat = GlobalHelper::getCategoryUrlById($this->postCategories[0]->category_id);
+        $cat = GlobalHelper::getCategoryUrlById($this->postCategories[0]["category_id"]);
         return Url::to(['post/full', 'cat' => $cat, 'id' => $this->id, 'alt' => $this->url]);
     }
 

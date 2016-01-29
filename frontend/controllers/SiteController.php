@@ -1,10 +1,12 @@
 <?php
 namespace frontend\controllers;
 
+use app\components\GlobalHelper;
 use app\components\TemporaryUnavailableException;
 use app\models\Contact2Form;
 use common\models\User;
 use frontend\models\ConfirmEmailForm;
+use frontend\models\Post;
 use Yii;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
@@ -294,8 +296,78 @@ class SiteController extends Controller
         return $this->render('contact2Form', ['model' => $model]);
     }
 
+    /**
+     * Выводит XML карту сайта
+     *
+     * Карта берется из кэша, в котором она хранится 12 часов. Если в кэше ее нет, генерируется новая.
+     *
+     * @return mixed|string
+     */
     public function actionSitemap(){
-        return 'Sitemap';
+
+        $xml_map = Yii::$app->cache->get('sitemap_xml');
+        if(!$xml_map) {
+            $xml_map = $this->generateSitemap();
+            Yii::$app->cache->set('sitemap_xml', $xml_map, 43200);
+        }
+        return $xml_map;
+    }
+
+    /**
+     * Генерация XML карты сайта
+     *
+     * @return string
+     */
+    public function generateSitemap() {
+        $xml_map = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">";
+        // Главная страница
+        $xml_map .= "
+		<url>
+			<loc>" . Yii::$app->params['frontendUrl'] . "</loc>
+			<lastmod>" . date("Y-m-d") . "</lastmod>
+			<changefreq>daily</changefreq>
+			<priority>1.0</priority>
+		</url>";
+        // Категории
+        $categories = GlobalHelper::getCategories();
+        foreach($categories as $mass)		// Добаление категорий
+        {
+            $id = $mass['id'];
+            $xml_name = GlobalHelper::getCategoryUrlById($id);
+            $xml_date = date("Y-m-d");
+            $xml_map .= "
+		<url>
+			<loc>" . Yii::$app->params['frontendUrl'] . $xml_name . "/</loc>
+			<lastmod>" . $xml_date . "</lastmod>
+			<changefreq>daily</changefreq>
+			<priority>0.8</priority>
+		</url>";
+        }
+        // Статьи
+        $posts = Post::find()
+            ->where(['approve' => '1'])
+            ->andWhere(['<=', 'date', date('Y-m-d')])
+            ->andWhere(['!=', 'category_art', 1])
+            ->orderBy('date')
+            ->with('categories')
+            ->all();
+
+        //var_dump($posts);
+        foreach($posts as $post) {
+            $xml_map .= "
+		<url>
+			<loc>" . substr(Yii::$app->params['frontendUrl'],0,-1) . $post->link . "</loc>
+			<lastmod>" . date("Y-m-d", strtotime($post->date)) . "</lastmod>
+			<changefreq>weekly</changefreq>
+			<priority>0.6</priority>
+		</url>";
+        }
+
+        $xml_map .= "
+</urlset>";
+
+        return $xml_map;
     }
 
 }
