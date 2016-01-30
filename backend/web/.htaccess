@@ -1,3 +1,7 @@
+AuthType Basic   
+AuthName "Private zone. Only for administrator!" 
+AuthUserFile  /OpenServer/domains/bw.dev/backend/web/.htpasswd   
+require user admin
 RewriteEngine on
 # If a directory or a file exists, use it directly
 RewriteCond %{REQUEST_FILENAME} !-f
