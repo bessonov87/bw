@@ -65,6 +65,7 @@ class PostController extends Controller{
 
         // Определяем тип
         $type = Yii::$app->request->get('type');
+        $subCategories = '';
         // Если выборка по категориям
         if($type == 'byCat'){
             // Получаем id категорий
@@ -81,7 +82,6 @@ class PostController extends Controller{
             // Если страница первая, проверяем, есть ли у данной категории подкатегории.
             // Если есть, выводим их сверху
             $subCats = [];
-            $subCategories = '';
             if(Yii::$app->request->get('page') == 1){
                 foreach($categories as $cat){
                     if($cat['parent_id'] == $categoryId[0] && $cat['category_art'] == 0){
