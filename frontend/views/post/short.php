@@ -8,7 +8,7 @@ use app\components\MyLinkPager;
 use yii\helpers\Url;
 use app\components\GlobalHelper;
 
-if($pages->page >0 || Yii::$app->params['category']){
+if($pages->page >0 || isset(Yii::$app->params['category'])){
     $this->title = Yii::$app->params['site']['shortTitle'];
 }else{
     $this->title = Yii::$app->params['site']['title'];
