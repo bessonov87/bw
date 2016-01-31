@@ -262,7 +262,7 @@ IeAsset::register($this);
             Все права защищены</div>
     </div>
 </div>
-<script type="text/javascript" src="{template}js/mobile_menu.js"></script>
+<script type="text/javascript" src="/bw15/js/mobile_menu.js"></script>
 <script type="text/javascript">
     (function(w){var l = function() {
         var n = document.getElementsByTagName("script")[0],
