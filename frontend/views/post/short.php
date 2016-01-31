@@ -56,10 +56,6 @@ foreach($posts as $post):
     </div>
 <?php
 endforeach;
-?>
-
-
-<?
 
 echo MyLinkPager::widget(['pagination' => $pages, 'cat' => Yii::$app->params['category']]);
 
@@ -70,4 +66,3 @@ echo MyLinkPager::widget(['pagination' => $pages, 'cat' => Yii::$app->params['ca
         'dateFormat' => 'yy-mm-dd',
     ]
 ]);*/
-?>
