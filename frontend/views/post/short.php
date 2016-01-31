@@ -21,7 +21,7 @@ if(array_key_exists('category', Yii::$app->params)){
     $this->title = $catName . ' - ' . $this->title;
 }
 // Если задана дата
-if(Yii::$app->params['date']){
+if(array_key_exists('date', Yii::$app->params)){
     $this->title = 'Статьи за ' . Yii::$app->params['date'] . ' - ' . $this->title;
 }
 ?>
