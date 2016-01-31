@@ -27,7 +27,7 @@ class CalendarWidget extends Widget
 
         $rows = (new Query())
             ->select('COUNT(*) as count, DAY(date) as day')
-            ->from('post')
+            ->from('{{%post}}')
             ->where("DATE_FORMAT( DATE, '%Y-%m' ) = :month", [':month' => $this->date])
             ->groupBy("DAY( `date` )")
             ->all();
