@@ -57,7 +57,8 @@ foreach($posts as $post):
 <?php
 endforeach;
 
-echo MyLinkPager::widget(['pagination' => $pages, 'cat' => Yii::$app->params['category']]);
+$cat = (array_key_exists('category', Yii::$app->params)) ? Yii::$app->params['category'] : '';
+echo MyLinkPager::widget(['pagination' => $pages, 'cat' => $cat]);
 
 /*echo DatePicker::widget([
     'language' => 'ru',

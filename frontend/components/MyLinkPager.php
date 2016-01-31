@@ -29,7 +29,7 @@ class MyLinkPager extends LinkPager
         if($this->cat){
             $url .= '/'.GlobalHelper::getCategoryUrlById($this->cat[0]);
         }
-        if(Yii::$app->params['date']){
+        if(array_key_exists('date', Yii::$app->params)){
             $url .= '/'.Yii::$app->params['date'];
         }
         if($page != 0){
