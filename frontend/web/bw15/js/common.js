@@ -98,7 +98,7 @@ $(document).ready(function() {
         }
 		// Отправка запроса
         $.ajax({
-			url: 'http://bw.dev/ajax/calendar',
+			url: '/ajax/calendar',
 			type: 'GET',
 			data: {
 				'date' : loadDate,
