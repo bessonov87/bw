@@ -26,7 +26,7 @@ class SidebarMenuWidget extends Widget
             $showItem = false;
             if(isset($item['allowedOn'])){
                 $allowedOnArray = explode(',', $item['allowedOn']);
-                $currentPageCategory = Yii::$app->params['category'];
+                $currentPageCategory = (array_key_exists('category', Yii::$app->params)) ? Yii::$app->params['category'] : '';
                 if(is_array($currentPageCategory)){
                     foreach($currentPageCategory as $value){
                         if(in_array($value, $allowedOnArray)){
