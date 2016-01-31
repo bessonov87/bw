@@ -24,7 +24,7 @@ class Advert extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'advert';
+        return '{{%advert}}';
     }
 
     /**

@@ -21,7 +21,7 @@ class PostsRating extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'posts_rating';
+        return '{{%posts_rating}}';
     }
 
     /**

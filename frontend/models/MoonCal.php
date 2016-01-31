@@ -29,7 +29,7 @@ class MoonCal extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'moon_cal';
+        return '{{%moon_cal}}';
     }
 
     /**
