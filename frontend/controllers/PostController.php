@@ -2,6 +2,8 @@
 namespace frontend\controllers;
 
 use app\components\GlobalHelper;
+use app\components\PostAdditions;
+use app\components\SocialButtonsWidget;
 use app\models\Advert;
 use frontend\models\Category;
 use frontend\models\PostCategory;
@@ -204,11 +206,14 @@ class PostController extends Controller{
 
         // Применение дополнительных методов для обработки полного текста статей
         if($m = GlobalHelper::getCategories()[$categoryId]['add_method']){
-            $methodName = 'additional'.ucfirst($m);
-            if(method_exists($this, $methodName)) {
-                $post->full = $this->$methodName($post->full);
+            $methodName = 'full'.ucfirst($m);
+            if(method_exists('app\components\PostAdditions', $methodName)) {
+                PostAdditions::$methodName($post);
             }
         }
+
+        // Социальные кнопки
+        $post->full .= SocialButtonsWidget::widget();
 
         // Рекламные материалы
         $post = $this->insertAdvert($post);
@@ -287,16 +292,6 @@ class PostController extends Controller{
         }
 
         return $post;
-    }
-
-    protected function additionalMoonHair($full){
-
-        return $full;
-    }
-
-    protected function additionalFaceMask($full) {
-        $full .= 'А!!!';
-        return $full;
     }
 
 }

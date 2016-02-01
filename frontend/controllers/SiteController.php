@@ -118,7 +118,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->goHome();
     }
 
     /**
@@ -281,7 +281,7 @@ class SiteController extends Controller
     }
 
 
-    public function actionContact2()
+    public function actionFeedback()
     {
         $model = new Contact2Form();
 

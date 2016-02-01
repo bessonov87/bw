@@ -241,11 +241,13 @@ body {
     padding: 5px;
 }
 
-.social-bottom{
+.post_social{
     text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
-.social-bottom span{
+.post_social span{
     display: block;
     text-align: center;
     font-weight: bold;
@@ -357,6 +359,30 @@ body {
 .sidebar-item-orange{
     background:url(../images/arrow_orange.jpg) no-repeat;
 }
+
+#art_full a {
+    color: #B9610B;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+#art_full a:hover {
+    text-decoration: none;
+}
+
+/* Ссылки на лунный календарь */
+.moon_link {
+    font-size: 16px;
+    line-height: 38px;
+}
+
+.moon_link_big {
+    font-size: 18px;
+    line-height: 38px;
+    font-weight: bold;
+}
+/*----------------------------*/
+
 
 .blockmenu                                {
     font-size: 14px;
@@ -1043,3 +1069,78 @@ ol.popular li:hover:after {
     max-width: 320px;
 }
 
+/*################ TODAY ############################*/
+
+.today_box
+{
+    border:1px #333 solid;
+    width:550px;
+    border-collapse:collapse;
+}
+
+.today_day
+{
+    float: left;
+    width: 274px;
+    border-bottom: 1px #333 solid;
+    padding: 8px;
+    line-height: 35px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #73E4FA;
+    cursor:pointer;
+}
+
+#moon_today
+{
+    border-right: 1px #333 solid;
+}
+
+#moon_tomorrow
+{
+    width: 274px;
+}
+
+.today_active
+{
+    background-color: #fff;
+    cursor:auto;
+    border-bottom:none;!important
+}
+
+.today_moon
+{
+    float: left;
+    padding: 8px;
+}
+
+.today_moon_info
+{
+    float: left;
+    padding: 8px;
+    line-height:29px;
+    text-align: left;
+}
+
+#tomorrow_block
+{
+    display:none;
+}
+
+/*---------------------------------------------------*/
+
+/* ТАБЛИЦА ЛУННЫЙ КАЛЕНДАРЬ */
+.moon_calendar_table{
+    border-collapse: collapse;
+}
+
+.moon_calendar_table td {
+    border: 1px #333 solid;
+    padding: 15px;
+}
+
+.moon_calendar_table a{
+    font-size: 15px;
+    font-weight: bold;
+}

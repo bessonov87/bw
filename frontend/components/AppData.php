@@ -37,19 +37,41 @@ class AppData
         ],
     ];
 
+    public static $moonCalLinksBase = "/horoscope/lunnyj-kalendar-na-god/";
+
+    public static $moonCalMonthLinks = [
+        '2016' => [
+            1 => '2434-lunnyj_kalendar_na_janvar_2016_goda.html',
+            '2435-lunnyj_kalendar_na_fevral_2016_goda.html',
+            '2436-lunnyj_kalendar_na_mart_2016_goda.html',
+            '2497-lunnyj-kalendar-na-aprel-2016-goda.html',
+            '2498-lunnyj-kalendar-na-maj-2016-goda.html',
+            '2499-lunnyj-kalendar-na-ijun-2016-goda.html',
+            '2500-lunnyj-kalendar-na-ijul-2016-goda.html',
+            '2501-lunnyj-kalendar-na-avgust-2016-goda.html',
+            '2502-lunnyj-kalendar-na-sentjabr-2016-goda.html',
+            '2503-lunnyj-kalendar-na-oktjabr-2016-goda.html',
+            '2504-lunnyj-kalendar-na-nojabr-2016-goda.html',
+            '2505-lunnyj-kalendar-na-dekabr-2016-goda.html',
+        ],
+    ];
+
     /**
      * Ссылки на лунные календари стрижек
      *
      * В зависимости от переданного года ($year) формируется и передается массив с полными ссылками на лунные календари
      * стрижек по месяцам.
      *
-     * Если вторым параметром передать номер месяца
+     * Если вторым параметром передать номер месяца, метод возвращает ссылку на этот месяц
      *
      * @param $year
      * @param null $month
-     * @return array
+     * @return array|string Массив со сслыками на весь год или строка со ссылкой на месяц
      */
     public static function getMoonHairLinks($year, $month = null) {
+        if(!array_key_exists($year, self::$moonHairMonthLinks)){
+            return null;
+        }
         $mappedArray = array_map(
             function($val){
                 return self::$moonHairLinksBase . $val;
@@ -59,8 +81,47 @@ class AppData
 
         // Если указан месяц, возвращаем ссылку на данный месяц
         if($month) {
+            if(!array_key_exists($month, $mappedArray)){
+                return null;
+            }
             if($month < 1 || $month > 12)
-                return '';
+                return null;
+            return $mappedArray[$month];
+        }
+
+        return $mappedArray;
+    }
+
+    /**
+     * Ссылки на общие лунные календари по месяцам
+     *
+     * В зависимости от переданного года ($year) формируется и передается массив с полными ссылками на общие лунные
+     * календари по месяцам.
+     *
+     * Если вторым параметром передать номер месяца, метод возвращает ссылку на этот месяц
+     *
+     * @param $year
+     * @param null $month
+     * @return array|string Массив со сслыками на весь год или строка со ссылкой на месяц
+     */
+    public static function getMoonCalLinks($year, $month = null) {
+        if(!array_key_exists($year, self::$moonCalMonthLinks)){
+            return null;
+        }
+        $mappedArray = array_map(
+            function($val){
+                return self::$moonCalLinksBase . $val;
+            },
+            self::$moonCalMonthLinks[$year]
+        );
+
+        // Если указан месяц, возвращаем ссылку на данный месяц
+        if($month) {
+            if(!array_key_exists($month, $mappedArray)){
+                return null;
+            }
+            if($month < 1 || $month > 12)
+                return null;
             return $mappedArray[$month];
         }
 

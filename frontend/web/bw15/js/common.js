@@ -167,4 +167,30 @@ $(document).ready(function() {
 		});
 	});
 
+	// БЛОК СЕГОДНЯ В ЛУННОМ КАЛЕНДАРЕ СТРИЖЕК
+	$(function() {
+        $('.today_day').on('click', function() {
+            $('#today_block').toggle();
+            $('#tomorrow_block').toggle();
+            $('#moon_tomorrow').toggleClass('today_active');
+            $('#moon_today').toggleClass('today_active');
+        });
+		/*{
+			if(day == "today")
+			{
+				$("#today_block").show();
+				$("#tomorrow_block").hide();
+				$("#moon_tomorrow").removeClass("today_active");
+				$("#moon_today").addClass("today_active");
+			}
+			else if(day == "tomorrow")
+			{
+				$("#today_block").hide();
+				$("#tomorrow_block").show();
+				$("#moon_tomorrow").addClass("today_active");
+				$("#moon_today").removeClass("today_active");
+			}
+		}*/
+	});
+
 });
