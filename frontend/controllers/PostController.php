@@ -189,6 +189,9 @@ class PostController extends Controller{
             }
         }
 
+        // Поиск и замена ссылок на другие страницы сайта (ссылки в формате [link=<id_статьи>]<текст_ссылки>[/link])
+        $this->replaceLinks($post);
+
         // Применение дополнительных методов для обработки полного текста статей
         if($m = GlobalHelper::getCategories()[$categoryId]['add_method']){
             $methodName = 'full'.ucfirst($m);
@@ -200,8 +203,8 @@ class PostController extends Controller{
         // Социальные кнопки
         $post->full .= SocialButtonsWidget::widget();
 
-        // Рекламные материалы
-        $post = $this->insertAdvert($post);
+        // Вставка рекламных материалов
+        $this->insertAdvert($post);
 
         // Обновление количества просмотров статьи
         $post->updateCounters(['views' => 1]);
@@ -234,6 +237,12 @@ class PostController extends Controller{
             return $post;
 
         foreach($adverts as $advert) {
+            // Если реклама запрещена на уровне статьи, присваиваем рекламному коду пустую строку
+            // чтобы тег рекламы, если он есть, не оставался на странице, а заменялся на пустую строку
+            if($post->allow_ad == 0) {
+                $advert['code'] = '';
+            }
+
             if(!$advert['replacement_tag']) $advert['replacement_tag'] = 'none';
             if($advert['location'] != 'various'){
                 if($advert['replacement_tag'] != 'none' && strstr($post->full, "[{$advert['replacement_tag']}]"))
@@ -276,7 +285,35 @@ class PostController extends Controller{
             }
         }
 
-        return $post;
+        //return $post;
     }
 
+
+    protected function replaceLinks($post) {
+        // Поиск ссылок на другие страницы сайта
+        preg_match_all("@\[link=([0-9]{1,5})\](.*?)\[/link\]@", $post->full, $matches);
+        // $matches[1] - ID страниц
+        // $matches[0] - Полное совпадение
+        // $matches[2] - Текст ссылки
+        if(!empty($matches[1])){
+            $posts = Post::find()
+                ->where(['approve' => Post::APPROVED])
+                ->andWhere(['in', 'id', $matches[1]])
+                ->all();
+            $links = [];
+            foreach($posts as $p){
+                $links[$p->id] = $p->link;
+            }
+            foreach($matches[1] as $key => $linkId){
+                if(array_key_exists($linkId, $links)){
+                    $linkText = $matches[2][$key];
+                    $link = '<a href="'.$links[$linkId].'">'.$linkText.'</a>';
+                    $post->full = str_replace($matches[0][$key], $link, $post->full);
+                }
+                else{
+                    $post->full = str_replace($matches[0][$key], $matches[2][$key], $post->full);
+                }
+            }
+        }
+    }
 }

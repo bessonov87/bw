@@ -111,10 +111,15 @@ class Post extends ActiveRecord
     }
 
     public function getSimilarPosts(){
+        // Если для данной статьи похожие запрещены, возвращаем null
+        if(!$this->allow_similar)
+            return null;
         $similarPosts = Post::find()
             ->where("MATCH(short, full, title, meta_title) AGAINST('$this->title')")
             ->andWhere(['approve' => static::APPROVED])
             ->andWhere( 'id != '.$this->id )
+            ->andWhere(['not_in_related' => 0])
+            ->andWhere(['category_art' => 0])
             ->with('postCategories')
             ->limit(5)
             ->all();

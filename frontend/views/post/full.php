@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
-use app\components\PostHelper;
+use app\components\SimilarPostsWidget;
 use app\components\GlobalHelper;
 use app\components\CommentsWidget;
 use app\components\RatingWidget;
@@ -52,16 +52,18 @@ if($post->meta_title){
                     <script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script><div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="small" data-yashareQuickServices="vkontakte,facebook,twitter,odnoklassniki,moimir,lj,gplus" data-yashareTheme="counter"></div>
                 </div>
                 <div class="text-size">
-                    <div style="line-height:2; font-size: 14px;"><strong>Размер текста:</strong></div>
-                    <div style="display:inline-block; cursor:pointer" onclick="$('#art_full').css('font-size', '12px')"><img alt="Мелкий" title="Мелкий" src="/bw15/images/font32.png" width="12"></div>&nbsp;&nbsp;
-                    <div style="display:inline-block; cursor:pointer" onclick="$('#art_full').css('font-size', '14px')"><img alt="Средний" title="Средний" src="/bw15/images/font32.png" width="18"></div>&nbsp;&nbsp;
-                    <div style="display:inline-block; cursor:pointer" onclick="$('#art_full').css('font-size', '16px')"><img alt="Крупный" title="Крупный" src="/bw15/images/font32.png" width="24"></div>
+                    <span><strong>Размер текста:</strong></span>
+                    <div class="text_size_imgs">
+                        <div class="img_container" onclick="$('#art_full').css('font-size', '12px')"><img alt="Мелкий" title="Мелкий" src="/bw15/images/font32.png" width="12"></div>&nbsp;&nbsp;
+                        <div class="img_container" onclick="$('#art_full').css('font-size', '14px')"><img alt="Средний" title="Средний" src="/bw15/images/font32.png" width="18"></div>&nbsp;&nbsp;
+                        <div class="img_container" onclick="$('#art_full').css('font-size', '16px')"><img alt="Крупный" title="Крупный" src="/bw15/images/font32.png" width="24"></div>
+                    </div>
                 </div>
                 <div class="clear"></div>
             </div>
             <div align="justify" style="color:#000000; font-size:14px; line-height: 1.5;" id="art_full"><?=$post->full?></div>
             <div class="related_posts">
-                <strong>Другие публикации по теме:</strong><br/><?=PostHelper::similar($post->similarPosts, ['list' => true, 'listType' => 'ol'])?>
+                <strong>Другие публикации по теме:</strong><br/><?=SimilarPostsWidget::widget(['posts' => $post->similarPosts, 'list' => true, 'listType' => 'ol'])?>
             </div>
         </div>
         <div class="clear"></div>

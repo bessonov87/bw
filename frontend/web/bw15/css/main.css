@@ -241,6 +241,26 @@ body {
     padding: 5px;
 }
 
+.text_size_imgs{
+    text-align: center;
+}
+
+.text-size span {
+    line-height:2;
+    font-size: 14px;
+    display: block;
+}
+
+.text-size .img_container {
+    display:inline-block;
+    cursor:pointer;
+}
+
+.text-size img {
+    vertical-align: bottom;
+    padding: 0!important;
+}
+
 .post_social{
     text-align: center;
     margin-top: 20px;
