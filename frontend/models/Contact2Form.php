@@ -15,4 +15,18 @@ class Contact2Form extends Model
                 ['email', 'email'],
             ];
     }
+
+    /**
+     * Отправка письма администратору
+     *
+     * @return boolean whether the email was send
+     */
+    public function sendEmail()
+    {
+        return \Yii::$app->mailer->compose(['html' => 'feedback-html', 'text' => 'feedback-text'], ['data' => $this])
+                    ->setFrom($this->email)
+                    ->setTo(\Yii::$app->params['feedbackEmail'])
+                    ->setSubject('Письмо администрации - ' . \Yii::$app->params['site']['shortTitle'])
+                    ->send();
+    }
 }

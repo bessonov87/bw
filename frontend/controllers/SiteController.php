@@ -287,7 +287,11 @@ class SiteController extends Controller
 
         if($model->load(Yii::$app->request->post()) && $model->validate())
         {
-            Yii::$app->session->setFlash('success', 'Данные введены верно');
+            if($model->sendEmail()){
+                Yii::$app->session->setFlash('success', 'Письмо отправлено.');
+            } else {
+                Yii::$app->session->setFlash('error', 'При отправке письма произошла ошибка. Попробуйте отправить письмо еще раз. Если ошибка повторяется, пожалуйста, сообщите об этом в службу поддержки по адресу '. Yii::$app->params['supportEmail']);
+            }
         }else{
             Yii::$app->session->setFlash('info', 'Все поля формы обязательны к заполнению. Если вы хотите получить ответ, укажите правильный email адрес.
             <br>Если вы обращаетесь к администрации по вопросам рекламы, в теме сообщения укажите "Реклама на сайте"');

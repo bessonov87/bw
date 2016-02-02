@@ -17,17 +17,29 @@ $this->params['breadcrumbs'][] = $this->title;
                 'id' => 'contact-form',
                 'options' => ['class' => 'form-contact']
             ]); ?>
-            <?= $form->field($model, 'name')->label('Имя') ?>
-            <?= $form->field($model, 'email') ?>
+            <?php
+                if(Yii::$app->user->isGuest) {
+                    echo $form->field($model, 'name')->label('Имя');
+                } else {
+                    echo $form->field($model, 'name')->hiddenInput(['value' => Yii::$app->user->identity->username])->label(false);
+                }
+            ?>
+            <?php
+                if(Yii::$app->user->isGuest) {
+                    echo $form->field($model, 'email');
+                } else {
+                    echo $form->field($model, 'email')->hiddenInput(['value' => Yii::$app->user->identity->email])->label(false);
+                }
+            ?>
             <?= $form->field($model, 'subject')->textInput()->label('Тема сообщения') ?>
-            <?= $form->field($model, 'message')->textarea()->label('Текст сообщения') ?>
+            <?= $form->field($model, 'message')->textarea(['rows' => 10])->label('Текст сообщения') ?>
             <?= Html::submitButton('Отправить', ['class'=>'btn btn-success'])?>
             <?php ActiveForm::end() ?>
             <?php
             endif;
 
             if(Yii::$app->session->hasFlash('success')){
-                echo 'Спасибо за обращение';
+                echo 'Спасибо за обращение. В ближайшее время мы ознакомимся с вашим письмом и, если это требуется, дадим на него ответ.';
             }
             ?>
         </div>

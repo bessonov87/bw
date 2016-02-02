@@ -25,6 +25,7 @@ use Yii;
  * @property integer $allow_catlink
  * @property integer $allow_similar
  * @property integer $allow_rate
+ * @property integer $allow_ad
  * @property integer $approve
  * @property integer $fixed
  * @property integer $category_art
@@ -50,7 +51,7 @@ class Post extends \yii\db\ActiveRecord
     {
         return [
             [['author_id', 'short', 'full', 'title', 'url'], 'required'],
-            [['author_id', 'edit_user', 'allow_comm', 'allow_main', 'allow_catlink', 'allow_similar', 'allow_rate', 'approve', 'fixed', 'category_art', 'inm', 'not_in_related'], 'integer'],
+            [['author_id', 'edit_user', 'allow_comm', 'allow_main', 'allow_catlink', 'allow_similar', 'allow_rate', 'allow_ad', 'approve', 'fixed', 'category_art', 'inm', 'not_in_related'], 'integer'],
             [['date', 'edit_date'], 'safe'],
             [['short', 'full'], 'string'],
             [['title', 'meta_title', 'meta_descr', 'meta_keywords', 'edit_reason'], 'string', 'max' => 255],
@@ -65,28 +66,29 @@ class Post extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'author_id' => 'Author ID',
-            'date' => 'Date',
-            'short' => 'Short',
-            'full' => 'Full',
-            'title' => 'Title',
+            'author_id' => 'ID Автора',
+            'date' => 'Дата',
+            'short' => 'Краткий текст',
+            'full' => 'Полный текст',
+            'title' => 'Заголовок',
             'meta_title' => 'Meta Title',
-            'meta_descr' => 'Meta Descr',
+            'meta_descr' => 'Meta Description',
             'meta_keywords' => 'Meta Keywords',
             'url' => 'Url',
-            'edit_date' => 'Edit Date',
-            'edit_user' => 'Edit User',
-            'edit_reason' => 'Edit Reason',
-            'allow_comm' => 'Allow Comm',
-            'allow_main' => 'Allow Main',
-            'allow_catlink' => 'Allow Catlink',
-            'allow_similar' => 'Allow Similar',
-            'allow_rate' => 'Allow Rate',
-            'approve' => 'Approve',
-            'fixed' => 'Fixed',
-            'category_art' => 'Category Art',
+            'edit_date' => 'Дата редактирования',
+            'edit_user' => 'Редактор',
+            'edit_reason' => 'Причина редактирования',
+            'allow_comm' => 'Разрешить комментарии',
+            'allow_main' => 'Публиковать на главной',
+            'allow_catlink' => 'Разрешить ссылки на категории',
+            'allow_similar' => 'Разрешить похожие статьи',
+            'allow_rate' => 'Разрешить рейтинг',
+            'allow_ad' => 'Публиковать рекламу?',
+            'approve' => 'Разрешить статью?',
+            'fixed' => 'Зафиксировать статью?',
+            'category_art' => 'Статья-категория?',
             'inm' => 'Inm',
-            'not_in_related' => 'Not In Related',
+            'not_in_related' => 'Не выбирать в качестве похожей для других статей',
         ];
     }
 

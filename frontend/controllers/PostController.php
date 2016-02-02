@@ -132,6 +132,11 @@ class PostController extends Controller{
             $query->andWhere("DATE_FORMAT( DATE, '$dateFormat' ) = :date", [':date' => $date]);
         }
 
+        // Если главная страница и просто страницы
+        if(!$type || $type == 'index') {
+            $query->andWhere(['allow_main' => 1]);
+        }
+
         $countPosts = clone $query;
         $pages = new Pagination(['totalCount' => $countPosts->count(), 'route' => 'post/short']);
         $posts = $query->offset($pages->offset)
@@ -140,27 +145,6 @@ class PostController extends Controller{
             ->all();
 
         return $this->render('short', ['posts' => $posts, 'pages' => $pages, 'categories' => $categories, 'subCategories' => $subCategories]);
-
-
-        /*$request = Yii::$app->request;
-        $format = $request->get('format');
-        if($format == 'byCat'){
-            $title = 'Статьи раздела ' . $request->get('cat');
-            $params = [
-                'cat' => $request->get('cat'),
-            ];
-        }
-        elseif($format == 'byDate'){
-            $title = 'Статьи за ' . $request->get('year');
-            $params = [
-                'year' => $request->get('year'),
-                'month' => $request->get('month'),
-                'day' => $request->get('day'),
-            ];
-        }
-        $params['page'] = $request->get('page');
-        $params['title'] = $title;
-        return $this->render('short', $params);*/
     }
 
     public function actionFull()

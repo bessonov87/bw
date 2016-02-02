@@ -36,25 +36,25 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'edit_reason')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'allow_comm')->textInput() ?>
+    <?= $form->field($model, 'allow_comm')->radioList([1 => 'Да', 0 => 'Нет']) ?>
 
-    <?= $form->field($model, 'allow_main')->textInput() ?>
+    <?= $form->field($model, 'allow_main')->radioList([1 => 'Да', 0 => 'Нет']) ?>
 
-    <?= $form->field($model, 'allow_catlink')->textInput() ?>
+    <?= $form->field($model, 'allow_catlink')->radioList([1 => 'Да', 0 => 'Нет']) ?>
 
-    <?= $form->field($model, 'allow_similar')->textInput() ?>
+    <?= $form->field($model, 'allow_similar')->radioList([1 => 'Да', 0 => 'Нет']) ?>
 
-    <?= $form->field($model, 'allow_rate')->textInput() ?>
+    <?= $form->field($model, 'allow_rate')->radioList([1 => 'Да', 0 => 'Нет']) ?>
 
-    <?= $form->field($model, 'approve')->textInput() ?>
+    <?= $form->field($model, 'allow_ad')->radioList([1 => 'Да', 0 => 'Нет']) ?>
 
-    <?= $form->field($model, 'fixed')->textInput() ?>
+    <?= $form->field($model, 'approve')->radioList([1 => 'Да', 0 => 'Нет']) ?>
 
-    <?= $form->field($model, 'category_art')->textInput() ?>
+    <?= $form->field($model, 'fixed')->radioList([1 => 'Да', 0 => 'Нет']) ?>
 
-    <?= $form->field($model, 'inm')->textInput() ?>
+    <?= $form->field($model, 'category_art')->radioList([1 => 'Да', 0 => 'Нет']) ?>
 
-    <?= $form->field($model, 'not_in_related')->textInput() ?>
+    <?= $form->field($model, 'not_in_related')->radioList([1 => 'Да', 0 => 'Нет']) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

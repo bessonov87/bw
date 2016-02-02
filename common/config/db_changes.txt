@@ -1,3 +1,8 @@
 ﻿====================== 28.01.2016 ==========================================
 
 ALTER TABLE  `user` ADD  `email_confirm_token` VARCHAR( 255 ) NULL DEFAULT NULL AFTER  `password_reset_token` ;
+
+
+02.02.2016
+
+ALTER TABLE  `post` ADD  `allow_ad` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT  '1' AFTER  `allow_rate` ;

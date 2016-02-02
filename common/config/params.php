@@ -3,6 +3,7 @@ return [
     'fullAccessIps' => ['127.0.0.1', '37.26.135.215'],
     'adminEmail' => 'admin@beauty-women.ru',
     'supportEmail' => 'support@beauty-women.ru',
+    'feedbackEmail' => 'weblon@inbox.ru',
     'user.passwordResetTokenExpire' => 3600,
     'user.emailConfirmTokenExpire' => 604800,
     'emailActivation' => true,
