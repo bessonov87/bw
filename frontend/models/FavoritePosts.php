@@ -25,7 +25,7 @@ class FavoritePosts extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'favorite_posts';
+        return '{{%favorite_posts}}';
     }
 
     /**
