@@ -43,7 +43,7 @@ if(Yii::$app->user->isGuest):
     <div class="comments-not-logged-header">У вас недостаточно прав для добавления комментариев</div>
     <div class="comments-not-logged-message">
         <span>Чтобы оставлять комментарии, вам необходимо <i class="fa fa-external-link"></i> <a href="#inline_login" class="fancybox">авторизоваться</a>.</span>
-        <span>Если у вас еще нет учетной записи на нашем сайте, предлагаем <i class="fa fa-external-link"></i> <a href="#inline_register" class="fancybox">зарегистрироваться</a>.<br>Это займет не более 5 минут.</span>
+        <span>Если у вас еще нет учетной записи на нашем сайте, предлагаем <i class="fa fa-external-link"></i> <a href="/site/signup" class="fancybox">зарегистрироваться</a>.<br>Это займет не более 5 минут.</span>
     </div>
 </div>
 <?php
