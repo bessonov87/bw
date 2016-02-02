@@ -21,7 +21,7 @@ class CommentsWidget extends Widget
     public function run(){
         if(!is_array($this->comments)) return '***';
         // Переиндексируем комментарии относительно id комментария, на который данный отвечает
-
+        $comments_array = '';
         foreach($this->comments as $comm){
             $reply_to = (is_null($comm['reply_to'])) ? 0 : $comm['reply_to'];
             $comments_array[$reply_to][] = $comm;
