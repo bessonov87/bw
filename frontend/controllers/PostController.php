@@ -157,7 +157,7 @@ class PostController extends Controller{
 
         // Определяем Id
         // Если это статья-категория, берем из params, иначе из request->get
-        $postId = (Yii::$app->params['category_art']) ? Yii::$app->params['category_art'] : Yii::$app->request->get('id');
+        $postId = (array_key_exists('category_art', Yii::$app->params)) ? Yii::$app->params['category_art'] : Yii::$app->request->get('id');
 
         $post = Post::findOne([
             'id' => $postId,
