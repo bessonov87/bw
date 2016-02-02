@@ -81,8 +81,3 @@ if($post->meta_title){
 <div id="all-comments">
     <?= CommentsWidget::widget(['comments' => $post->comments, 'addCommModel' => $model]) ?>
 </div>
-
-<? //var_dump($post->categories); ?>
-<? //var_dump($post->postsRating); ?>
-<? //var_dump(ArrayHelper::toArray($post->comments)); ?>
-<? //var_dump($post->comments); ?>
