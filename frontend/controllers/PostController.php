@@ -172,6 +172,7 @@ class PostController extends Controller{
         $categoryId = $post->postCategories[0]->category_id;
         Yii::$app->params['category'] = [$categoryId];
 
+        $model = '';
         // Добавление комментариев
         if(!Yii::$app->user->isGuest) {
             $model = new CommentForm();
