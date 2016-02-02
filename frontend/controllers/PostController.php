@@ -206,7 +206,7 @@ class PostController extends Controller{
         $post->updateCounters(['views' => 1]);
 
         // Если статья-категория, используем представление full_cat.php, иначе full.php
-        $viewFile = Yii::$app->params['category_art'] ? 'full_cat' : 'full';
+        $viewFile = (array_key_exists('category_art', Yii::$app->params)) ? 'full_cat' : 'full';
 
         return $this->render($viewFile, ['post' => $post, 'model' => $model]);
     }
