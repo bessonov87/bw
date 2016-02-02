@@ -22,6 +22,7 @@ if(!Yii::$app->user->isGuest):
 
         <div class="form-line comm-text">
             <?= $form->field($model, 'text')->textarea()->label('Текст сообщения') ?>
+            <?php var_dump(Yii::$app->params['comments']); ?>
             <span>Минимум: <?= Yii::$app->params['comments']['min_length'] ?> символов, Максимум: <?= Yii::$app->params['comments']['max_length'] ?> символов</span>
         </div>
         <div class="form-line">
