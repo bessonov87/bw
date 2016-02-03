@@ -32,7 +32,7 @@ class PopularWidget extends Widget
             ->andWhere(['approve' => '1'])
             ->orderBy(['views' => SORT_DESC])
             ->limit($this->numPosts)
-            ->with('categories')
+            ->with('postCategories')
             ->all();
         // Если listType не соответствует списку возможных типов из массива _listTypes, присваиваем ему значение по умолчанию
         if(!in_array($this->listType, $this->_listTypes)){
@@ -40,11 +40,11 @@ class PopularWidget extends Widget
         }
         // Пробегаемся по выбранным numPosts постам
         foreach($posts as $post){
-            $cat = GlobalHelper::getCategoryUrlById($post->categories[0]['id']);
+            //$cat = GlobalHelper::getCategoryUrlById($post->categories[0]['id']);
             // Проверяем соответствует ли заголовок статьи максимальной длине (maxTitle). Если нет, укорачиваем его
             $linkTitle = (strlen($post['title']) <= $this->maxTitle) ? $post['title'] : $this->cutTitle($post['title']);
             // Формируем ссылку
-            $link = Html::a($linkTitle, Url::to(['post/full', 'cat' => $cat, 'id' => $post->id, 'alt' => $post->url]));
+            $link = Html::a($linkTitle, $post->link);
             // Если популярные статьи нужно выводить в виде тизеров
             if($this->tizerStyle){
                 $postHtml = $post->full;

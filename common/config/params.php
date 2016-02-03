@@ -19,6 +19,9 @@ return [
     'posts' => [
         'on_page' => 20,
     ],
+    'paths' => [
+        'avatar' => '/uploads/fotos/',
+    ],
     'users' => [
         'allowModule' => false,
         'allowAuthorization' => true,

@@ -271,4 +271,23 @@ class User extends ActiveRecord implements IdentityInterface
     public function getProfile(){
         return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
     }
+
+    /**
+     * Адрес страницы пользователя
+     */
+    public function getMyPage(){
+        return '/user/'.$this->username.'/';
+    }
+
+    /**
+     * Аватар пользователя
+     */
+    public function getAvatar(){
+        if(!$this->profile->avatar){
+            $avatar = ($this->profile->sex == 'm') ? 'noavatar_male.png' : 'noavatar_female.png';
+        } else {
+            $avatar = $this->profile->avatar;
+        }
+        return Yii::$app->params['paths']['avatar'].$avatar;
+    }
 }
