@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use yii\web\Controller;
 use common\models\User;
 use yii\helpers\Html;
+use yii\web\NotFoundHttpException;
 
 class UserController extends Controller{
 
