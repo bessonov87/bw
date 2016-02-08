@@ -232,4 +232,22 @@ class GlobalHelper
         return $string;
     }
 
+    /**
+     * Форматирование даты и времени
+     *
+     * @param $timestamp
+     * @return string
+     */
+    public static function dateFormat($timestamp){
+        if(!$timestamp){
+            $timestamp = time();
+        }
+        $year = date('Y', $timestamp);
+        $month = static::rusMonth(date('m', $timestamp), 'r');
+        $day = date('j', $timestamp);
+        $time = date('H:i', $timestamp);
+
+        return "$day $month $year, $time";
+    }
+
 }

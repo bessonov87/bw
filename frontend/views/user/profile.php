@@ -3,10 +3,12 @@
 /* @var $user common\models\User */
 
 use yii\helpers\Html;
+
+$this->title = "Профиль пользователя ".$user->username.". ".Yii::$app->params['site']['shortTitle'];
 ?>
 
 <div id="content-item">
-    <div id="content-item-top" class="content-item-blue"><h1><?= Html::encode($this->title) ?></h1></a></div>
+    <div id="content-item-top" class="content-item-blue"><h1>Профиль пользователя</h1></a></div>
     <div id="content-item-content">
         <div id="content-small-14">
 
@@ -26,6 +28,20 @@ use yii\helpers\Html;
 
             <div class="user_personal">
                 <h2>Личное:</h2>
+                <p class="user_sex"><div>Пол:</div><span><?= ($user->profile->sex == "m") ? "мужской" : "женский" ?></span></p>
+                <p class="user_birth"><div>Дата рождения:</div><span><?= ($user->profile->birth_date) ? $user->profile->birth_date : "не указана" ?></span></p>
+                <p class="user_location"><div>Страна/город:</div><span><?= $user->location ?></span></p>
+            </div>
+
+            <div class="user_friends">
+                <h3>Друзья:</h3>
+                <div>У пользователя пока нет друзей</div>
+            </div>
+
+            <div class="user_activity">
+                <h2>Активность:</h2>
+                <h3>Комментарии:</h3>
+                <div>У пользователя пока нет комментариев</div>
             </div>
 
         </div>

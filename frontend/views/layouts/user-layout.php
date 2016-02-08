@@ -85,6 +85,15 @@ IeAsset::register($this);
             </div>
             <div id="sidebar">
 
+                <!-- Блок Пользователь -->
+                <div id="sidebar-item">
+                    <div id="sidebar-item-top" class="sidebar-item-pink"><?= Html::encode(Yii::$app->request->get('username')) ?></div>
+                    <div id="sidebar-item-content">
+                        <?= \app\components\UserWidget::widget(['username' => Yii::$app->request->get('username')]) ?>
+                    </div>
+                </div>
+                <!-- Конец Пользователь -->
+
                 <!-- Блок Боковое меню -->
                 <div id="sidebar-item">
                     <div id="sidebar-item-top" class="sidebar-item-blue">Навигация</div>

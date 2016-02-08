@@ -5,6 +5,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
 use yii\web\IdentityInterface;
 
 /**
@@ -289,5 +290,22 @@ class User extends ActiveRecord implements IdentityInterface
             $avatar = $this->profile->avatar;
         }
         return Yii::$app->params['paths']['avatar'].$avatar;
+    }
+
+    public function getLocation(){
+        if($this->profile->country){
+            if(strlen($this->profile->country) == 2){
+                // НАЗВАНИЕ СТРАНЫ ПО ДВУХБУКВЕННОМУ КОДУ
+                $country = $this->profile->country;
+            } else {
+                $country = $this->profile->country;
+            }
+        } else {
+            $country = "Не указана";
+        }
+
+        $city = ($this->profile->city) ? Html::encode($this->profile->city) : "Не указан";
+
+        return $country.'/'.$city;
     }
 }
