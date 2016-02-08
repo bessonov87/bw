@@ -40,7 +40,7 @@ class PostController extends Controller{
         }
         // Переиндексируем массив категорий по значению url
         $categories = ArrayHelper::index($categories, 'url');
-        if(!array_key_exists($cat, $categories)){
+        if(!isset($categories[$cat])){
             throw new NotFoundHttpException('Такого раздела на сайте не существует. Проверьте правильно ли вы скопировали или ввели адрес в адресную строку. Если вы перешли на эту страницу по ссылке с данного сайта, сообщите пожалуйста о неработающей ссылке нам с помощью обратной связи.');
         }
         //var_dump($categories[$cat]);
