@@ -16,7 +16,7 @@ if($_SERVER['REMOTE_ADDR'] == '37.26.135.215') var_dump($comment['text']);
     </div>
     <div class="comment-foto"><img src="<?= GlobalHelper::avatarSrc($comment['user']) ?>"></div>
     <div class="comment-body">
-        <div class="comment-text"><?= nl2br(Html::encode($comment['text'])) ?></div>
+        <div class="comment-text"><?= nl2br(Html::encode(GlobalHelper::br2nl($comment['text']))) ?></div>
     </div>
     <div class="clear"></div>
     <div class="comment-info">

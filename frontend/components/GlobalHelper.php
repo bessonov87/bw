@@ -7,6 +7,18 @@ use yii\helpers\ArrayHelper;
 
 class GlobalHelper
 {
+
+    /**
+     * Convert BR tags to newlines and carriage returns.
+     *
+     * @param string The string to convert
+     * @return string The converted string
+     */
+    public static function br2nl ( $string )
+    {
+        return preg_replace('/\<br(\s*)?\/?\>/i', PHP_EOL, $string);
+    }
+
     public static function avatarSrc($user){
         $avatar = $user['profile']['avatar'];
         $avatarPath = '/uploads/fotos/';
