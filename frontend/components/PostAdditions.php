@@ -203,7 +203,8 @@ class PostAdditions
             if($moon_phase > 1 && $moon_phase < 5) $rost_moon = "Луна Растущая";
             if($moon_phase == 1) $rost_moon = "Полнолуние";
             if($moon_phase > 5) $rost_moon = "Луна Убывающая";
-
+            $rost_moon_tomorrow = '';
+            $blago_moon_tomorrow = '';
             // Для Завтра
             $moon_phase_tomorrow = $phase_image[$moons[$today]['w']+1];
             if($moon_phase_tomorrow == 1) $rost_moon_tomorrow = "Новолуние";
