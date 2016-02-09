@@ -47,7 +47,9 @@ class CommentsWidget extends Widget
         $comments = '';
         // Перебираем все комментарии, которые не являются ответными
         foreach ($comments_array[$reply] as $comment) {
-            if($this->_treeStep != 1 && $this->_treeStep <= \Yii::$app->params['comments']['max_nesting']){
+            if($_SERVER['REMOTE_ADDR'] == '37.26.135.215')
+            var_dump($comment);
+            /*if($this->_treeStep != 1 && $this->_treeStep <= \Yii::$app->params['comments']['max_nesting']){
                 $comments .= '<div class="comment-reply-arrow comment-reply-arrow-5"><i class="fa fa-reply"></i></div>';
             } else if($this->_treeStep > \Yii::$app->params['comments']['max_nesting']) {
                 $comments .= '<div class="comment-reply-arrow comment-reply-arrow-abs"><i class="fa fa-reply"></i></div>';
@@ -70,7 +72,7 @@ class CommentsWidget extends Widget
             }
             $comments .= '</div>';
             if($reply == 0) $this->_treeStep = 1;
-            $comments .= '<div class="clear"></div>';
+            $comments .= '<div class="clear"></div>';*/
         }
 
         return $comments;
