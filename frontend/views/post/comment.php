@@ -4,7 +4,7 @@
 use app\components\GlobalHelper;
 use yii\helpers\Html;
 
-if($_SERVER['REMOTE_ADDR'] == '37.26.135.215') var_dump($comment['text']);
+//if($_SERVER['REMOTE_ADDR'] == '37.26.135.215') var_dump($comment['text']);
 
 ?>
 
