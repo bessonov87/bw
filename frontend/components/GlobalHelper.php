@@ -10,8 +10,9 @@ class GlobalHelper
     public static function avatarSrc($user){
         $avatar = $user['profile']['avatar'];
         $avatarPath = '/uploads/fotos/';
-        if(!$avatar){
+        if(!$avatar) {
             $avatar = ($user['profile']['sex'] == 'm') ? 'noavatar_male.png' : 'noavatar_female.png';
+        }
         return $avatarPath.$avatar;
     }
 
