@@ -9,6 +9,7 @@ class GlobalHelper
 {
     public static function avatarSrc($user){
         $avatar = $user['profile']['avatar'];
+        echo $_SERVER['REMOTE_ADDR'];
         if($_SERVER['REMOTE_ADDR'] == '37.26.135.215')
             var_dump($avatar);
         if(is_null($avatar)){
