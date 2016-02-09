@@ -9,15 +9,9 @@ class GlobalHelper
 {
     public static function avatarSrc($user){
         $avatar = $user['profile']['avatar'];
-        echo $_SERVER['REMOTE_ADDR'];
-        if($_SERVER['REMOTE_ADDR'] == '37.26.135.215')
-            var_dump($avatar);
-        if(is_null($avatar)){
-            $avatarPath = '/bw15/images/';
+        $avatarPath = '/uploads/fotos/';
+        if(!$avatar){
             $avatar = ($user['profile']['sex'] == 'm') ? 'noavatar_male.png' : 'noavatar_female.png';
-        } else {
-            $avatarPath = '/uploads/fotos/';
-        }
         return $avatarPath.$avatar;
     }
 
