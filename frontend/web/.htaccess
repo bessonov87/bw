@@ -2,6 +2,8 @@ RewriteEngine on
 # Старые статьи с лунным календарем перенаправляем на новые
 RewriteRule ^horoscope/lunnyj-kalendar-na-god/lunnyj_kalendar_na_(.*).html(/?)+$ redirect.php?cal=common&moon_month=$1 [L]
 RewriteRule ^horoscope/lunnyj-kalendar-na-god/([0-9]+)_(.*)_([0-9]+)_goda.html(/?)+$ redirect.php?cal=common&moon_day=$1&month=$2&year=$3 [L]
+# Перенаправление feedback.php на /site/feedback
+RewriteRule ^feedback.php$ /site/feedback [L,R=301]
 # Перенаправление страниц без слеша на конце на страницы со слешем
 RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
