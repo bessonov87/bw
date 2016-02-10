@@ -45,12 +45,15 @@ class SimilarPostsWidget extends Widget {
         }
 
         if($this->list === true){
+            $list = [];
             foreach($this->posts as $post){
                 $link = (!$this->manual) ? $post->link : $link = $post->url;
                 $list[] = Html::a($this->cutTitle($post->title), $link);
             }
             $listType = ($this->listType == 'ul') ? 'ul' : 'ol';
-            $list = Html::$listType($list, ['encode' => false]);
+            if($list) {
+                $list = Html::$listType($list, ['encode' => false]);
+            }
         } else {
             $list = '';
             foreach($this->posts as $post){
