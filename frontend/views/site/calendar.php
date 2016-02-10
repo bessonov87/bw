@@ -5,6 +5,7 @@
 use yii\helpers\Html;
 use app\components\GlobalHelper;
 
+$controls = '';
 if(!$noControls) {
     $controls = Html::tag('div', '<i class="fa fa-angle-double-left fa-lg"></i>', ['class' => 'calendar_control', 'id' => 'calendar-prev']);
     $controls .= Html::tag('div', '<i class="fa fa-angle-double-right fa-lg"></i>', ['class' => 'calendar_control', 'id' => 'calendar-next']);
