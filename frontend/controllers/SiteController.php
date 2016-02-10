@@ -327,7 +327,7 @@ class SiteController extends Controller
         // Главная страница
         $xml_map .= "
 		<url>
-			<loc>" . Yii::$app->params['frontendUrl'] . "</loc>
+			<loc>" . Yii::$app->params['frontendBaseUrl'] . "</loc>
 			<lastmod>" . date("Y-m-d") . "</lastmod>
 			<changefreq>daily</changefreq>
 			<priority>1.0</priority>
@@ -341,7 +341,7 @@ class SiteController extends Controller
             $xml_date = date("Y-m-d");
             $xml_map .= "
 		<url>
-			<loc>" . Yii::$app->params['frontendUrl'] . $xml_name . "/</loc>
+			<loc>" . Yii::$app->params['frontendBaseUrl'] . $xml_name . "/</loc>
 			<lastmod>" . $xml_date . "</lastmod>
 			<changefreq>daily</changefreq>
 			<priority>0.8</priority>
@@ -360,7 +360,7 @@ class SiteController extends Controller
         foreach($posts as $post) {
             $xml_map .= "
 		<url>
-			<loc>" . substr(Yii::$app->params['frontendUrl'],0,-1) . $post->link . "</loc>
+			<loc>" . substr(Yii::$app->params['frontendBaseUrl'],0,-1) . $post->link . "</loc>
 			<lastmod>" . date("Y-m-d", strtotime($post->date)) . "</lastmod>
 			<changefreq>weekly</changefreq>
 			<priority>0.6</priority>
