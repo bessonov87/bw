@@ -22,6 +22,7 @@ use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
 use yii\web\MethodNotAllowedHttpException;
+use yii\log\FileTarget;
 
 /**
  * Site controller

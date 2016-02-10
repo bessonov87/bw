@@ -28,6 +28,10 @@ return [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
+                [
+                    'class' => 'app\components\log\BwDbTarget',
+                    'levels' => ['error', 'warning'],
+                ],
             ],
         ],
         'errorHandler' => [
