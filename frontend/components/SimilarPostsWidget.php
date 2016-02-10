@@ -53,6 +53,8 @@ class SimilarPostsWidget extends Widget {
             $listType = ($this->listType == 'ul') ? 'ul' : 'ol';
             if($list) {
                 $list = Html::$listType($list, ['encode' => false]);
+            } else {
+                $list = '';
             }
         } else {
             $list = '';
