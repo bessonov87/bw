@@ -30,7 +30,7 @@ class AppAsset extends AssetBundle
         'bw15/libs/fancybox/jquery.fancybox.pack.js',
         'bw15/libs/scrollto/jquery.scrollTo.min.js',
         'bw15/libs/owl-carousel/owl.carousel.min.js',
-        'bw15/js/common.js',
+        'bw15/js/theme.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
