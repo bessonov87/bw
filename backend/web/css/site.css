@@ -89,3 +89,55 @@ a.desc:after {
     padding: 10px 20px;
     margin: 0 0 15px 0;
 }
+
+.message {
+    background-color: #FFFFF7;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.message_header {
+    border-bottom: 1px #333 solid;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.message_header:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.message_subheader {
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.message_subheader:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.message_time {
+    font-size: 18px;
+    float: left;
+}
+
+.message_title {
+    font-size: 16px;
+    font-weight: bold;
+    float: right;
+}
+
+.message_page {
+    font-size: 16px;
+    font-weight: bold;
+    float: left;
+}
+
+.message_prefix {
+    font-size: 16px;
+    float: right;
+}
