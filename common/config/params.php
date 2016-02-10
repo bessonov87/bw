@@ -23,7 +23,7 @@ return [
         'avatar' => '/uploads/fotos/',
     ],
     'users' => [
-        'allowModule' => false,
+        'allowModule' => true,
         'allowAuthorization' => true,
         'allowRegistration' => true,
         'allowSocialAuth' => true,

@@ -102,7 +102,6 @@ class SiteController extends Controller
         if(array_key_exists($action, $config)){
             foreach($config[$action] as $property){
                 if(!Yii::$app->params['users'][$property] && !in_array(Yii::$app->request->userIP, Yii::$app->params['fullAccessIps'])) {
-                    var_dump(Yii::$app->request->userIP);
                     throw new TemporaryUnavailableException();
                 }
             }
