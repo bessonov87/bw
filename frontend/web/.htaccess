@@ -9,6 +9,9 @@ RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !(.html)
 RewriteCond %{REQUEST_URI} !(.xml)
+RewriteCond %{REQUEST_URI} !(.png)
+RewriteCond %{REQUEST_URI} !(.jpg)
+RewriteCond %{REQUEST_URI} !(.gif)
 RewriteCond %{REQUEST_URI} !^/site/(.*)$
 RewriteCond %{REQUEST_URI} !^/ajax/(.*)$
 RewriteCond %{REQUEST_URI} !^/debug/(.*)$
