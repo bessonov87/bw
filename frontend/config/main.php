@@ -14,6 +14,9 @@ return [
     'controllerNamespace' => 'frontend\controllers',
     'defaultRoute' => 'post/short',
     'components' => [
+        'assetManager' => [
+            'appendTimestamp' => true,
+        ],
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
