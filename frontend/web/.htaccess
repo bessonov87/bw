@@ -6,6 +6,7 @@ RewriteRule ^horoscope/lunnyj-kalendar-na-god/([0-9]+)_(.*)_([0-9]+)_goda.html(/
 RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !(.html)
+RewriteCond %{REQUEST_URI} !(.xml)
 RewriteCond %{REQUEST_URI} !^/site/(.*)$
 RewriteCond %{REQUEST_URI} !^/debug/(.*)$
 RewriteCond %{REQUEST_URI} !(.*)/$
