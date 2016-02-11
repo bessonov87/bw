@@ -318,11 +318,60 @@ class SiteController extends Controller
         $xmlFileName = Yii::$app->request->get('xmlname');
         switch($xmlFileName) {
             case 'sitemap': $xml = $this->getSitemap(); break;
+            case 'rss': $xml = $this->getRss(); break;
             case 'browserconfig': $xml = $this->getBrowserconfig(); break;
             default: throw new NotFoundHttpException('Страница не найдена. Проверьте правильно ли вы скопировали или ввели адрес в адресную строку. Если вы перешли на эту страницу по ссылке с данного сайта, сообщите пожалуйста о неработающей ссылке нам с помощью обратной связи.');
         }
 
         return $xml;
+    }
+
+    public function getRss() {
+        $siteUrl = Yii::$app->params['frontendBaseUrl'];
+        $rss = '<?xml version="1.0" encoding="UTF-8"?>
+        <rss xmlns:dc="http://purl.org/dc/elements/1.1/">
+        <channel>
+        <title>' . Yii::$app->params['site']['title'] . '</title>
+        <link>' . $siteUrl . '</link>
+        <description>' . Yii::$app->params['site']['description'] . '</description>
+        <image>
+            <url>' . $siteUrl . 'favicon.ico</url>
+            <link>' . $siteUrl . '</link>
+            <title>' . Yii::$app->params['site']['title'] . '</title>
+        </image>
+        <copyright>' . Yii::$app->params['site']['shortTitle'] . '</copyright>
+        <language>ru</language>
+        <managingEditor>' . Yii::$app->params['site']['feedbackEmail'] . '</managingEditor>
+        <webMaster>' . Yii::$app->params['site']['supportEmail'] . '</webMaster>
+        ';
+
+        $posts = Post::find()
+            ->where(['approve' => Post::APPROVED])
+            ->andWhere(['allow_main' => 1])
+            ->andWhere(['<=', 'date', date("Y-m-d H:i:s")])
+            ->orderBy(['date' => SORT_DESC])
+            ->limit(10)
+            ->with('postCategories')
+            ->all();
+
+        $data = '';
+        foreach($posts as $post) {
+            $absoluteLink = $siteUrl.substr($post->link, 1);
+            $data.="<item>";
+            $data.="<title>" . $post->title . "</title>";
+            $data.="<link>" . $absoluteLink . "</link>";
+            $data.="<description><![CDATA[<div align=\"justify\">
+	" . $post->short . "<br /><br />
+	<a href=\"" . $absoluteLink . "\">Прочитать полностью на сайте " . Yii::$app->params['site']['shortTitle'] . "</a><br />
+	<hr />
+	</div>]]></description>";
+            $data.="<dc:creator>admin</dc:creator>";
+            $data.="<dc:date>" . $post->date . "</dc:date>\n</item>";
+        }
+
+        $rss .= $data . '</channel></rss>';
+
+        return $rss;
     }
 
     /**
