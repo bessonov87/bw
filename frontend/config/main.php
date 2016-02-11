@@ -91,9 +91,8 @@ return [
                     'defaults' => ['page' => 1, 'type' => 'byCat']
                 ],
                 [
-                    'pattern' => 'sitemap',
-                    'route' => 'site/sitemap',
-                    'suffix' => '.xml'
+                    'pattern' => '<xmlname:[A-Za-z0-9_-]+>.xml',
+                    'route' => 'site/xml'
                 ],
             ],
         ],

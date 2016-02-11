@@ -20,7 +20,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;
-use yii\web\HttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\MethodNotAllowedHttpException;
 use yii\web\Response;
 
@@ -301,16 +301,58 @@ class SiteController extends Controller
     }
 
     /**
-     * Выводит XML карту сайта
+     * Возвращает XML c заголовком application/xml
+     *
+     * Любой запрос типа http://site.ru/<имя_файла>.xml перенаправляется сюда.
+     * В зависимости от имени файла вызывается соответствующий метод, который должен генерировать и возвращать
+     * содержимое в формате XML.
+     *
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionXml() {
+        $response = Yii::$app->response;
+        $response->format = Response::FORMAT_RAW;
+        $response->getHeaders()->set('Content-Type', 'application/xml; charset=utf-8');
+
+        $xmlFileName = Yii::$app->request->get('xmlname');
+        switch($xmlFileName) {
+            case 'sitemap': $xml = $this->getSitemap(); break;
+            case 'browserconfig': $xml = $this->getBrowserconfig(); break;
+            default: throw new NotFoundHttpException('Страница не найдена. Проверьте правильно ли вы скопировали или ввели адрес в адресную строку. Если вы перешли на эту страницу по ссылке с данного сайта, сообщите пожалуйста о неработающей ссылке нам с помощью обратной связи.');
+        }
+
+        return $xml;
+    }
+
+    /**
+     * Возвращает xml-содержимое для файта browserconfig.xml, используемого новыми браузерами Microsoft
+     *
+     * @return string
+     */
+    public function getBrowserconfig() {
+        return '<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>
+  <msapplication>
+    <tile>
+      <square70x70logo src="/bw15/images/tiles/smalltile.png"/>
+      <square150x150logo src="/bw15/images/tiles/mediumtile.png"/>
+      <wide310x150logo src="/bw15/images/tiles/widetile.png"/>
+      <square310x310logo src="/bw15/images/tiles/largetile.png"/>
+      <TileColor>#FFC1B4</TileColor>
+    </tile>
+  </msapplication>
+</browserconfig>';
+    }
+
+    /**
+     * Возвращает XML карту сайта
      *
      * Карта берется из кэша, в котором она хранится 12 часов. Если в кэше ее нет, генерируется новая.
      *
      * @return mixed|string
      */
-    public function actionSitemap(){
-        $response = Yii::$app->response;
-        $response->format = Response::FORMAT_RAW;
-        $response->getHeaders()->set('Content-Type', 'application/xml; charset=utf-8');
+    public function getSitemap(){
         $xml_map = Yii::$app->cache->get('sitemap_xml');
         if(!$xml_map) {
             $xml_map = $this->generateSitemap();
