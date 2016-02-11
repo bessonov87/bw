@@ -175,6 +175,10 @@ class Post extends ActiveRecord
         return Url::to(['post/full', 'cat' => $cat, 'id' => $this->id, 'alt' => $this->url]);
     }
 
+    public function getAbsoluteLink() {
+        return \Yii::$app->params['frontendBaseUrl'].substr($this->link, 1);
+    }
+
     public static function tableName(){
         return '{{%post}}';
     }
