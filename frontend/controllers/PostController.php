@@ -216,6 +216,31 @@ class PostController extends Controller{
     }
 
     /**
+     * Редирект неправильных ссылок на посты
+     *
+     * Обрабатывает ссылки вида http://site.ru/4421-kremy-ot-morshhin-mify-i-realnost.html (без категории)
+     * и вида http://site.ru/beautysecrets/face/421-kremy-ot-morshhin-mify-i/ (обрезанное окончание)
+     * и перенаправляет на
+     *
+     * @throws NotFoundHttpException
+     */
+    public function actionRedirect() {
+        $postId = Yii::$app->request->get('id');
+
+        $post = Post::findOne([
+            'id' => $postId,
+            'approve' => Post::APPROVED,
+        ]);
+
+        if(is_null($post)){
+            throw new NotFoundHttpException('Статьи с данным адресом на сайте не существует. Проверьте правильно ли вы скопировали или ввели адрес в адресную строку. Если вы перешли на эту страницу по ссылке с данного сайта, сообщите пожалуйста о неработающей ссылке нам с помощью обратной связи.');
+        }
+
+        //return Yii::$app->params['frontendBaseUrl'].substr($post->link, 1);
+        $this->redirect(Yii::$app->params['frontendBaseUrl'].substr($post->link, 1), TRUE, 301);
+    }
+
+    /**
      * Вставка рекламных материалов в текст статьи
      *
      * Рекламные материалы задаются в базе данных в таблице 'advert'. Они могут иметь 3 варианта расположения:

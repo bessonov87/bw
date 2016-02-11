@@ -53,6 +53,16 @@ return [
                 ],
                 [
                     'pattern' => '<cat:[/A-Za-z0-9_-]+>/<id:\d+>-<alt:[A-Za-z0-9_-]+>',
+                    'route' => 'post/redirect',
+                    'suffix' => '/'
+                ],
+                [
+                    'pattern' => '<id:\d+>-<alt:[A-Za-z0-9_-]+>',
+                    'route' => 'post/redirect',
+                    'suffix' => '.html'
+                ],
+                [
+                    'pattern' => '<cat:[/A-Za-z0-9_-]+>/<id:\d+>-<alt:[A-Za-z0-9_-]+>',
                     'route' => 'post/full',
                     'suffix' => '.html'
                 ],
