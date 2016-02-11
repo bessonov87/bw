@@ -26,6 +26,8 @@ if($post->meta_title){
 } else {
     $this->title = $post->title;
 }
+// Добавляем canonical
+$this->registerLinkTag(['rel' => 'canonical', 'href' => $post->link]);
 
 ?>
 <div id="post-id"><?=$post->id?></div>
