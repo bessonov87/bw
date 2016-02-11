@@ -377,7 +377,8 @@ class SiteController extends Controller
             $data.="<link>" . $absoluteLink . "</link>";
             $data.="<description><![CDATA[<div align=\"justify\">
 	" . $post->short . "<br /><br />
-	<a href=\"" . $absoluteLink . "\">Прочитать полностью на сайте " . Yii::$app->params['site']['shortTitle'] . "</a><br />
+	<a style=\"float: right;\" href=\"" . $absoluteLink . "\">Прочитать полностью на сайте " . Yii::$app->params['site']['shortTitle'] . "</a>
+	<br style='clear: both; display: block; content: \"\";' />
 	<hr />
 	</div>]]></description>";
             $data.="<guid>".$absoluteLink."</guid>";
