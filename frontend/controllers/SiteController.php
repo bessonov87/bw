@@ -341,8 +341,8 @@ class SiteController extends Controller
         </image>
         <copyright>' . Yii::$app->params['site']['shortTitle'] . '</copyright>
         <language>ru</language>
-        <managingEditor>' . Yii::$app->params['site']['feedbackEmail'] . '</managingEditor>
-        <webMaster>' . Yii::$app->params['site']['supportEmail'] . '</webMaster>
+        <managingEditor>' . Yii::$app->params['feedbackEmail'] . '</managingEditor>
+        <webMaster>' . Yii::$app->params['supportEmail'] . '</webMaster>
         ';
 
         $posts = Post::find()
