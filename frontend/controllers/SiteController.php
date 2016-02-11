@@ -329,20 +329,16 @@ class SiteController extends Controller
     public function getRss() {
         $siteUrl = Yii::$app->params['frontendBaseUrl'];
         $rss = '<?xml version="1.0" encoding="UTF-8"?>
-        <rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+        <rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
         <channel>
         <title>' . Yii::$app->params['site']['title'] . '</title>
         <link>' . $siteUrl . '</link>
         <description>' . Yii::$app->params['site']['description'] . '</description>
-        <image>
-            <url>' . $siteUrl . 'favicon.ico</url>
-            <link>' . $siteUrl . '</link>
-            <title>' . Yii::$app->params['site']['title'] . '</title>
-        </image>
         <copyright>' . Yii::$app->params['site']['shortTitle'] . '</copyright>
         <language>ru</language>
-        <managingEditor>' . Yii::$app->params['feedbackEmail'] . '</managingEditor>
-        <webMaster>' . Yii::$app->params['supportEmail'] . '</webMaster>
+        <managingEditor>' . Yii::$app->params['feedbackEmail'] . ' (Elena Bessonova)</managingEditor>
+        <webMaster>' . Yii::$app->params['supportEmail'] . ' (Sergey Bessonov)</webMaster>
+        <atom:link href="'.$siteUrl.'rss.xml" rel="self" type="application/rss+xml" />
         ';
 
         $posts = Post::find()
@@ -365,8 +361,10 @@ class SiteController extends Controller
 	<a href=\"" . $absoluteLink . "\">Прочитать полностью на сайте " . Yii::$app->params['site']['shortTitle'] . "</a><br />
 	<hr />
 	</div>]]></description>";
-            $data.="<dc:creator>admin</dc:creator>";
-            $data.="<dc:date>" . $post->date . "</dc:date>\n</item>";
+            $data.="<guid>".$absoluteLink."</guid>";
+            //$data.="<dc:creator>admin</dc:creator>";
+            //$data.="<dc:date>" . date("D, j M Y G:i:s", strtotime($post->date)) . " GMT</dc:date>";
+            $data.="<pubDate>".date("D, j M Y G:i:s", strtotime($post->date))."</pubDate>\n</item>";
         }
 
         $rss .= $data . '</channel></rss>';
