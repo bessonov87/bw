@@ -326,7 +326,26 @@ class SiteController extends Controller
         return $xml;
     }
 
+    /**
+     * Возвращает xml-содержимое RSS ленты
+     *
+     * @return mixed|string
+     */
     public function getRss() {
+        $rss = Yii::$app->cache->get('rss_xml');
+        if(!$rss) {
+            $rss = $this->generateRss();
+            Yii::$app->cache->set('rss_xml', $rss, 43200);
+        }
+        return $rss;
+    }
+
+    /**
+     * Генерирует xml-содержимое RSS ленты
+     *
+     * @return string
+     */
+    public function generateRss() {
         $siteUrl = Yii::$app->params['frontendBaseUrl'];
         $rss = '<?xml version="1.0" encoding="UTF-8"?>
         <rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
