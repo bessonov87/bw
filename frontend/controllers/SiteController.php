@@ -364,7 +364,7 @@ class SiteController extends Controller
             $data.="<guid>".$absoluteLink."</guid>";
             //$data.="<dc:creator>admin</dc:creator>";
             //$data.="<dc:date>" . date("D, j M Y G:i:s", strtotime($post->date)) . " GMT</dc:date>";
-            $data.="<pubDate>".date("D, j M Y G:i:s", strtotime($post->date))."</pubDate>\n</item>";
+            $data.="<pubDate>".date("D, j M Y G:i:s", strtotime($post->date)-10800)." GMT</pubDate>\n</item>";
         }
 
         $rss .= $data . '</channel></rss>';
