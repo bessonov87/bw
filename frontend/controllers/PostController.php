@@ -237,7 +237,7 @@ class PostController extends Controller{
         }
 
         //return Yii::$app->params['frontendBaseUrl'].substr($post->link, 1);
-        $this->redirect(Yii::$app->params['frontendBaseUrl'].substr($post->link, 1), TRUE, 301);
+        $this->redirect(Yii::$app->params['frontendBaseUrl'].substr($post->link, 1), 301);
     }
 
     /**
