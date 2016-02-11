@@ -329,7 +329,7 @@ class SiteController extends Controller
     public function getRss() {
         $siteUrl = Yii::$app->params['frontendBaseUrl'];
         $rss = '<?xml version="1.0" encoding="UTF-8"?>
-        <rss xmlns:dc="http://purl.org/dc/elements/1.1/">
+        <rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
         <channel>
         <title>' . Yii::$app->params['site']['title'] . '</title>
         <link>' . $siteUrl . '</link>
