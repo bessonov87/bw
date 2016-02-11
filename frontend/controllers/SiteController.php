@@ -22,7 +22,7 @@ use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
 use yii\web\MethodNotAllowedHttpException;
-use yii\log\FileTarget;
+use yii\web\Response;
 
 /**
  * Site controller
@@ -308,7 +308,9 @@ class SiteController extends Controller
      * @return mixed|string
      */
     public function actionSitemap(){
-
+        $response = Yii::$app->response;
+        $response->format = Response::FORMAT_RAW;
+        $response->getHeaders()->set('Content-Type', 'application/xml; charset=utf-8');
         $xml_map = Yii::$app->cache->get('sitemap_xml');
         if(!$xml_map) {
             $xml_map = $this->generateSitemap();
