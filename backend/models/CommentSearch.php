@@ -67,8 +67,12 @@ class CommentSearch extends Comment
             'approve' => $this->approve,
         ]);
 
-        $query->andFilterWhere(['like', 'author', $this->author])
+        /*$query->andFilterWhere(['like', 'author', $this->author])
             ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'text_raw', $this->text_raw])
+            ->andFilterWhere(['like', 'text', $this->text])
+            ->andFilterWhere(['like', 'ip', $this->ip]);*/
+        $query->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'text_raw', $this->text_raw])
             ->andFilterWhere(['like', 'text', $this->text])
             ->andFilterWhere(['like', 'ip', $this->ip]);
