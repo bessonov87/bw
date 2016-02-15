@@ -5,10 +5,10 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Comment;
+use backend\models\Comment;
 
 /**
- * CommentSearch represents the model behind the search form about `common\models\Comment`.
+ * CommentSearch represents the model behind the search form about `backend\models\Comment`.
  */
 class CommentSearch extends Comment
 {
@@ -54,8 +54,6 @@ class CommentSearch extends Comment
             // $query->where('0=1');
             return $dataProvider;
         }
-
-        $query->orderBy(['date' => SORT_DESC]);
 
         $query->andFilterWhere([
             'id' => $this->id,

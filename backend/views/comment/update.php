@@ -3,12 +3,12 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Comment */
+/* @var $model backend\models\Comment */
 
-$this->title = 'Редактирование комментария: ID' . ' ' . $model->id;
+$this->title = 'Update Comment: ' . ' ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Comments', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Редактировать';
+$this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="comment-update">
 
