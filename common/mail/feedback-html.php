@@ -2,8 +2,8 @@
 use yii\helpers\Html;
 /* @var $this yii\web\View */
 ?>
-<p>Это письмо отправил(а) <strong><?= Html::encode($name) ?></strong></p>
+<p>Это письмо отправил(а) <strong><?= Html::encode($data->name) ?></strong></p>
 <p>==================================================</p>
-<p><?= Html::encode($text) ?></p>
+<p><?= Html::encode($data->message) ?></p>
 <p>==================================================</p>
-<p>IP адрес отправителя: <?= $ip ?></p>
+<p>IP адрес отправителя: <?= $data->ip ?></p>

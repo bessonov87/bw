@@ -2,11 +2,12 @@
 
 namespace app\models;
 
+use Yii;
 use yii\base\Model;
 
 class Contact2Form extends Model
 {
-    public $name, $email, $subject, $message;
+    public $name, $email, $subject, $message, $ip;
 
     public function rules(){
         return [
@@ -23,6 +24,7 @@ class Contact2Form extends Model
      */
     public function sendEmail()
     {
+        $this->ip = Yii::$app->request->userIP;
         return \Yii::$app->mailer->compose(['html' => 'feedback-html', 'text' => 'feedback-text'], ['data' => $this])
                     ->setFrom($this->email)
                     ->setTo(\Yii::$app->params['feedbackEmail'])
