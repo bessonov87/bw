@@ -33,8 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'post_id',
             'user_id',
             'date',
-            'author',
-            'email:email',
             'text_raw:ntext',
             'text:ntext',
             'ip',

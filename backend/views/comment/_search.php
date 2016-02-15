@@ -25,10 +25,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'date') ?>
 
-    <?php // echo $form->field($model, 'author') ?>
-
-    <?php // echo $form->field($model, 'email') ?>
-
     <?php // echo $form->field($model, 'text_raw') ?>
 
     <?php // echo $form->field($model, 'text') ?>
