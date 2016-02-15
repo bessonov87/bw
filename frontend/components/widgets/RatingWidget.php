@@ -6,9 +6,21 @@ use yii\base\Widget;
 use yii\helpers\Html;
 use frontend\models\PostsRating;
 
+/**
+ * RatingWidget формирует блок рейтинга статьи
+ *
+ * @author Sergey Bessonov <bessonov87@gmail.com>
+ * @version 1.0
+ */
 class RatingWidget extends Widget
 {
+    /**
+     * @var integer id статьи
+     */
     public $post_id;
+    /**
+     * @var string сообщение о результате выставления рейтинга
+     */
     public $message;
 
     public function getViewPath(){

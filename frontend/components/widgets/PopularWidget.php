@@ -8,17 +8,57 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use app\components\GlobalHelper;
 
+/**
+ * PopularWidget формирует список популярных статей
+ *
+ * В зависимости от переданных параметров, популярных статьи могут выводиться в виде нумерованного или
+ * ненумерованного списка, а также в виде тизеров. Изображения для тизера, если выбран данный тип, берется из статьи
+ * автоматически.
+ *
+ * @author Sergey Bessonov <bessonov87@gmail.com>
+ * @version 1.0
+ */
 class PopularWidget extends Widget
 {
+    /**
+     * @var int количество статей в списке
+     */
     public $numPosts = 10;
+    /**
+     * @var string css класс обертки списка
+     */
     public $listClass = 'popular';
+    /**
+     * @var string тип списка статей (ol, ul)
+     */
     public $listType;
+    /**
+     * @var bool оборачивать в div контейнер
+     */
     public $container = true;
+    /**
+     * @var string css класс контейнера
+     */
     public $containerClass;
+    /**
+     * @var bool список в виде тизеров
+     */
     public $tizerStyle = false;
+    /**
+     * @var int ширина изображения в тизере
+     */
     public $imageWidth = 70;
+    /**
+     * @var int максимальная длина заголовка статьи
+     */
     public $maxTitle = 120;
+    /**
+     * @var array допустимые типы списка
+     */
     private $_listTypes = ['ol', 'ul'];
+    /**
+     * @var string тип списка по умолчанию
+     */
     private $_defaultListType = 'ol';
 
     public function init(){

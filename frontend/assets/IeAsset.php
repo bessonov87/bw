@@ -4,6 +4,12 @@ namespace frontend\assets;
 
 use yii\web\AssetBundle;
 
+/**
+ * IeAsset подключает файлы для Internet Explorer ниже 9 версии
+ *
+ * @author Sergey Bessonov <bessonov87@gmail.com>
+ * @version 1.0
+ */
 class IeAsset extends AssetBundle
 {
     public $basePath = '@webroot';

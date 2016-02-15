@@ -5,9 +5,23 @@ use app\models\FavoritePosts;
 use Yii;
 use yii\base\Widget;
 
+/**
+ * FavoriteWidget формирует блок добавления статьи в избранное
+ *
+ * Описание класса
+ *
+ * @author Sergey Bessonov <bessonov87@gmail.com>
+ * @version 1.0
+ */
 class FavoriteWidget extends Widget
 {
+    /**
+     * @var integer ID статьи
+     */
     public $post_id;
+    /**
+     * @var string сообщение о результате добавления статьи в избранное
+     */
     public $message;
 
     public function getViewPath(){
@@ -37,11 +51,7 @@ class FavoriteWidget extends Widget
                     $inFavorite = true;
             }
         }
-
-        //var_dump($favorites);
-
         $options['button_class'] = ($inFavorite) ? 'favorite_button_yellow' : 'favorite_button_grey';
-
         return $this->render('favorite', ['options' => $options, 'message' => $this->message]);
     }
 }

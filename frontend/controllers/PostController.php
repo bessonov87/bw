@@ -15,70 +15,47 @@ use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
+/**
+ * Post controller
+ */
 class PostController extends Controller{
 
     /**
-     * Определение ID категории(й) для выборки анонсов
+     * Отображает анонсы статей
      *
-     * Категория ($cat) передается в формате строки вида 'category_url' или 'category_url/subcategory_url'.
-     * Если передана одна категория, метод вернет массив с ее ID и ID всех дочерних (подкатегорий) (за исключением
-     * случая, когда третьим параметром передан true; тогда метод вернет только ID данной категории без дочерних).
-     * Если передана подкатегория, метод вернет только ее ID в виде массива из одного элемента.
-     * Если в массиве категорий ($categories) нет такой категории, генерируется исключение NotFoundHttpException.
+     * Страницы с анонсами могут иметь несколько типов:
+     * byCat - по категории (показываются анонсы для статей данной категории и ее подкатегорий)
+     * byDate - по дате (показываются статьи по определенным датам - за год, за месяц, за день)
+     * index - главная страница (показывает анонсы всех статей, кроме запрещенных к показу на главной)
+     * В зависимости от типа, базовый запрос, определяемый в начале метода, дополняется соответствующими условиями.
      *
-     * @param $cat
-     * @param $categories
-     * @param $noChilds
-     * @return array
+     * Если категория представляет собой особый тип статьи (статья-категория), автоматически вызывается действие
+     * actionFull.
+     *
+     * @return string
      * @throws NotFoundHttpException
+     * @throws \app\components\NotFoundHttpException
      */
-    protected function postCategory($cat, $categories, $noChilds = false){
-        // Если адрес состоит из категории и подкатегории, выбираем только подкатегорию
-        if(strpos($cat, '/')){
-            $cats = explode('/', $cat);
-            $cat = end($cats);
-        }
-        // Переиндексируем массив категорий по значению url
-        $categories = ArrayHelper::index($categories, 'url');
-        if(!isset($categories[$cat])){
-            throw new NotFoundHttpException('Такого раздела на сайте не существует. Проверьте правильно ли вы скопировали или ввели адрес в адресную строку. Если вы перешли на эту страницу по ссылке с данного сайта, сообщите пожалуйста о неработающей ссылке нам с помощью обратной связи.');
-        }
-        //var_dump($categories[$cat]);
-        // Если у данной категории нет родительской, проверяем на наличие дочерних и добавляем их к запросу
-        if($categories[$cat]['parent_id'] == 0){
-            foreach($categories as $category){
-                if($category['parent_id'] == $categories[$cat]['id']){
-                    $categoryIds[] = $category['id'];
-                }
-            }
-        }
-        $categoryIds[] = $categories[$cat]['id'];
-        return $categoryIds;
-    }
-
     public function actionShort()
     {
         // Получаем список всех категорий, переиндексированный по id категорий
         $categories = GlobalHelper::getCategories();
-
         // Создаем объект ActiveQuery, общий для всех вариантов (категорий, поиска, вывода по датам)
         $query = Post::find()->where(['approve' => Post::APPROVED])
             ->orderBy(['date' => SORT_DESC]);
-
         // Определяем тип
         $type = Yii::$app->request->get('type');
         $subCategories = '';
         // Если выборка по категориям
         if($type == 'byCat'){
-            // Получаем id категорий
-            $categoryIds = $this->postCategory(Yii::$app->request->get('cat'), $categories);
+            // Получаем id категории и ее дочерних (если они есть) в виде массива
+            $categoryIds = GlobalHelper::getCategoryIdByUrl(Yii::$app->request->get('cat'));
             // Записываем id текущей категории в глобальный параметр
             $categoryId = GlobalHelper::getCategoryIdByUrl(Yii::$app->request->get('cat'), true);
             Yii::$app->params['category'] = $categoryId;
             // Проверяем, является ли категория статьей и если да, запускаем метод actionFull
             if($categories[$categoryId[0]]['category_art'] != 0) {
                 Yii::$app->params['category_art'] = $categories[$categoryId[0]]['category_art'];
-
                 return $this->actionFull();
             }
             // Если страница первая, проверяем, есть ли у данной категории подкатегории.
@@ -94,7 +71,6 @@ class PostController extends Controller{
                     $subCategories = $this->renderPartial('short_cat', ['categories' => $subCats]);
                 }
             }
-
             // Получаем список постов для данных категорий
             $cateroryPostIds = PostCategory::find()
                 ->asArray()
@@ -112,13 +88,10 @@ class PostController extends Controller{
             $y = (Yii::$app->request->get('year')) ? Yii::$app->request->get('year') : date('Y');
             $m = Yii::$app->request->get('month');
             $d = Yii::$app->request->get('day');
-
             // Записываем дату в глобальный параметр для постраничной навигации
             Yii::$app->params['date'] = $y . ($m ? '/'.$m : '') . ($d ? '/'.$d : '');
-
             $date = $y;
             $dateFormat = '%Y';
-
             // Если задан месяц
             if($m){
                 $dateFormat .= '-%m';
@@ -128,22 +101,20 @@ class PostController extends Controller{
                     $date .= '-'.$d;
                 }
             }
-
             $query->andWhere("DATE_FORMAT( DATE, '$dateFormat' ) = :date", [':date' => $date]);
         }
-
         // Если главная страница и просто страницы
         if(!$type || $type == 'index') {
             $query->andWhere(['allow_main' => 1]);
         }
-
+        // Постраничная навигация
         $countPosts = clone $query;
         $pages = new Pagination(['totalCount' => $countPosts->count(), 'route' => 'post/short']);
         $posts = $query->offset($pages->offset)
             ->limit($pages->limit)
             ->with('postCategories')
             ->all();
-
+        // Рендеринг контента
         return $this->render('short', ['posts' => $posts, 'pages' => $pages, 'categories' => $categories, 'subCategories' => $subCategories]);
     }
 

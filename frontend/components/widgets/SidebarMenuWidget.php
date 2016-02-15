@@ -6,6 +6,18 @@ use yii\base\Widget;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+/**
+ * SidebarMenuWidget формирует меню в сайдбаре
+ *
+ * Пункты меню передаются в свойство items. Должны иметь формат:
+ * 'items' => [
+ *      ['label' => 'Текст ссылки', 'url' => ['маршрут']],      // Ссылка в виде маршрута (controllerID/actionID)
+ *      ['label' => 'Текст ссылки', 'url' => 'адрес ссылки'],   // Ссылка в виде строки
+ * ];
+ *
+ * @author Sergey Bessonov <bessonov87@gmail.com>
+ * @version 1.0
+ */
 class SidebarMenuWidget extends Widget
 {
     public $items = [];
@@ -17,10 +29,9 @@ class SidebarMenuWidget extends Widget
     }
 
     public function run() {
-
-        if(empty($this->items))
-            return '***';
-
+        if(empty($this->items)) {
+            return '';
+        }
         $result = '';
         foreach($this->items as $item) {
             $showItem = false;
@@ -38,13 +49,10 @@ class SidebarMenuWidget extends Widget
             } else {
                 $showItem = true;
             }
-
             if($showItem) {
                 $result .= Html::a($item['label'], $item['url']);
             }
         }
-
         return Html::tag('div', $result, ['class' => $this->cssClass]);
-
     }
 }

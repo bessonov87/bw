@@ -4,6 +4,12 @@ namespace app\components\widgets;
 use common\models\LoginForm;
 use yii\base\Widget;
 
+/**
+ * LoginWidget
+ *
+ * @author Sergey Bessonov <bessonov87@gmail.com>
+ * @version 1.0
+ */
 class LoginWidget extends Widget
 {
 

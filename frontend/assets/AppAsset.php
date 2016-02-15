@@ -10,6 +10,8 @@ namespace frontend\assets;
 use yii\web\AssetBundle;
 
 /**
+ * AppAsset подключает стили и скрипты для приложения
+ *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */

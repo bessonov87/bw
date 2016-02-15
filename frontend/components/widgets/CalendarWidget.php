@@ -11,6 +11,17 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use app\components\GlobalHelper;
 
+/**
+ * CalendarWidget отвечает за формирование календаря в сайдбаре
+ *
+ * В зависимости от значения свойства noControls, календарь будет (если false) или не будет (если true)
+ * формироваться с кнопка перехода на следующий и предыдущий месяцы. При первоначальном формировании календаря, он
+ * должен выводиться с кнопками управления, при ajax запросах кнопки управления остаются, обновляется непосредствено
+ * сам календарь.
+ *
+ * @author Sergey Bessonov <bessonov87@gmail.com>
+ * @version 1.0
+ */
 class CalendarWidget extends Widget
 {
     public $month;
