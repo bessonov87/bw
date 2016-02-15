@@ -15,6 +15,7 @@ use Yii;
  * @property string $author
  * @property string $email
  * @property string $text
+ * @property string $text_raw
  * @property string $ip
  * @property integer $is_register
  * @property integer $approve
@@ -39,7 +40,7 @@ class Comment extends \yii\db\ActiveRecord
     {
         return [
             [['reply_to', 'post_id', 'user_id', 'is_register', 'approve'], 'integer'],
-            [['date'], 'safe'],
+            [['date', 'text_raw'], 'safe'],
             [['text'], 'required'],
             [['text'], 'string'],
             [['author', 'email', 'ip'], 'string', 'max' => 40]
