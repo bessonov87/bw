@@ -28,7 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'reply_to',
             'post_id',
-            'user_id',
+            [
+                'attribute'=>'user_id',
+                'format' => 'raw',
+                'value' => function ($comment) {
+                    return Html::a(Html::encode($comment->user_id),['user/view', 'id' => $comment->user_id]);
+                },
+            ],
             'date',
             // 'text_raw:ntext',
             'text:ntext',
