@@ -33,6 +33,7 @@
                     ['label' => 'Меню Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Статьи', 'icon' => 'fa fa-file-text-o', 'url' => ['post/index']],
                     ['label' => 'Категории', 'icon' => 'fa fa-file-text-o', 'url' => ['category/index']],
+                    ['label' => 'Комментарии', 'icon' => 'fa fa-comment-o', 'url' => ['comment/index']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [
                         'label' => 'Логи',

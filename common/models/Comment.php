@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "comment".
  *
  * @property string $id
+ * @property string $reply_to
  * @property string $post_id
  * @property string $user_id
  * @property string $date
@@ -37,7 +38,7 @@ class Comment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['post_id', 'user_id', 'is_register', 'approve'], 'integer'],
+            [['reply_to', 'post_id', 'user_id', 'is_register', 'approve'], 'integer'],
             [['date'], 'safe'],
             [['text'], 'required'],
             [['text'], 'string'],
@@ -52,13 +53,14 @@ class Comment extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'post_id' => 'Post ID',
-            'user_id' => 'User ID',
-            'date' => 'Date',
-            'author' => 'Author',
+            'reply_to' => 'Ответ на',
+            'post_id' => 'ID статьи',
+            'user_id' => 'User',
+            'date' => 'Добавлен',
+            'author' => 'Автор',
             'email' => 'Email',
             'text' => 'Text',
-            'ip' => 'Ip',
+            'ip' => 'IP',
             'is_register' => 'Is Register',
             'approve' => 'Approve',
         ];
