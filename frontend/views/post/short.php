@@ -2,10 +2,10 @@
 
 /** @var \yii\data\Pagination $pages */
 
-use yii\jui\DatePicker;
-use yii\widgets\LinkPager;
+//use yii\jui\DatePicker;
+//use yii\widgets\LinkPager;
 use app\components\MyLinkPager;
-use yii\helpers\Url;
+//use yii\helpers\Url;
 use app\components\GlobalHelper;
 
 if($pages->page >0 || array_key_exists('category', Yii::$app->params)){

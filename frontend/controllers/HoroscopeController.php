@@ -16,6 +16,9 @@ class HoroscopeController extends Controller
     }
 
     public function actionMonth() {
+        $phaseImage = [];
+        $allDays = [];
+        $goodDays = [];
         $month = Yii::$app->request->get('month');
         $moonMonthNum = GlobalHelper::engMonth($month, 'i', true);
 
@@ -29,7 +32,7 @@ class HoroscopeController extends Controller
         $moonYear = (date('m') == 12 && $moonMonthNum != 12) ? date('Y')+1 : date('Y');
 
         // Ссылки на лунные календари стрижек
-        $moonHairLinks = AppData::getMoonHairLinks($moonYear);
+        //$moonHairLinks = AppData::getMoonHairLinks($moonYear);
 
         // Дата для запроса
         $moonMonthYear = $moonYear.'-'.sprintf("%02d", $moonMonthNum);

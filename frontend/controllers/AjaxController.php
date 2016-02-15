@@ -1,13 +1,14 @@
 <?php
 namespace frontend\controllers;
 
-use app\components\FavoriteWidget;
+use app\components\widgets\FavoriteWidget;
 use app\models\FavoritePosts;
 use frontend\models\PostsRating;
 use Yii;
 use yii\web\Controller;
-use app\components\CalendarWidget;
-use app\components\RatingWidget;
+use yii\db\IntegrityException;
+use app\components\widgets\CalendarWidget;
+use app\components\widgets\RatingWidget;
 
 class AjaxController extends Controller
 {
@@ -21,9 +22,11 @@ class AjaxController extends Controller
         if(Yii::$app->request->get('date')){
             return CalendarWidget::widget(['date' => Yii::$app->request->get('date'), 'noControls' => true]);
         }
+        return '';
     }
 
     public function actionRating(){
+        $message = '';
         if((Yii::$app->request->get('score') == 1 || Yii::$app->request->get('score') == -1) && Yii::$app->request->get('post_id')){
             $postId = Yii::$app->request->get('post_id');
             $score = Yii::$app->request->get('score');
@@ -38,7 +41,7 @@ class AjaxController extends Controller
                     } else {
                         $message = current($rating->errors)[0];
                     }
-                } catch(yii\db\IntegrityException $e) {
+                } catch(IntegrityException $e) {
                     if(strpos($e->errorInfo[2], 'foreign key')){
                         $message = 'Ошибка. Неверный ID статьи';
                     }
@@ -53,6 +56,8 @@ class AjaxController extends Controller
     }
 
     public function actionFavorite() {
+        $message = '';
+        $postId = 0;
         if(!Yii::$app->request->get('post_id'))
             return 'Ошибка';
         if(!Yii::$app->user->isGuest) {
@@ -66,7 +71,7 @@ class AjaxController extends Controller
                 } else {
                     $message = current($favorite->errors)[0];
                 }
-            } catch(yii\db\IntegrityException $e) {
+            } catch(IntegrityException $e) {
                 if(strpos($e->errorInfo[2], 'foreign key')){
                     $message = 'Ошибка. Неверный ID статьи';
                 }

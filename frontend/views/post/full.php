@@ -3,11 +3,11 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
-use app\components\SimilarPostsWidget;
+use app\components\widgets\SimilarPostsWidget;
 use app\components\GlobalHelper;
-use app\components\CommentsWidget;
-use app\components\RatingWidget;
-use app\components\FavoriteWidget;
+use app\components\widgets\CommentsWidget;
+use app\components\widgets\RatingWidget;
+use app\components\widgets\FavoriteWidget;
 
 foreach(GlobalHelper::getCategoryBreadcrumb(Yii::$app->params['category'][0]) as $cBreadcrumb) {
     $this->params['breadcrumbs'][] = ['label' => Html::a($cBreadcrumb['label'], $cBreadcrumb['link']), 'encode' => false];

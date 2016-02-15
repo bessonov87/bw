@@ -10,8 +10,12 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use frontend\assets\IeAsset;
 use common\widgets\Alert;
-use app\components\SidebarMenuWidget;
-use app\components\AdvertWidget;
+use app\components\widgets\SidebarMenuWidget;
+use app\components\widgets\AdvertWidget;
+use app\components\widgets\HoroscopeWidget;
+use app\components\widgets\LoginWidget;
+use app\components\widgets\CalendarWidget;
+use app\components\widgets\PopularWidget;
 
 AppAsset::register($this);
 IeAsset::register($this);
@@ -140,7 +144,7 @@ IeAsset::register($this);
             <div id="sidebar-item">
                 <div id="sidebar-item-top" class="sidebar-item-pink"><a href="http://astrolis.ru/goroskop/na-den/" target="_blank">Гороскоп на сегодня</a></div>
                 <div id="sidebar-item-content">
-                    <?= \app\components\HoroscopeWidget::widget() ?>
+                    <?= HoroscopeWidget::widget() ?>
                 </div>
             </div>
             <!-- Конец Блок Гороскоп -->
@@ -197,7 +201,7 @@ IeAsset::register($this);
             <div id="sidebar-item">
                 <div id="sidebar-item-top" class="sidebar-item-green">Вход на сайт</div>
                 <div id="sidebar-item-content">
-                    <?= \app\components\LoginWidget::widget() ?>
+                    <?= LoginWidget::widget() ?>
                 </div>
             </div>
             <!-- Конец Блок Вход на сайт -->
@@ -206,7 +210,7 @@ IeAsset::register($this);
             <div id="sidebar-item">
                 <div id="sidebar-item-top" class="sidebar-item-orange">Календарь</div>
                 <div id="sidebar-item-content">
-                    <?= \app\components\CalendarWidget::widget() ?>
+                    <?= CalendarWidget::widget() ?>
                 </div>
             </div>
             <!-- Конец Блок Календарь -->
@@ -215,7 +219,7 @@ IeAsset::register($this);
             <div id="sidebar-item">
                 <div id="sidebar-item-top" class="sidebar-item-pink">Популярное</div>
                 <div id="sidebar-item-content">
-                    <?= \app\components\PopularWidget::widget(['numPosts' => 10, 'listType' => 'ol']) ?>
+                    <?= PopularWidget::widget(['numPosts' => 10, 'listType' => 'ol']) ?>
                 </div>
             </div>
             <!-- Конец Популярное -->

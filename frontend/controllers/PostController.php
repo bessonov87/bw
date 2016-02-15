@@ -3,9 +3,9 @@ namespace frontend\controllers;
 
 use app\components\GlobalHelper;
 use app\components\PostAdditions;
-use app\components\SocialButtonsWidget;
+use app\components\widgets\SocialButtonsWidget;
 use app\models\Advert;
-use frontend\models\Category;
+use app\models\Category;
 use frontend\models\PostCategory;
 use frontend\models\CommentForm;
 use frontend\models\Post;

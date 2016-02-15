@@ -3,11 +3,11 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
-use app\components\PostHelper;
+//use app\components\PostHelper;
 use app\components\GlobalHelper;
-use app\components\CommentsWidget;
-use app\components\RatingWidget;
-use app\components\FavoriteWidget;
+use app\components\widgets\CommentsWidget;
+use app\components\widgets\RatingWidget;
+use app\components\widgets\FavoriteWidget;
 
 $this->params['breadcrumbs'][] = $post->title;
 

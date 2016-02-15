@@ -8,8 +8,8 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use frontend\assets\IeAsset;
 use common\widgets\Alert;
-use app\components\SidebarMenuWidget;
-use app\components\AdvertWidget;
+use app\components\widgets\SidebarMenuWidget;
+//use app\components\widgets\AdvertWidget;
 
 AppAsset::register($this);
 IeAsset::register($this);
