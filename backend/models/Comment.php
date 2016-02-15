@@ -30,7 +30,7 @@ class Comment extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'comment';
+        return '{{%comment}}';
     }
 
     /**
