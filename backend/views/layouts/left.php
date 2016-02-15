@@ -2,17 +2,7 @@
 
     <section class="sidebar">
 
-        <!-- Sidebar user panel -->
-        <div class="user-panel">
-            <div class="pull-left image">
-                <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
-            </div>
-            <div class="pull-left info">
-                <p><?= Yii::$app->user->identity->username ?></p>
-
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-            </div>
-        </div>
+        <?= \app\components\widgets\UserWidget::widget() ?>
 
         <!-- search form -->
         <form action="#" method="get" class="sidebar-form">
@@ -34,6 +24,7 @@
                     ['label' => 'Статьи', 'icon' => 'fa fa-file-text-o', 'url' => ['post/index']],
                     ['label' => 'Категории', 'icon' => 'fa fa-file-text-o', 'url' => ['category/index']],
                     ['label' => 'Комментарии', 'icon' => 'fa fa-comment-o', 'url' => ['comment/index']],
+                    ['label' => 'Пользователи', 'icon' => 'fa fa-users', 'url' => ['user/index']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [
                         'label' => 'Логи',
