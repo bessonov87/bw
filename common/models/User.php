@@ -308,4 +308,8 @@ class User extends ActiveRecord implements IdentityInterface
 
         return $country.'/'.$city;
     }
+
+    public function getRegisterDate(){
+        return date('Y-m-d H:i', $this->created_at);
+    }
 }
