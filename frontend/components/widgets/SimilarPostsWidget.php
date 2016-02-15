@@ -1,6 +1,6 @@
 <?php
 
-namespace app\components;
+namespace app\components\widgets;
 
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -18,6 +18,9 @@ use yii\base\Widget;
  * string class - класс div обертки (по умолчанию similar_posts)
  * boolean manual - ручная установка ссылок на статьи (в данном случае в $post->similarPosts вручную в свойстве url
  * указывается полностью вся ссылка). Таким образом, для формирования ссылки берется только title и url.
+ *
+ * @author Sergey Bessonov <bessonov87@gmail.com>
+ * @since 1.0
  */
 class SimilarPostsWidget extends Widget {
 

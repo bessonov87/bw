@@ -1,6 +1,6 @@
 <?php
 
-namespace app\components;
+namespace app\components\widgets;
 
 use frontend\models\Post;
 use yii\base\Widget;

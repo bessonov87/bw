@@ -1,5 +1,5 @@
 <?php
-namespace app\components;
+namespace app\components\widgets;
 
 use yii\base\Widget;
 use common\models\Advert;

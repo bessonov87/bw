@@ -1,5 +1,5 @@
 <?php
-namespace app\components;
+namespace app\components\widgets;
 
 use app\models\FavoritePosts;
 use Yii;

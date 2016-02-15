@@ -1,5 +1,5 @@
 <?php
-namespace app\components;
+namespace app\components\widgets;
 
 use common\models\LoginForm;
 use yii\base\Widget;
