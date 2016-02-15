@@ -19,7 +19,7 @@ class CommentSearch extends Comment
     {
         return [
             [['id', 'reply_to', 'post_id', 'user_id', 'is_register', 'approve'], 'integer'],
-            [['date', 'author', 'email', 'text_raw', 'text', 'ip'], 'safe'],
+            [['date', 'text_raw', 'text', 'ip'], 'safe'],
         ];
     }
 
@@ -65,9 +65,7 @@ class CommentSearch extends Comment
             'approve' => $this->approve,
         ]);
 
-        $query->andFilterWhere(['like', 'author', $this->author])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'text_raw', $this->text_raw])
+        $query->andFilterWhere(['like', 'text_raw', $this->text_raw])
             ->andFilterWhere(['like', 'text', $this->text])
             ->andFilterWhere(['like', 'ip', $this->ip]);
 
