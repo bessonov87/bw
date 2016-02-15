@@ -19,7 +19,7 @@ class CommentSearch extends Comment
     {
         return [
             [['id', 'reply_to', 'post_id', 'user_id', 'is_register', 'approve'], 'integer'],
-            [['date', 'text_raw', 'text', 'ip'], 'safe'],
+            [['date', 'author', 'text_raw', 'text', 'ip'], 'safe'],
         ];
     }
 
