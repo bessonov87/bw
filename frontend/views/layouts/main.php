@@ -16,6 +16,7 @@ use app\components\widgets\HoroscopeWidget;
 use app\components\widgets\LoginWidget;
 use app\components\widgets\CalendarWidget;
 use app\components\widgets\PopularWidget;
+use app\components\widgets\SearchWidget;
 
 AppAsset::register($this);
 IeAsset::register($this);
@@ -44,19 +45,8 @@ IeAsset::register($this);
         <div id="logo-text"><h1>Женский журнал - Секреты здоровья и красоты</h1></div>
     </div>
     <div id="top-nav">
-        <div id="top-nav-search">
-            <div class="box">
-                <form action='' method="post" target="_top" >
-                    <div class="container-4">
-                        <input type="hidden" name="do" value="search" />
-                        <input type="search" id="search" name="story" placeholder="Поиск..." />
-                        <button class="icon"><i class="fa fa-search"></i></button>
-                    </div>
-                </form>
-            </div>
+        <?= SearchWidget::widget() ?>
 
-
-        </div>
         <span onclick="toggle_menu();" class="toggle_butt mobile-nav"></span>
         <ul class="solidblockmenu">
             <?php

@@ -7,6 +7,7 @@ use app\models\Contact2Form;
 use common\models\User;
 use frontend\models\ConfirmEmailForm;
 use frontend\models\Post;
+use frontend\models\SearchForm;
 use Yii;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
@@ -298,6 +299,23 @@ class SiteController extends Controller
         }
 
         return $this->render('contact2Form', ['model' => $model]);
+    }
+
+    public function actionSearch() {
+        $posts = [];
+        $date = date('Y-m-d H:i:s');
+        $searchModel = new SearchForm();
+        if ($searchModel->load(Yii::$app->request->post()) && $searchModel->validate()) {
+
+
+            $posts = Post::find()
+                ->where(['approve' => Post::APPROVED])
+                ->andWhere('date <=\''.$date.'\'')
+                ->limit(20)
+                ->all();
+        }
+
+        return $this->render('@app/views/post/search', ['searchModel' => $searchModel, 'posts' => $posts]);
     }
 
     /**

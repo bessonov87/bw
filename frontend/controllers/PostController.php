@@ -9,6 +9,7 @@ use app\models\Category;
 use frontend\models\PostCategory;
 use frontend\models\CommentForm;
 use frontend\models\Post;
+use frontend\models\SearchForm;
 use Yii;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
@@ -80,7 +81,6 @@ class PostController extends Controller{
             $postIds = ArrayHelper::getColumn($cateroryPostIds, 'post_id');
             // Добавляем условие к запросу на выборку статей
             $query->andWhere(['in', 'id', $postIds]);
-
         }
         // Если выборка по датам
         if($type == 'byDate') {
