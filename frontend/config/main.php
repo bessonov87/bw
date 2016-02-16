@@ -41,6 +41,12 @@ return [
             'class' => '\frontend\components\SlUrlManager',
             'rules' => require(__DIR__ . '/rules.php'),
         ],
+        'elasticsearch' => [
+            'class' => 'yii\elasticsearch\Connection',
+            'nodes' => [
+                ['http_address' => '127.0.0.1:9200'],
+            ],
+        ],
     ],
     'params' => $params,
 ];

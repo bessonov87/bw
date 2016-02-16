@@ -260,4 +260,15 @@ class GlobalHelper
         return "$day $month $year, $time";
     }
 
+    /**
+     * Возвращает символ по номеру из строки в кодировке UTF-8
+     *
+     * @param $str строка utf-8
+     * @param $pos позиция символа
+     * @return string символ
+     */
+    public static function utf8char($str, $pos) {
+        return mb_substr($str,$pos,1,'UTF-8');
+    }
+
 }

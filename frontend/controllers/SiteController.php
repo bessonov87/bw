@@ -306,11 +306,13 @@ class SiteController extends Controller
         $date = date('Y-m-d H:i:s');
         $searchModel = new SearchForm();
         if ($searchModel->load(Yii::$app->request->post()) && $searchModel->validate()) {
-
-
             $posts = Post::find()
-                ->where(['approve' => Post::APPROVED])
-                ->andWhere('date <=\''.$date.'\'')
+                ->select("*, MATCH(short, full, title, meta_title) AGAINST('$searchModel->story') as rel")
+                ->where("MATCH(short, full, title, meta_title) AGAINST('$searchModel->story')")
+                ->andWhere(['approve' => Post::APPROVED])
+                ->andWhere(['category_art' => 0])
+                ->with('postCategories')
+                ->orderBy(['rel' => SORT_DESC])
                 ->limit(20)
                 ->all();
         }

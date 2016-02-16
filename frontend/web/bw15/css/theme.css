@@ -229,6 +229,12 @@ body {
     padding: 5px 8px 25px 8px;
 }
 
+.search-short:after {
+    clear: both;
+    content: '';
+    display: block;
+}
+
 .social-top{
     float: left;
     border: 1px solid #ABABAB;

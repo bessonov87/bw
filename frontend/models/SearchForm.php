@@ -22,4 +22,14 @@ class SearchForm extends Model
             ['story', 'string', 'min' => 3, 'max' => 50],
         ];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'story' => 'Поисковая фраза',
+        ];
+    }
 }
