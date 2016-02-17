@@ -1,11 +1,12 @@
 <?php
 
-namespace frontend\models;
+namespace common\models;
 
 use yii\db\ActiveRecord;
 use common\models\Comment;
-use app\models\Category;
+use common\models\Category;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 use app\components\GlobalHelper;
 
 /**
@@ -44,6 +45,7 @@ use app\components\GlobalHelper;
 class Post extends ActiveRecord
 {
     const APPROVED = 1;
+    const NOT_APPROVED = 0;
 
     /**
      * @inheritdoc
@@ -98,6 +100,29 @@ class Post extends ActiveRecord
         return $this->hasMany(Category::className(), ['id' => 'category_id'])
             ->viaTable('post_category', ['post_id' => 'id']);
     }*/
+
+    /**
+     * Возвращает название статуса статьи по значению из базы
+     *
+     * @return mixed
+     */
+    public function getStatusName()
+    {
+        return ArrayHelper::getValue(self::getStatusesArray(), $this->approve);
+    }
+
+    /**
+     * Возвращает массив со статусами статей
+     *
+     * @return array
+     */
+    public static function getStatusesArray()
+    {
+        return [
+            self::APPROVED => 'Разрешена',
+            self::NOT_APPROVED => 'Запрещена',
+        ];
+    }
 
     // Второй способ связи
     public function getPostCategories(){
