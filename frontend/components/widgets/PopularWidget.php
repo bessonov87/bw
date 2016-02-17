@@ -2,11 +2,9 @@
 
 namespace app\components\widgets;
 
-use frontend\models\Post;
 use yii\base\Widget;
 use yii\helpers\Html;
-use yii\helpers\Url;
-use app\components\GlobalHelper;
+use common\models\ar\Post;
 
 /**
  * PopularWidget формирует список популярных статей
@@ -80,7 +78,6 @@ class PopularWidget extends Widget
         }
         // Пробегаемся по выбранным numPosts постам
         foreach($posts as $post){
-            //$cat = GlobalHelper::getCategoryUrlById($post->categories[0]['id']);
             // Проверяем соответствует ли заголовок статьи максимальной длине (maxTitle). Если нет, укорачиваем его
             $linkTitle = (strlen($post['title']) <= $this->maxTitle) ? $post['title'] : $this->cutTitle($post['title']);
             // Формируем ссылку

@@ -18,7 +18,7 @@ return [
             'appendTimestamp' => true,
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'common\models\ar\User',
             'enableAutoLogin' => true,
         ],
         'log' => [

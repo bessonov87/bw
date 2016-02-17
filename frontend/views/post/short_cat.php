@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-use app\components\GlobalHelper;
+use common\components\helpers\GlobalHelper;
 ?>
 
 <?php

@@ -2,11 +2,8 @@
 
 /** @var \yii\data\Pagination $pages */
 
-//use yii\jui\DatePicker;
-//use yii\widgets\LinkPager;
 use app\components\MyLinkPager;
-//use yii\helpers\Url;
-use app\components\GlobalHelper;
+use common\components\helpers\GlobalHelper;
 
 if($pages->page >0 || array_key_exists('category', Yii::$app->params)){
     $this->title = Yii::$app->params['site']['shortTitle'];
@@ -59,11 +56,3 @@ endforeach;
 
 $cat = (array_key_exists('category', Yii::$app->params)) ? Yii::$app->params['category'] : '';
 echo MyLinkPager::widget(['pagination' => $pages, 'cat' => $cat]);
-
-/*echo DatePicker::widget([
-    'language' => 'ru',
-    'name' => 'country',
-    'clientOptions' => [
-        'dateFormat' => 'yy-mm-dd',
-    ]
-]);*/

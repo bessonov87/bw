@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Post;
+use common\models\ar\Post;
 use app\models\PostSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

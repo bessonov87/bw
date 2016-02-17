@@ -1,7 +1,8 @@
 <?php
 
 /** @var \yii\data\Pagination $pages */
-/** @var \frontend\models\Post $post */
+/** @var \common\models\ar\Post $post */
+/** @var \frontend\models\form\SearchForm $searchModel */
 
 //use yii\jui\DatePicker;
 //use yii\widgets\LinkPager;
@@ -9,7 +10,7 @@ use app\components\MyLinkPager;
 //use Yii;
 use yii\helpers\Html;
 use app\components\widgets\SearchWidget;
-use app\components\GlobalHelper;
+use common\components\helpers\GlobalHelper;
 
 $this->title = 'Поиск по сайту';
 // Если задана поисковая фраза

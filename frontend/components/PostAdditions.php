@@ -1,9 +1,10 @@
 <?php
 
 namespace app\components;
-use app\models\MoonCal;
-use yii\helpers\Html;
 
+use yii\helpers\Html;
+use common\models\ar\MoonCal;
+use common\components\helpers\GlobalHelper;
 
 /**
  * Class PostAdditions

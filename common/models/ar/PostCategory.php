@@ -1,5 +1,5 @@
 <?php
-namespace frontend\models;
+namespace common\models\ar;
 
 use yii\db\ActiveRecord;
 

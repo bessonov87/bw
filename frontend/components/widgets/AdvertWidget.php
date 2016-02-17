@@ -2,7 +2,7 @@
 namespace app\components\widgets;
 
 use yii\base\Widget;
-use common\models\Advert;
+use common\models\ar\Advert;
 
 /**
  * AdvertWidget подключает рекламу
@@ -27,12 +27,11 @@ class AdvertWidget extends Widget
      * @return string
      */
     public function run(){
+        /** @var Advert $advert */
         if(!$this->block_number){
             return '';
         }
-
         $advert = Advert::findOne(['block_number' => $this->block_number]);
-
         return ($advert) ? $advert->code : '';
     }
 

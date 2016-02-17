@@ -1,20 +1,19 @@
 <?php
 namespace frontend\controllers;
 
-use app\components\GlobalHelper;
-use app\components\PostAdditions;
-use app\components\widgets\SocialButtonsWidget;
-use app\models\Advert;
-use app\models\Category;
-use frontend\models\PostCategory;
-use frontend\models\CommentForm;
-use frontend\models\Post;
-use frontend\models\SearchForm;
 use Yii;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use common\models\ar\Advert;
+use common\models\ar\PostCategory;
+use common\models\ar\Post;
+use common\components\helpers\GlobalHelper;
+use app\components\PostAdditions;
+use app\components\widgets\SocialButtonsWidget;
+use frontend\models\form\CommentForm;
+use frontend\models\form\SearchForm;
 
 /**
  * Post controller
@@ -35,7 +34,7 @@ class PostController extends Controller{
      *
      * @return string
      * @throws NotFoundHttpException
-     * @throws \app\components\NotFoundHttpException
+     * @throws \app\components\TemporaryUnavailableException
      */
     public function actionShort()
     {

@@ -1,9 +1,9 @@
 <?php
 namespace app\components\widgets;
 
-use app\models\FavoritePosts;
 use Yii;
 use yii\base\Widget;
+use common\models\ar\FavoritePosts;
 
 /**
  * FavoriteWidget формирует блок добавления статьи в избранное

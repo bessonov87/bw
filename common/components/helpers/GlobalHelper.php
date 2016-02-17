@@ -1,8 +1,8 @@
 <?php
-namespace app\components;
+namespace common\components\helpers;
 
 use Yii;
-use app\models\Category;
+use common\models\ar\Category;
 use yii\helpers\ArrayHelper;
 
 class GlobalHelper

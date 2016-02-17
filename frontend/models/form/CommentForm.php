@@ -1,8 +1,9 @@
 <?php
-namespace frontend\models;
+namespace frontend\models\form;
 
-use common\models\Comment;
-use common\models\User;
+use common\models\ar\Comment;
+use common\models\ar\User;
+use common\models\ar\Post;
 use Yii;
 use yii\base\Model;
 use yii\helpers\HtmlPurifier;

@@ -1,10 +1,11 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $user common\models\ar\User */
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use common\models\User;
+use common\models\ar\User;
 
 ?>
 <div class="login_block">

@@ -3,11 +3,11 @@
 namespace backend\controllers;
 
 use Yii;
-use app\models\Category;
-use backend\models\CategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\ar\Category;
+use backend\models\CategorySearch;
 
 /**
  * CategoryController implements the CRUD actions for Category model.

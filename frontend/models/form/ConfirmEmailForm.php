@@ -1,10 +1,10 @@
 <?php
-namespace frontend\models;
+namespace frontend\models\form;
 
-use common\models\User;
+use Yii;
 use yii\base\InvalidParamException;
 use yii\base\Model;
-use Yii;
+use common\models\ar\User;
 
 /**
  * Password reset form
@@ -15,7 +15,7 @@ class ConfirmEmailForm extends Model
     public $userFound = false;
 
     /**
-     * @var \common\models\User
+     * @var \common\models\ar\User
      */
     private $_user = null;
 

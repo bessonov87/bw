@@ -3,8 +3,7 @@
 namespace app\components\widgets;
 
 use yii\base\Widget;
-use yii\helpers\Html;
-use frontend\models\PostsRating;
+use common\models\ar\PostsRating;
 
 /**
  * RatingWidget формирует блок рейтинга статьи

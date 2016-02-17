@@ -2,14 +2,14 @@
 
 namespace app\components\widgets;
 
-use frontend\models\Post;
 use yii\base\Widget;
 use yii\db\ActiveRecord;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use app\components\GlobalHelper;
+use common\models\ar\Post;
+use common\components\helpers\GlobalHelper;
 
 /**
  * CalendarWidget отвечает за формирование календаря в сайдбаре

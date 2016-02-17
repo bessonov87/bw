@@ -1,29 +1,26 @@
 <?php
 namespace frontend\controllers;
 
-use app\components\GlobalHelper;
-use app\components\TemporaryUnavailableException;
-use app\models\Contact2Form;
-use common\models\User;
-use frontend\models\ConfirmEmailForm;
-use frontend\models\Post;
-use frontend\models\SearchForm;
 use Yii;
-use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
-use frontend\models\ContactForm;
-use yii\base\ErrorException;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
-use yii\web\MethodNotAllowedHttpException;
 use yii\web\Response;
+use common\models\ar\User;
+use common\models\ar\Post;
+use common\models\LoginForm;
+use frontend\models\form\Contact2Form;
+use frontend\models\form\ConfirmEmailForm;
+use frontend\models\form\SearchForm;
+use frontend\models\form\PasswordResetRequestForm;
+use frontend\models\form\ResetPasswordForm;
+use frontend\models\form\SignupForm;
+use frontend\models\form\ContactForm;
+use app\components\TemporaryUnavailableException;
+use common\components\helpers\GlobalHelper;
 
 /**
  * Site controller

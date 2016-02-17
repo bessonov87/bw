@@ -1,8 +1,8 @@
 <?php
 namespace app\components\widgets;
 
-use common\models\LoginForm;
 use yii\base\Widget;
+use common\models\LoginForm;
 
 /**
  * LoginWidget

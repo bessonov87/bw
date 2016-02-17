@@ -3,7 +3,7 @@
 namespace app\components\widgets;
 
 use yii\base\Widget;
-use frontend\models\SearchForm;
+use frontend\models\form\SearchForm;
 
 class SearchWidget extends Widget
 {

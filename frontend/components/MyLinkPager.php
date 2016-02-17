@@ -4,7 +4,7 @@ namespace app\components;
 use Yii;
 use yii\widgets\LinkPager;
 use yii\helpers\Html;
-//use yii\data\Pagination;
+use common\components\helpers\GlobalHelper;
 
 
 class MyLinkPager extends LinkPager

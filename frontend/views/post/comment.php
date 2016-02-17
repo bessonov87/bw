@@ -1,7 +1,8 @@
 <?php
 /* @var $this yii\web\View */
+/* @var $comment common\models\ar\Comment */
 
-use app\components\GlobalHelper;
+use common\components\helpers\GlobalHelper;
 use yii\helpers\Html;
 
 //if($_SERVER['REMOTE_ADDR'] == '37.26.135.215') var_dump($comment['text']);

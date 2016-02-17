@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
-use app\components\GlobalHelper;
+use common\components\helpers\GlobalHelper;
 
 $controls = '';
 if(!$noControls) {

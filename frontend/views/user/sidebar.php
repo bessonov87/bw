@@ -1,8 +1,8 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $user common\models\User */
+/* @var $user common\models\ar\User */
 
-use app\components\GlobalHelper;
+use common\components\helpers\GlobalHelper;
 ?>
 
 <div class="user_avatar">

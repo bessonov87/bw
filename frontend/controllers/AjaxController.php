@@ -1,14 +1,14 @@
 <?php
 namespace frontend\controllers;
 
-use app\components\widgets\FavoriteWidget;
-use app\models\FavoritePosts;
-use frontend\models\PostsRating;
 use Yii;
 use yii\web\Controller;
 use yii\db\IntegrityException;
+use common\models\ar\FavoritePosts;
+use common\models\ar\PostsRating;
 use app\components\widgets\CalendarWidget;
 use app\components\widgets\RatingWidget;
+use app\components\widgets\FavoriteWidget;
 
 class AjaxController extends Controller
 {

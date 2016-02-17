@@ -1,16 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Sergey
- * Date: 15.02.2016
- * Time: 18:32
- */
 
 namespace app\components\widgets;
 
 use Yii;
 use yii\base\Widget;
-use common\models\User;
+use common\models\ar\User;
 
 
 class UserWidget extends Widget

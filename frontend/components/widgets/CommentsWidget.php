@@ -49,7 +49,6 @@ class CommentsWidget extends Widget
      * @return string
      */
     public function getCommentTree($comments_array, $reply = 0){
-
        $this->_treeStep += 1;
         $comments = '';
         // Перебираем все комментарии, которые не являются ответными
@@ -65,9 +64,7 @@ class CommentsWidget extends Widget
             } else {
                 $comments .= '<div class="comment-item" id="comment-'.$comment['id'].'">';
             }
-
             $comments .= $this->render('comment', ['comment' => $comment]);
-
             // Если есть ответные
             if(!empty($comments_array[$comment['id']])){
                 $comments .= '<div class="reply-comments" id="reply-comments-'.$comment['id'].'">';
@@ -79,7 +76,6 @@ class CommentsWidget extends Widget
             if($reply == 0) $this->_treeStep = 1;
             $comments .= '<div class="clear"></div>';
         }
-
         return $comments;
     }
 }

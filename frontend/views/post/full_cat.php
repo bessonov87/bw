@@ -1,10 +1,10 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $post common\models\ar\Post */
 
 use yii\helpers\Html;
-//use app\components\PostHelper;
-use app\components\GlobalHelper;
+use common\components\helpers\GlobalHelper;
 use app\components\widgets\CommentsWidget;
 use app\components\widgets\RatingWidget;
 use app\components\widgets\FavoriteWidget;

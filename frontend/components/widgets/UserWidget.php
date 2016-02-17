@@ -2,7 +2,7 @@
 namespace app\components\widgets;
 
 use yii\base\Widget;
-use common\models\User;
+use common\models\ar\User;
 
 class UserWidget extends Widget
 {

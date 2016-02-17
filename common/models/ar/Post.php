@@ -1,13 +1,13 @@
 <?php
 
-namespace common\models;
+namespace common\models\ar;
 
 use yii\db\ActiveRecord;
-use common\models\Comment;
-use common\models\Category;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
-use app\components\GlobalHelper;
+use common\models\ar\Comment;
+use common\models\ar\Category;
+use common\components\helpers\GlobalHelper;
 
 /**
  * This is the model class for table "post".

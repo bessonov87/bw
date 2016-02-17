@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\ar;
 
 use yii\elasticsearch\ActiveRecord;
 
