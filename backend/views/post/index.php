@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\models\Post;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PostSearch */
@@ -42,13 +43,69 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'allow_catlink',
             // 'allow_similar',
             // 'allow_rate',
-            'approve',
+            [
+                'filter' => Post::getStatusesArray(),
+                'attribute' => 'approve',
+                'format' => 'raw',
+                'value' => function ($model, $key, $index, $column) {
+                    /** @var Post $model */
+                    /** @var \yii\grid\DataColumn $column */
+                    $value = $model->{$column->attribute};
+                    switch ($value) {
+                        case Post::APPROVED:
+                            $class = 'success';
+                            break;
+                        case Post::NOT_APPROVED:
+                            $class = 'warning';
+                            break;
+                        default:
+                            $class = 'default';
+                    };
+                    $html = Html::tag('span', Html::encode($model->getStatusName()), ['class' => 'label label-' . $class]);
+                    return $value === null ? $column->grid->emptyCell : $html;
+                }
+            ],
             // 'fixed',
-            'category_art',
+            [
+                'filter' => [0 => 'Нет', 1 => 'Да'],
+                'attribute' => 'category_art',
+                'format' => 'raw',
+                'value' => function ($model, $key, $index, $column) {
+                    /** @var Post $model */
+                    /** @var \yii\grid\DataColumn $column */
+                    $value = $model->{$column->attribute};
+                    switch ($value) {
+                        case 0:
+                            $class = 'default';
+                            $val = 'Нет';
+                            break;
+                        case 1:
+                            $class = 'success';
+                            $val = 'Да';
+                            break;
+                        default:
+                            $class = 'default';
+                            $val = 'Нет';
+                    };
+
+                    $html = Html::tag('span', Html::encode($val), ['class' => 'label label-' . $class]);
+                    return $value === null ? $column->grid->emptyCell : $html;
+                }
+            ],
             // 'inm',
             // 'not_in_related',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'buttons' => [
+                    'link' => function ($url, $model) {
+                        $customurl = $model->link; //$model->id для AR
+                        return \yii\helpers\Html::a( '<span class="glyphicon glyphicon-link"></span>', $customurl,
+                            ['title' => 'Открыть статью']);
+                    }
+                ],
+                'template' => '{view} {update} {delete} {link}',
+            ],
         ],
     ]); ?>
 
