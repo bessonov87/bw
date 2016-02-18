@@ -260,8 +260,10 @@ class SiteController extends Controller
     }
 
     public function actionConfirmEmail($token = 'none'){
-        if(Yii::$app->user->identity->status == User::STATUS_ACTIVE){
-            return $this->goHome();
+        if(!Yii::$app->user->isGuest) {
+            if (Yii::$app->user->identity->status == User::STATUS_ACTIVE) {
+                return $this->goHome();
+            }
         }
         $model = new ConfirmEmailForm($token);
         if($model->userFound){
