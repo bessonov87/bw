@@ -32,7 +32,7 @@ class CommentForm extends Model
             ['text', 'string', 'length' => [Yii::$app->params['comments']['min_length'], Yii::$app->params['comments']['max_length']]],
             // password is validated by validatePassword()
             ['post_id', 'exist',
-                'targetClass' => '\frontend\models\Post',
+                'targetClass' => '\common\models\ar\Post',
                 'targetAttribute' => 'id',
                 'filter' => ['approve' => Post::APPROVED],
                 'message' => 'There is no post with such id.'
