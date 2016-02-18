@@ -308,7 +308,6 @@ class SiteController extends Controller
                 ->where("MATCH(short, full, title, meta_title) AGAINST('$searchModel->story')")
                 ->andWhere(['approve' => Post::APPROVED])
                 ->andWhere(['category_art' => 0])
-                ->with('postCategories')
                 ->orderBy(['rel' => SORT_DESC])
                 ->limit(20)
                 ->all();
@@ -383,7 +382,6 @@ class SiteController extends Controller
             ->andWhere(['<=', 'date', date("Y-m-d H:i:s")])
             ->orderBy(['date' => SORT_DESC])
             ->limit(10)
-            ->with('postCategories')
             ->all();
 
         $data = '';
@@ -482,14 +480,13 @@ class SiteController extends Controller
             ->andWhere(['<=', 'date', date('Y-m-d')])
             ->andWhere(['!=', 'category_art', 1])
             ->orderBy('date')
-            ->with('categories')
             ->all();
 
         //var_dump($posts);
         foreach($posts as $post) {
             $xml_map .= "
 		<url>
-			<loc>" . substr(Yii::$app->params['frontendBaseUrl'],0,-1) . $post->link . "</loc>
+			<loc>" . $post->absoluteLink . "</loc>
 			<lastmod>" . date("Y-m-d", strtotime($post->date)) . "</lastmod>
 			<changefreq>weekly</changefreq>
 			<priority>0.6</priority>
