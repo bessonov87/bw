@@ -27,6 +27,13 @@ return [
                 ],
             ],
         ],
+        'urlManagerFrontend' => [
+            'class' => '\frontend\components\SlUrlManager',
+            'rules' => require(__DIR__ . '/../../frontend/config/rules.php'),
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],

@@ -7,7 +7,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use common\models\ar\Advert;
-use common\models\ar\PostCategory;
+//use common\models\ar\PostCategory;
 use common\models\ar\Post;
 use common\components\helpers\GlobalHelper;
 use app\components\PostAdditions;
@@ -71,15 +71,18 @@ class PostController extends Controller{
                     $subCategories = $this->renderPartial('short_cat', ['categories' => $subCats]);
                 }
             }
-            // Получаем список постов для данных категорий
+            // Добавляем к списку подкатегорий запрашиваемую категорию
+            $subCats[] = $categoryId[0];
+            /*// Получаем список постов для данных категорий
             $cateroryPostIds = PostCategory::find()
                 ->asArray()
                 ->where(['in', 'category_id', $categoryIds])
                 ->all();
             // Выбираем только ID постов
-            $postIds = ArrayHelper::getColumn($cateroryPostIds, 'post_id');
+            $postIds = ArrayHelper::getColumn($cateroryPostIds, 'post_id');*/
             // Добавляем условие к запросу на выборку статей
-            $query->andWhere(['in', 'id', $postIds]);
+            //$query->andWhere(['in', 'category_id', implode(',', $subCats)]);
+            $query->andWhere('category_id IN ('.implode(',', $subCats).')');
         }
         // Если выборка по датам
         if($type == 'byDate') {
@@ -111,7 +114,6 @@ class PostController extends Controller{
         $pages = new Pagination(['totalCount' => $countPosts->count(), 'route' => 'post/short']);
         $posts = $query->offset($pages->offset)
             ->limit($pages->limit)
-            ->with('postCategories')
             ->all();
         // Рендеринг контента
         return $this->render('short', ['posts' => $posts, 'pages' => $pages, 'categories' => $categories, 'subCategories' => $subCategories]);
@@ -139,8 +141,7 @@ class PostController extends Controller{
         }
 
         // Записываем id текущей категории в виде массива в глобальный параметр
-        $categoryId = $post->postCategories[0]->category_id;
-        Yii::$app->params['category'] = [$categoryId];
+        Yii::$app->params['category'] = [$post->category_id];
 
         $model = '';
         // Добавление комментариев
@@ -163,7 +164,7 @@ class PostController extends Controller{
         $this->replaceLinks($post);
 
         // Применение дополнительных методов для обработки полного текста статей
-        if($m = GlobalHelper::getCategories()[$categoryId]['add_method']){
+        if($m = GlobalHelper::getCategories()[$post->category_id]['add_method']){
             $methodName = 'full'.ucfirst($m);
             if(method_exists('app\components\PostAdditions', $methodName)) {
                 PostAdditions::$methodName($post);

@@ -2,7 +2,9 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use common\models\Post;
+use common\models\ar\Post;
+use common\components\helpers\GlobalHelper;
+use backend\components\grids\BwActionColumn;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PostSearch */
@@ -29,6 +31,17 @@ $this->params['breadcrumbs'][] = $this->title;
             //'author_id',
             'date',
             'title',
+            [
+                'attribute' => 'category_id',
+                'filter' => GlobalHelper::getCategoriesFilter(),
+                'format' => 'raw',
+                'value' => function ($model, $key, $index, $column) {
+                    $value = $model->categoryName;
+                    $html = Html::tag('span', Html::encode($value), ['class' => 'label label-blue']);
+                    return $value === null ? $column->grid->emptyCell : $html;
+                },
+            ],
+            //'category_id',
             //'short:ntext',
             //'full:ntext',
             // 'meta_title',
@@ -94,14 +107,24 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             // 'inm',
             // 'not_in_related',
+            [
+                'attribute' => 'views',
+                'label' => 'D',
+                //'header' => '<i class="fa fa-eye"></i>',
+            ],
+            [
+                'attribute' => 'commentsCount',
+                'header' => '<i class="fa fa-comments"></i>',
+                //'header' => '<span class="glyphicon glyphicon-user"></span>',
+            ],
 
             [
-                'class' => 'yii\grid\ActionColumn',
+                'class' => BwActionColumn::className(),
                 'buttons' => [
                     'link' => function ($url, $model) {
-                        $customurl = $model->link; //$model->id для AR
+                        $customurl = $model->frontendLink; //$model->frontendLink для AR
                         return \yii\helpers\Html::a( '<span class="glyphicon glyphicon-link"></span>', $customurl,
-                            ['title' => 'Открыть статью']);
+                            ['title' => 'Открыть статью', 'target' => '_blank']);
                     }
                 ],
                 'template' => '{view} {update} {delete} {link}',

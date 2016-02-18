@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Advert */
+/* @var $model common\models\ar\Advert */
 
 $this->title = 'Update Advert: ' . ' ' . $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Adverts', 'url' => ['index']];

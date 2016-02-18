@@ -70,7 +70,6 @@ class PopularWidget extends Widget
             ->andWhere(['approve' => '1'])
             ->orderBy(['views' => SORT_DESC])
             ->limit($this->numPosts)
-            ->with('postCategories')
             ->all();
         // Если listType не соответствует списку возможных типов из массива _listTypes, присваиваем ему значение по умолчанию
         if(!in_array($this->listType, $this->_listTypes)){

@@ -15,6 +15,7 @@ use common\components\helpers\GlobalHelper;
  * @property string $id
  * @property string $author_id
  * @property string $date
+ * @property integer $category_id
  * @property string $short
  * @property string $full
  * @property string $title
@@ -53,9 +54,9 @@ class Post extends ActiveRecord
     public function rules()
     {
         return [
-            [['author_id', 'short', 'full', 'title', 'url'], 'required'],
-            [['author_id', 'views', 'edit_user', 'allow_comm', 'allow_main', 'allow_catlink', 'allow_similar', 'allow_rate', 'approve', 'fixed', 'category_art', 'inm', 'not_in_related'], 'integer'],
-            [['date', 'edit_date'], 'safe'],
+            [['author_id', 'date', 'category_id', 'short', 'full', 'title', 'url'], 'required'],
+            [['author_id', 'category_id', 'views', 'edit_user', 'allow_comm', 'allow_main', 'allow_catlink', 'allow_similar', 'allow_rate', 'approve', 'fixed', 'category_art', 'inm', 'not_in_related'], 'integer'],
+            [['edit_date', 'commentsCount'], 'safe'],
             [['short', 'full'], 'string'],
             [['title', 'meta_title', 'meta_descr', 'meta_keywords', 'edit_reason'], 'string', 'max' => 255],
             [['url'], 'string', 'max' => 100]
@@ -71,6 +72,7 @@ class Post extends ActiveRecord
             'id' => 'ID',
             'author_id' => 'Author ID',
             'date' => 'Date',
+            'category_id' => 'Категория',
             'short' => 'Short',
             'full' => 'Full',
             'title' => 'Title',
@@ -89,9 +91,10 @@ class Post extends ActiveRecord
             'allow_rate' => 'Allow Rate',
             'approve' => 'Approve',
             'fixed' => 'Fixed',
-            'category_art' => 'Category Art',
+            'category_art' => 'CArt',
             'inm' => 'Inm',
             'not_in_related' => 'Not In Related',
+            'commentsCount' => 'Комменты',
         ];
     }
 
@@ -124,17 +127,49 @@ class Post extends ActiveRecord
         ];
     }
 
-    // Второй способ связи
+    /*// Второй способ связи
     public function getPostCategories(){
         return $this->hasMany(PostCategory::className(), ['post_id' => 'id']);
+    }
+
+    // Одна категория для статьи
+    public function getPostCategory(){
+        return $this->hasOne(PostCategory::className(), ['post_id' => 'id']);
+    }
+
+    public function getCategory(){
+        $category = $this->hasOne(Category::className(), ['id' => 'category_id'])
+            ->via('postCategory');
+        return $category;
     }
 
     public function getCategories(){
         $categories = $this->hasMany(Category::className(), ['id' => 'category_id'])
             ->via('postCategories')->asArray();
         return $categories;
+    }*/
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategory(){
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 
+    /**
+     * Возвращает название категории, в которой размещена статья
+     *
+     * @return mixed
+     */
+    public function getCategoryName(){
+        return $this->category->name;
+    }
+
+    /**
+     * Возвращает набор похожих статей для данной статьи, если они разрешены
+     *
+     * @return array|null|\yii\db\ActiveRecord[]
+     */
     public function getSimilarPosts(){
         // Если для данной статьи похожие запрещены, возвращаем null
         if(!$this->allow_similar)
@@ -145,7 +180,6 @@ class Post extends ActiveRecord
             ->andWhere( 'id != '.$this->id )
             ->andWhere(['not_in_related' => 0])
             ->andWhere(['category_art' => 0])
-            ->with('postCategories')
             ->limit(5)
             ->all();
         return $similarPosts;
@@ -174,6 +208,10 @@ class Post extends ActiveRecord
         return $comments;
     }
 
+    public function getCommentsCount(){
+        return count($this->comments);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -196,8 +234,13 @@ class Post extends ActiveRecord
     }
 
     public function getLink(){
-        $cat = GlobalHelper::getCategoryUrlById($this->postCategories[0]["category_id"]);
+        $cat = GlobalHelper::getCategoryUrlById($this->category_id);
         return Url::to(['post/full', 'cat' => $cat, 'id' => $this->id, 'alt' => $this->url]);
+    }
+
+    public function getFrontendLink(){
+        $cat = GlobalHelper::getCategoryUrlById($this->category_id);
+        return substr(\Yii::$app->params['frontendBaseUrl'], 0, -1).\Yii::$app->urlManagerFrontend->createUrl(['post/full', 'cat' => $cat, 'id' => $this->id, 'alt' => $this->url]);
     }
 
     public function getAbsoluteLink() {

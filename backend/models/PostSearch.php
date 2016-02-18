@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Post;
+use common\models\ar\Post;
 
 /**
  * PostSearch represents the model behind the search form about `app\models\Post`.
@@ -18,7 +18,7 @@ class PostSearch extends Post
     public function rules()
     {
         return [
-            [['id', 'author_id', 'edit_user', 'allow_comm', 'allow_main', 'allow_catlink', 'allow_similar', 'allow_rate', 'approve', 'fixed', 'category_art', 'inm', 'not_in_related'], 'integer'],
+            [['id', 'category_id', 'author_id', 'edit_user', 'allow_comm', 'allow_main', 'allow_catlink', 'allow_similar', 'allow_rate', 'approve', 'fixed', 'category_art', 'inm', 'not_in_related'], 'integer'],
             [['date', 'short', 'full', 'title', 'meta_title', 'meta_descr', 'meta_keywords', 'url', 'edit_date', 'edit_reason'], 'safe'],
         ];
     }
@@ -43,8 +43,13 @@ class PostSearch extends Post
     {
         $query = Post::find();
 
+        $query->with('category');
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => ['date' => SORT_DESC],
+            ]
         ]);
 
         $this->load($params);
@@ -59,6 +64,7 @@ class PostSearch extends Post
             'id' => $this->id,
             'author_id' => $this->author_id,
             'date' => $this->date,
+            'category_id' => $this->category_id,
             'edit_date' => $this->edit_date,
             'edit_user' => $this->edit_user,
             'allow_comm' => $this->allow_comm,

@@ -48,6 +48,31 @@ class GlobalHelper
     }
 
     /**
+     * Возвращает список категорий в формате ['id' => 'name']
+     *
+     * @return array
+     */
+    public static function getCategoriesFilter(){
+        $categories = self::getCategories();
+        if(!$categories) return ['0' => 'Нет категорий'];
+        foreach($categories as $cat){
+            if($cat['parent_id'] == 0){
+                $mainCats[$cat['id']] = $cat['name'];
+            }
+            //$categoriesFilter[$cat['id']] = $cat['name'];
+        }
+        foreach($mainCats as $id => $name){
+            $categoriesFilter[$id] = $name;
+            foreach($categories as $cat){
+                if($cat['parent_id'] == $id){
+                    $categoriesFilter[$cat['id']] = '---'.$cat['name'];
+                }
+            }
+        }
+        return $categoriesFilter;
+    }
+
+    /**
      * Определяем Url категории по ее ID
      *
      * Url определяется с учетом наличия основной категории, если передан ID подкатегории

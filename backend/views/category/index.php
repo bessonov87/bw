@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\components\helpers\GlobalHelper;
+use backend\components\grids\BwActionColumn;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\CategorySearch */
@@ -23,13 +25,31 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'parent_id',
-            'name',
-            'url:url',
-            'icon',
+            [
+                'attribute' => 'id',
+                'options' => ['style' => 'width: 65px; max-width: 65px;'],
+                'contentOptions' => ['style' => 'width: 65px; max-width: 65px;'],
+            ],
+            [
+                'attribute' => 'parent_id',
+                'options' => ['style' => 'width: 75px; max-width: 75px;'],
+                'contentOptions' => ['style' => 'width: 75px; max-width: 75px;'],
+            ],
+            [
+                'attribute' => 'name',
+                'options' => ['style' => 'min-width: 300px;'],
+                'contentOptions' => ['style' => 'min-width: 300px;'],
+            ],
+            [
+                'attribute' => 'url',
+                'format' => 'raw',
+                'value' => function ($model, $key, $index, $column) {
+                    $value = $model->url;
+                    $html = Html::tag('span', Html::encode($value), ['class' => 'label label-blue']);
+                    return $value === null ? $column->grid->emptyCell : $html;
+                },
+            ],
+            //'icon',
             // 'description:ntext',
             // 'meta_title',
             // 'meta_descr',
@@ -38,12 +58,23 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'post_num',
             // 'short_view',
             // 'full_view',
-            // 'category_art',
+            'category_art',
             // 'header:ntext',
             // 'footer:ntext',
             'add_method',
+            'postCount',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => BwActionColumn::className(),
+                'buttons' => [
+                    'link' => function ($url, $model) {
+                        $customurl = Yii::$app->params['frontendBaseUrl'].GlobalHelper::getCategoryUrlById($model->id).'/';
+                        return \yii\helpers\Html::a( '<span class="glyphicon glyphicon-link"></span>', $customurl,
+                            ['title' => 'Открыть статью', 'target' => '_blank']);
+                    }
+                ],
+                'template' => '{view} {update} {delete} {link}',
+            ],
         ],
     ]); ?>
 

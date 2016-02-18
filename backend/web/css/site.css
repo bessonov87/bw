@@ -141,3 +141,7 @@ a.desc:after {
     font-size: 16px;
     float: right;
 }
+
+.label-blue {
+    background-color: #1EB7DA !important;
+}
