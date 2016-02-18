@@ -38,7 +38,7 @@ class CommentForm extends Model
                 'message' => 'There is no post with such id.'
             ],
             ['user_id', 'exist',
-                'targetClass' => '\common\models\User',
+                'targetClass' => '\common\models\ar\User',
                 'targetAttribute' => 'id',
                 'filter' => ['status' => User::STATUS_ACTIVE],
                 'message' => 'There is no user with such id.'

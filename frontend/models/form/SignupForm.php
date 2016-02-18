@@ -24,14 +24,14 @@ class SignupForm extends Model
         return [
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Данное имя пользователя уже занято.'],
+            ['username', 'unique', 'targetClass' => '\common\models\ar\User', 'message' => 'Данное имя пользователя уже занято.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Этот email адрес уже зарегистрирован в системе. Возможно, вы регистрировались ранее. Попробуйте восстановить пароль для входа на сайт.'],
+            ['email', 'unique', 'targetClass' => '\common\models\ar\User', 'message' => 'Этот email адрес уже зарегистрирован в системе. Возможно, вы регистрировались ранее. Попробуйте восстановить пароль для входа на сайт.'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
