@@ -12,8 +12,6 @@ use Yii;
  * @property string $post_id
  * @property string $user_id
  * @property string $date
- * @property string $author
- * @property string $email
  * @property string $text
  * @property string $text_raw
  * @property string $ip
@@ -43,7 +41,7 @@ class Comment extends \yii\db\ActiveRecord
             [['date', 'text_raw'], 'safe'],
             [['text'], 'required'],
             [['text'], 'string'],
-            [['author', 'email', 'ip'], 'string', 'max' => 40]
+            [['ip'], 'string', 'max' => 40]
         ];
     }
 

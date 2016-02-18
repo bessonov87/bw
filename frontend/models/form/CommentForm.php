@@ -41,7 +41,7 @@ class CommentForm extends Model
                 'targetClass' => '\common\models\ar\User',
                 'targetAttribute' => 'id',
                 'filter' => ['status' => User::STATUS_ACTIVE],
-                'message' => 'There is no user with such id.'
+                'message' => 'Вам запрещено оставлять комментарии. Возможно, это связано с тем, что вы не подтвердили свой email'
             ],
             ['user_id', 'compare', 'compareValue' => Yii::$app->user->identity->getId()],
         ];
