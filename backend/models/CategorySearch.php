@@ -53,7 +53,7 @@ class CategorySearch extends Category
 
         $query->leftJoin(['postsNum' => $subQuery], 'postsNum.category_id = id');
 
-        $query->select('category.*, postsNum.post_count');
+        $query->select('{{%category}}.*, postsNum.post_count');
 
         //$query->select('category.*, count(post.id) as countP')->joinWith('postCount')->groupBy('category.id');
         //$query->join('LEFT JOIN', '{{%post}}', [$this->tableName().'.id' => '{{%post}}.category_id']);
