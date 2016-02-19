@@ -11,10 +11,13 @@
             <?php
             foreach($comments as $comment):
                 /** @var $comment common\models\ar\Comment */
+                //$avatar = Yii::$app->params['frontendBaseUrl'].substr($comment->user->avatar, 1);
+                $avatar = '';
+                var_dump($comment->user);
             ?>
             <!-- chat item -->
             <div class="item">
-                <img src="<?= Yii::$app->params['frontendBaseUrl'].substr($comment->user->avatar, 1) ?>" alt="user image" class="online">
+                <img src="<?= $avatar ?>" alt="user image" class="online">
 
                 <p class="message">
                     <a href="#" class="name">
