@@ -21,6 +21,7 @@
                 'options' => ['class' => 'sidebar-menu'],
                 'items' => [
                     ['label' => 'Меню Yii2', 'options' => ['class' => 'header']],
+                    ['label' => 'Dashboard', 'icon' => 'fa fa-dashboard', 'url' => Yii::$app->homeUrl],
                     ['label' => 'Статьи', 'icon' => 'fa fa-file-text-o', 'url' => ['post/index']],
                     ['label' => 'Категории', 'icon' => 'fa fa-file-text-o', 'url' => ['category/index']],
                     ['label' => 'Комментарии', 'icon' => 'fa fa-comment-o', 'url' => ['comment/index']],

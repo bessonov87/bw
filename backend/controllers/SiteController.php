@@ -55,7 +55,9 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        // Получаем основную информацию о количестве пользователей, комментариев, статей, ошибок
+
+        return $this->render('dashboard');
     }
 
     public function actionLogin()

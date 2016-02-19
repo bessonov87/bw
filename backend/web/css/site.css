@@ -145,3 +145,19 @@ a.desc:after {
 .label-blue {
     background-color: #1EB7DA !important;
 }
+
+/* DASHBOARD */
+.server_info{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.server_info li{
+    padding: 6px 15px;
+}
+
+.info-box-today{
+    font-size: 12px;
+    padding-top: 0px;
+    display: block;
+}
