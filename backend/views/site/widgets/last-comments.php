@@ -13,7 +13,7 @@
                 /** @var $comment common\models\ar\Comment */
                 //$avatar = Yii::$app->params['frontendBaseUrl'].substr($comment->user->avatar, 1);
                 $avatar = '';
-                var_dump($comment->user);
+                var_dump($comment->user->getAvatar());
             ?>
             <!-- chat item -->
             <div class="item">
