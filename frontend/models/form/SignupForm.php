@@ -76,8 +76,6 @@ class SignupForm extends Model
             // Если необходима активация email адресов
             if(Yii::$app->params['emailActivation'] == true){
                 $user->status = $user::STATUS_NOT_ACTIVE;
-                $user->generateEmailConfirmToken();
-                $user->sendEmailConfirm();
             }
             $transaction = Yii::$app->db->beginTransaction();
             if ($r = $user->save()) {
@@ -85,6 +83,12 @@ class SignupForm extends Model
                 $profile->user_id = $user->id;
                 if($profile->save()){
                     $transaction->commit();
+                    // Генерируем токен для подтверждения email
+                    $user->generateEmailConfirmToken();
+                    // Сохраняем его в базе
+                    $user->save();
+                    // Отправляем письмо
+                    $user->sendEmailConfirm();
                     return $user;
                 } else {
                     $transaction->rollBack();
