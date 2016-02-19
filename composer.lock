@@ -4,24 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c196d50765dc71e3d07277f7d8033e3e",
-    "content-hash": "8821ac8671e40158902f9aebfe6a0a7d",
+    "hash": "1865ca17ae397529b6c020926712b79a",
+    "content-hash": "a1014fd5677c114d832e3e2b3292357e",
     "packages": [
         {
-            "name": "2amigos/yii2-ckeditor-widget",
-            "version": "dev-master",
+            "name": "2amigos/yii2-tinymce-widget",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/2amigos/yii2-ckeditor-widget.git",
-                "reference": "65dea6abf7813b1cb9264f7467bf638551d51ba2"
+                "url": "https://github.com/2amigos/yii2-tinymce-widget.git",
+                "reference": "d58bad3ede450f86acd475fb4ecda982b980132b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/2amigos/yii2-ckeditor-widget/zipball/65dea6abf7813b1cb9264f7467bf638551d51ba2",
-                "reference": "65dea6abf7813b1cb9264f7467bf638551d51ba2",
+                "url": "https://api.github.com/repos/2amigos/yii2-tinymce-widget/zipball/d58bad3ede450f86acd475fb4ecda982b980132b",
+                "reference": "d58bad3ede450f86acd475fb4ecda982b980132b",
                 "shasum": ""
             },
             "require": {
+                "tinymce/tinymce": ">=4",
                 "yiisoft/yii2": "~2.0.0"
             },
             "require-dev": {
@@ -38,7 +39,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "dosamigos\\ckeditor\\": "src"
+                    "dosamigos\\tinymce\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -53,18 +54,18 @@
                     "role": "Developer"
                 }
             ],
-            "description": "CKEditor widget for Yii2.",
-            "homepage": "http://yiiwheels.com/extension/ckeditor-widget",
+            "description": "TinyMCE widget for Yii2.",
+            "homepage": "http://yiiwheels.com/extension/tinymce-widget",
             "keywords": [
                 "2amigos",
-                "CKEditor",
                 "extension",
+                "tinymce",
                 "widget",
                 "yii",
                 "yii 2",
                 "yii2"
             ],
-            "time": "2015-09-02 16:53:55"
+            "time": "2015-03-28 21:53:43"
         },
         {
             "name": "almasaeed2010/adminlte",
@@ -557,85 +558,6 @@
             "time": "2013-11-30 08:25:19"
         },
         {
-            "name": "iutbay/yii2-fontawesome",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/iutbay/yii2-fontawesome.git",
-                "reference": "da7ae426f927f87932a86d7ca3aa7e84e22b31a6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/iutbay/yii2-fontawesome/zipball/da7ae426f927f87932a86d7ca3aa7e84e22b31a6",
-                "reference": "da7ae426f927f87932a86d7ca3aa7e84e22b31a6",
-                "shasum": ""
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "iutbay\\yii2fontawesome\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Kevin LEVRON",
-                    "email": "kevin.levron@gmail.com"
-                }
-            ],
-            "description": "Simple Font Awesome helper for Yii2",
-            "homepage": "https://github.com/iutbay/yii2-fontawesome",
-            "keywords": [
-                "FontAwesome",
-                "extension",
-                "icon",
-                "yii2"
-            ],
-            "time": "2015-11-03 13:35:36"
-        },
-        {
-            "name": "iutbay/yii2-kcfinder",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/iutbay/yii2-kcfinder.git",
-                "reference": "02eda6942e65f7f133347d527c29547290044872"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/iutbay/yii2-kcfinder/zipball/02eda6942e65f7f133347d527c29547290044872",
-                "reference": "02eda6942e65f7f133347d527c29547290044872",
-                "shasum": ""
-            },
-            "require": {
-                "iutbay/yii2-fontawesome": "dev-master",
-                "sunhater/kcfinder": "*",
-                "yiisoft/yii2-bootstrap": "*",
-                "yiisoft/yii2-jui": "*"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "iutbay\\yii2kcfinder\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Kevin LEVRON",
-                    "email": "kevin.levron@gmail.com"
-                }
-            ],
-            "description": "KCFinder for Yii2",
-            "homepage": "https://github.com/iutbay/yii2-kcfinder",
-            "keywords": [
-                "extension",
-                "kcfinder",
-                "yii2"
-            ],
-            "time": "2015-01-10 09:22:41"
-        },
-        {
             "name": "rmrevin/yii2-fontawesome",
             "version": "2.13.0",
             "source": {
@@ -686,61 +608,6 @@
                 "yii"
             ],
             "time": "2015-11-26 15:24:53"
-        },
-        {
-            "name": "sunhater/kcfinder",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sunhater/kcfinder.git",
-                "reference": "b645d2a81e647d63780c238b130593e32b4d95a9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sunhater/kcfinder/zipball/b645d2a81e647d63780c238b130593e32b4d95a9",
-                "reference": "b645d2a81e647d63780c238b130593e32b4d95a9",
-                "shasum": ""
-            },
-            "require": {
-                "ext-gd": "*",
-                "php": ">=5.3.0"
-            },
-            "suggest": {
-                "ext-curl": "*",
-                "ext-exif": "*",
-                "ext-fileinfo": "*",
-                "ext-gmagick": "*",
-                "ext-http": "*",
-                "ext-imagick": "*",
-                "ext-sockets": "*",
-                "ext-zip": "*"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0+",
-                "LGPL-3.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Pavel Tzonkov",
-                    "email": "sunhater@sunhater.com",
-                    "homepage": "http://sunhater.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "KCFinder web file manager",
-            "homepage": "http://kcfinder.sunhater.com",
-            "keywords": [
-                "explorer",
-                "file",
-                "file explorer",
-                "file manager",
-                "finder",
-                "kcfinder",
-                "manager"
-            ],
-            "time": "2014-08-24 00:00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -794,6 +661,52 @@
                 "mailer"
             ],
             "time": "2016-01-03 15:42:47"
+        },
+        {
+            "name": "tinymce/tinymce",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tinymce/tinymce-dist.git",
+                "reference": "4db115aff381c7e881193eede8cb8d8172d01963"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/4db115aff381c7e881193eede8cb8d8172d01963",
+                "reference": "4db115aff381c7e881193eede8cb8d8172d01963",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "tinymce.js",
+                        "plugins/*/plugin.js",
+                        "themes/*/theme.js"
+                    ],
+                    "files": [
+                        "tinymce.min.js",
+                        "plugins/*/plugin.min.js",
+                        "themes/*/theme.min.js",
+                        "skins/**"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "description": "Web based JavaScript HTML WYSIWYG editor control.",
+            "homepage": "http://www.tinymce.com",
+            "keywords": [
+                "editor",
+                "html",
+                "javascript",
+                "richtext",
+                "tinymce",
+                "wysiwyg"
+            ],
+            "time": "2016-02-11 08:05:42"
         },
         {
             "name": "yiidoc/yii2-redactor",

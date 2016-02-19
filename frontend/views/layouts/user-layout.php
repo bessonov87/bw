@@ -89,7 +89,7 @@ IeAsset::register($this);
                 <div id="sidebar-item">
                     <div id="sidebar-item-top" class="sidebar-item-pink"><?= Html::encode(Yii::$app->request->get('username')) ?></div>
                     <div id="sidebar-item-content">
-                        <?= \app\components\UserWidget::widget(['username' => Yii::$app->request->get('username')]) ?>
+                        <?= \app\components\widgets\UserWidget::widget(['username' => Yii::$app->request->get('username')]) ?>
                     </div>
                 </div>
                 <!-- Конец Пользователь -->

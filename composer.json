@@ -23,8 +23,7 @@
 		"dmstr/yii2-adminlte-asset": "2.*",
         "yiisoft/yii2-elasticsearch": "~2.0.0",
 		"yiidoc/yii2-redactor": "*",
-        "2amigos/yii2-ckeditor-widget" : "~1.0",
-        "iutbay/yii2-kcfinder" : "*"
+        "2amigos/yii2-tinymce-widget" : "~1.1"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
