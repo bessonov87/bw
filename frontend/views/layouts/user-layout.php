@@ -10,6 +10,7 @@ use frontend\assets\IeAsset;
 use common\widgets\Alert;
 use app\components\widgets\SidebarMenuWidget;
 use app\components\widgets\UserWidget;
+use app\components\widgets\PopularWidget;
 //use app\components\widgets\AdvertWidget;
 
 AppAsset::register($this);
@@ -151,7 +152,7 @@ IeAsset::register($this);
                 <div id="sidebar-item">
                     <div id="sidebar-item-top" class="sidebar-item-pink">Популярное</div>
                     <div id="sidebar-item-content">
-                        <?= \app\components\PopularWidget::widget(['numPosts' => 10, 'listType' => 'ol']) ?>
+                        <?= PopularWidget::widget(['numPosts' => 10, 'listType' => 'ol']) ?>
                     </div>
                 </div>
                 <!-- Конец Популярное -->
