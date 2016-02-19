@@ -20,6 +20,6 @@ class YandexMetrika extends Widget
     }
 
     public function getData(){
-        
+
     }
 }
