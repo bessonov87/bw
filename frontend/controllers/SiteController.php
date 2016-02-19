@@ -198,10 +198,6 @@ class SiteController extends Controller
                 $activation = (Yii::$app->params['emailActivation']) ? ' Ваша учетная запись пока не является активной. На адрес email, указанный вами при регистрации было отправлено письмо с данными для активации учетной записи. Проверьте свою электронную почту и следуйте инструкциям из письма.' : '';
                 Yii::$app->session->setFlash('success', 'Спасибо за регистрацию. Теперь вы можете войти на сайт используя свои имя пользователя и пароль.'.$activation);
                 return $this->goHome();
-                // Было раньше
-                /*if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }*/
             }
         }
 
