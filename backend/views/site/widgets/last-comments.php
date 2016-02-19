@@ -11,9 +11,7 @@
             <?php
             foreach($comments as $comment):
                 /** @var $comment common\models\ar\Comment */
-                //$avatar = Yii::$app->params['frontendBaseUrl'].substr($comment->user->avatar, 1);
-                $avatar = '';
-                var_dump($comment->user->profile);
+                $avatar = Yii::$app->params['frontendBaseUrl'].substr($comment->user->avatar, 1);
             ?>
             <!-- chat item -->
             <div class="item">

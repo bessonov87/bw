@@ -2,6 +2,7 @@
 namespace frontend\models\form;
 
 use common\models\ar\User;
+use common\models\ar\UserProfile;
 use yii\base\Model;
 use Yii;
 
@@ -78,8 +79,18 @@ class SignupForm extends Model
                 $user->generateEmailConfirmToken();
                 $user->sendEmailConfirm();
             }
+            $transaction = Yii::$app->db->beginTransaction();
             if ($r = $user->save()) {
-                return $user;
+                $profile = new UserProfile();
+                $profile->user_id = $user->id;
+                if($profile->save()){
+                    $transaction->commit();
+                    return $user;
+                } else {
+                    $transaction->rollBack();
+                }
+            } else {
+                $transaction->rollBack();
             }
         }
 
