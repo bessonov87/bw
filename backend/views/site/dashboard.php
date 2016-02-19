@@ -3,6 +3,7 @@
 
 use app\components\widgets\ServerInfo;
 use app\components\widgets\SiteSummary;
+use app\components\widgets\YandexMetrika;
 
 $this->title = 'Dashboard - '.Yii::$app->params['site']['shortTitle'];
 ?>
@@ -12,3 +13,4 @@ $this->title = 'Dashboard - '.Yii::$app->params['site']['shortTitle'];
 
 <?= ServerInfo::widget() ?>
 
+<?= YandexMetrika::widget() ?>
