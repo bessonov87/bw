@@ -21,8 +21,8 @@ class YandexMetrika extends Widget
 
     public function getData(){
         $today=date("Ymd");
-        $metrika_url = "http://api-metrika.yandex.ru/stat/traffic/summary.json?id=".Yii::$app->params['YandexID']."&pretty=1&date1=$today&date2=$today&oauth_token=".Yii::$app->params['YandexToken'];
-        $metrika_url = 'https://api-metrika.yandex.ru/stat/traffic/summary?id=e55e67446a994432980f572fb4fa1149&oauth_token=134c6f1287224bb3ac736eb418707820';
+        $metrika_url = "http://api-metrika.yandex.ru/stat/traffic/summary.json?id=".Yii::$app->params['YandexCounterID']."&pretty=1&date1=$today&date2=$today&oauth_token=".Yii::$app->params['YandexToken'];
+        //$metrika_url = 'https://api-metrika.yandex.ru/stat/traffic/summary?id=e55e67446a994432980f572fb4fa1149&oauth_token=134c6f1287224bb3ac736eb418707820';
         var_dump($metrika_url);
 
         $ch = curl_init();
