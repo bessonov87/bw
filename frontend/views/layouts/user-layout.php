@@ -9,6 +9,7 @@ use frontend\assets\AppAsset;
 use frontend\assets\IeAsset;
 use common\widgets\Alert;
 use app\components\widgets\SidebarMenuWidget;
+use app\components\widgets\UserWidget;
 //use app\components\widgets\AdvertWidget;
 
 AppAsset::register($this);
@@ -89,7 +90,7 @@ IeAsset::register($this);
                 <div id="sidebar-item">
                     <div id="sidebar-item-top" class="sidebar-item-pink"><?= Html::encode(Yii::$app->request->get('username')) ?></div>
                     <div id="sidebar-item-content">
-                        <?= \app\components\widgets\UserWidget::widget(['username' => Yii::$app->request->get('username')]) ?>
+                        <?= UserWidget::widget(['username' => Yii::$app->request->get('username')]) ?>
                     </div>
                 </div>
                 <!-- Конец Пользователь -->
