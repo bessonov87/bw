@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use dosamigos\tinymce\TinyMce;
+use backend\components\editor\TinyMCE;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\ar\Post */
@@ -15,31 +15,13 @@ use dosamigos\tinymce\TinyMce;
 
     <?= $form->field($model, 'author_id')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'date')->textInput() ?>
+    <?= $form->field($model, 'date') ?>
 
-    <?= $form->field($model, 'short')->widget(TinyMce::className(), [
-        'options' => ['rows' => 6],
-        'clientOptions' => [
-            'plugins' => [
-                "advlist autolink lists link charmap print preview anchor",
-                "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table contextmenu paste"
-            ],
-            'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-        ]
-    ]); ?>
+    <?= $form->field($model, 'category')->dropDownList(\common\components\helpers\GlobalHelper::getCategoriesFilter()) ?>
 
-    <?= $form->field($model, 'full')->widget(TinyMce::className(), [
-        'options' => ['rows' => 16],
-        'clientOptions' => [
-            'plugins' => [
-                "advlist autolink lists link charmap print preview anchor",
-                "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table contextmenu paste"
-            ],
-            'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-        ]
-    ]); ?>
+    <?= $form->field($model, 'short')->widget(TinyMCE::className()); ?>
+
+    <?= $form->field($model, 'full')->widget(\yii\redactor\widgets\Redactor::className()); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 

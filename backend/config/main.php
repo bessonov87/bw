@@ -12,7 +12,14 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'redactor' => [
+            'class' => 'yii\redactor\RedactorModule',
+            'uploadDir' => '@frontend/web/uploads',
+            'uploadUrl' => $params['frontendBaseUrl'].'uploads',
+            'imageAllowExtensions'=>['jpg','png','gif'],
+        ],
+    ],
     'components' => [
         'user' => [
             'identityClass' => 'common\models\ar\User',

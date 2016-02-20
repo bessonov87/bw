@@ -12,12 +12,4 @@ return [
             'enableStrictParsing' => false,
         ],
     ],
-    'modules' => [
-        'redactor' => [
-            'class' => 'yii\redactor\RedactorModule',
-            'uploadDir' => '@frontend/web/uploads',
-            'uploadUrl' => 'uploads',
-            'imageAllowExtensions'=>['jpg','png','gif'],
-        ],
-    ],
 ];

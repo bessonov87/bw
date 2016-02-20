@@ -13,6 +13,7 @@ RewriteCond %{REQUEST_URI} !(.png)
 RewriteCond %{REQUEST_URI} !(.jpg)
 RewriteCond %{REQUEST_URI} !(.gif)
 RewriteCond %{REQUEST_URI} !^/site/(.*)$
+RewriteCond %{REQUEST_URI} !^/gii(.*)$
 RewriteCond %{REQUEST_URI} !^/ajax/(.*)$
 RewriteCond %{REQUEST_URI} !^/debug/(.*)$
 RewriteCond %{REQUEST_URI} !(.*)/$
