@@ -7,6 +7,18 @@ use backend\components\editor\TinyMCE;
 /* @var $this yii\web\View */
 /* @var $model common\models\ar\Post */
 /* @var $form yii\widgets\ActiveForm */
+
+// Генерируем рандомный идентификатор, используемый при добавлении изображений для новых статей (у которых еще нет id)
+Yii::$app->response->cookies->remove(new \yii\web\Cookie([
+    'name' => 'r_id'
+]));
+if (!$model->id) {
+    $r_id = Yii::$app->security->generateRandomString(6);
+    Yii::$app->response->cookies->add(new \yii\web\Cookie([
+        'name' => 'r_id',
+        'value' => $r_id
+    ]));
+}
 ?>
 
 <div class="post-form">
@@ -19,7 +31,14 @@ use backend\components\editor\TinyMCE;
 
     <?= $form->field($model, 'category')->dropDownList(\common\components\helpers\GlobalHelper::getCategoriesFilter()) ?>
 
-    <?= $form->field($model, 'short')->widget(TinyMCE::className()); ?>
+    <?= $form->field($model, 'short')->widget(
+        TinyMCE::className(),[
+            'clientOptions' => [
+                'plugin_upload_post_id' => $model->id,
+                'plugin_upload_r_id' => ($model->id) ? 'null' : $r_id,
+                'plugin_upload_area' => ($model->id) ? 'editpost' : 'addpost',
+            ]
+    ]); ?>
 
     <?= $form->field($model, 'full')->widget(\yii\redactor\widgets\Redactor::className()); ?>
 

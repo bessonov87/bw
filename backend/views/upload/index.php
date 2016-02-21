@@ -3,74 +3,34 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+if($e = $model->getErrors()){
+    var_dump($e);
+}
+$imgConfig = Yii::$app->params['admin']['images'];
 ?>
 
-<?php $form = ActiveForm::begin(); ?>
-<form method="post" enctype="multipart/form-data">
-
+<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data', 'class' => 'upload_form']]); ?>
     <div class="form_line">
-        <div class="upload_file">
-        <?= $form->field($model, 'files[]')->fileInput() ?>
-        </div>
+        <?= $form->field($model, 'post_id')->hiddenInput(['value' => Yii::$app->request->get('post_id')])->label(false) ?>
+        <?= $form->field($model, 'user_id')->hiddenInput(['value' => Yii::$app->request->get('user_id')])->label(false) ?>
+        <?= $form->field($model, 'folder')->hiddenInput(['value' => Yii::$app->request->get('date_dir')])->label(false) ?>
+        <?= $form->field($model, 'files[]', ['template'=>'{label} {input}'])->fileInput(['multiple' => true])->label(false) ?>
     </div>
     <div class="form_line">
-        <?= $form->field($model, 'create_thumb')->checkbox() ?>
+        <?= $form->field($model, 'create_thumb', ['template'=>'{label} {input}'])->checkbox() ?>
     </div>
     <div class="form_line">
-        Уменьшение изображение более <?= $form->field($model, 'max_pixel')->textInput() ?> пикселей по <?= $form->field($model, 'max_pixel_side')->dropDownList(['width' => 'Ширине', 'height' => 'Высоте']) ?>
+        <?= $form->field($model, 'watermark', ['template'=>'{label} {input}'])->checkbox() ?>
     </div>
-
-
-    <table width="600" cellpadding="5" cellspacing="0" border="1">
-        <tbody>
-        <tr>
-            <td>
-                <table cellpadding="2" cellspacing="0" width="100%" id="files_table">
-                    <tbody><tr>
-                        <td>
-                            Файл:
-                        </td>
-                        <td>
-                            <input type="file" name="files[]">
-                        </td>
-                    </tr>
-                    </tbody></table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="checkbox" name="thumb" value="ok" checked="checked"> Создавать уменьшенную копию
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Уменьшение изображение более <input type="text" name="max_pixel" maxlength="5" style="width:30px" value="400"> пикселей по
-                <select name="max_side">
-                    <option value="width" selected="">Ширине</option>
-                    <option value="height">Высоте</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="checkbox" name="water" value="ok" checked="checked"> Накладывать водяной знак
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Уже на сервере:
-                <select name="already_on_server">
-                    <option value="0">Выберите файл</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <img id="add_fields" title="Добавить поле для еще одного файла" style="vertical-align:middle; cursor:pointer" src="/admin/images/plus.png" width="32" height="32" onclick="addTableRow($('#files_table'))"> <img id="add_fields" title="Удалить последнее поле для файла" style="vertical-align:middle; cursor:pointer" src="/admin/images/minus.png" width="32" height="32" onclick="delTableRow($('#files_table'));"> <input type="submit" value="Загрузить файл(ы)" name="do_upload" style="vertical-align:middle">
-            </td>
-        </tr>
-        </tbody></table>
-</form>
+    <div class="form_line">
+        Уменьшение изображение более <?= $form->field($model, 'max_pixel')->textInput(['value' => $imgConfig['max_pixel'], 'class' => 'inline_input'])->label(false) ?> пикселей по <?= $form->field($model, 'max_pixel_side')->dropDownList(['width' => 'Ширине', 'height' => 'Высоте'], ['class' => 'inline_input'])->label(false) ?>
+    </div>
+    <div class="form_line">
+        Уже на сервере: <?= $form->field($model, 'on_server')->dropDownList([0 => 'Выберите файл'], ['class' => 'inline_input'])->label(false) ?>
+    </div>
+    <div class="form_line">
+        <?= Html::submitButton('Загрузить', ['class' => 'btn btn-primary', 'name' => 'upload-button']) ?>
+    </div>
 <?php ActiveForm::end(); ?>
 
 

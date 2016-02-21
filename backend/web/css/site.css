@@ -161,3 +161,44 @@ a.desc:after {
     padding-top: 0px;
     display: block;
 }
+
+/* ФОРМА ЗАГРУЗКИ ФАЙЛОВ */
+.upload_form{
+    margin: 15px 0;
+    border: 1px #333 solid;
+    border-radius: 5px;
+}
+
+.form_line{
+    border-bottom: 1px #333 solid;
+    padding: 5px 10px;
+}
+
+.form_line > div{
+    margin: 0!important;
+}
+
+.form_line:last-child {
+    border-bottom: none;
+}
+
+.field-uploadform-max_pixel{
+    display: inline-block;
+}
+
+.field-uploadform-max_pixel input{
+    width: 35px;
+    height: 22px;
+}
+
+.field-uploadform-max_pixel_side{
+    display: inline-block;
+}
+
+.field-uploadform-max_pixel_side input{
+    width: 75px;
+}
+
+.field-uploadform-on_server{
+    display: inline-block;
+}

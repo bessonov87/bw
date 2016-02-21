@@ -13,6 +13,10 @@ class UploadForm extends Model
     public $create_thumb;
     public $max_pixel;
     public $max_pixel_side;
+    public $on_server;
+    public $watermark;
+    public $folder = 'files';
+
 
     /**
      * @inheritdoc
@@ -21,14 +25,11 @@ class UploadForm extends Model
     {
         return [
             [['user_id', 'post_id', 'files'], 'required'],
-            [['user_id', 'post_id', 'integer', 'create_thumb', 'max_pixel'], 'integer'],
-
-            ['files', 'each', 'rule' => ['string']],
-            ['post_id', 'exist',
-                'targetClass' => '\common\models\ar\Post',
-                'targetAttribute' => 'id',
-                'message' => 'There is no post with such id.'
-            ],
+            [['user_id', 'max_pixel'], 'integer'],
+            ['max_pixel_side','in','range'=>['width','height'],'strict'=>false],
+            [['create_thumb', 'watermark', 'post_id'], 'safe'],
+            [['on_server'], 'string'],
+            [['files'], 'file', 'skipOnEmpty' => 'false', 'maxFiles' => 10],
             ['user_id', 'exist',
                 'targetClass' => '\common\models\ar\User',
                 'targetAttribute' => 'id',
@@ -37,7 +38,18 @@ class UploadForm extends Model
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'create_thumb' => 'Создавать уменьшенную копию',
+            'watermark' => 'Добавлять водяной знак',
+        ];
+    }
+
     public function upload(){
-        var_dump($this->files);
+        var_dump($this);
     }
 }

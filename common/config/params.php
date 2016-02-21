@@ -29,4 +29,16 @@ return [
         'allowRegistration' => true,
         'allowSocialAuth' => true,
     ],
+    'admin' => [
+        'images' => [
+            'allowedExt' => ['jpg, png, gif'],
+            'max_pixel' => 600,
+            'max_pixel_side' => 'height',    // 'width' or 'height'
+            'create_thumb' => true,
+            'watermark' => false,
+        ],
+        'files' => [
+            'allowedExt' => ['rar, zip, pdf'],
+        ],
+    ],
 ];

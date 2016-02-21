@@ -4,69 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9c0a01efe6ecef24d5fa3e087e8ef596",
-    "content-hash": "a1014fd5677c114d832e3e2b3292357e",
+    "hash": "e437b864ee72c426789303ef17ed1a76",
+    "content-hash": "ba8e0298f01aa68d71eec63f0dc8d9ab",
     "packages": [
-        {
-            "name": "2amigos/yii2-tinymce-widget",
-            "version": "1.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/2amigos/yii2-tinymce-widget.git",
-                "reference": "d58bad3ede450f86acd475fb4ecda982b980132b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/2amigos/yii2-tinymce-widget/zipball/d58bad3ede450f86acd475fb4ecda982b980132b",
-                "reference": "d58bad3ede450f86acd475fb4ecda982b980132b",
-                "shasum": ""
-            },
-            "require": {
-                "tinymce/tinymce": ">=4",
-                "yiisoft/yii2": "~2.0.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                },
-                "asset-installer-paths": {
-                    "bower-asset-library": "vendor/bower"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "dosamigos\\tinymce\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "2amigOS! Consulting Group",
-                    "email": "hola@2amigos.us",
-                    "homepage": "http://2amigos.us",
-                    "role": "Developer"
-                }
-            ],
-            "description": "TinyMCE widget for Yii2.",
-            "homepage": "http://yiiwheels.com/extension/tinymce-widget",
-            "keywords": [
-                "2amigos",
-                "extension",
-                "tinymce",
-                "widget",
-                "yii",
-                "yii 2",
-                "yii2"
-            ],
-            "time": "2015-03-28 21:53:43"
-        },
         {
             "name": "almasaeed2010/adminlte",
             "version": "v2.3.2",
@@ -661,52 +601,6 @@
                 "mailer"
             ],
             "time": "2016-01-03 15:42:47"
-        },
-        {
-            "name": "tinymce/tinymce",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tinymce/tinymce-dist.git",
-                "reference": "4db115aff381c7e881193eede8cb8d8172d01963"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/4db115aff381c7e881193eede8cb8d8172d01963",
-                "reference": "4db115aff381c7e881193eede8cb8d8172d01963",
-                "shasum": ""
-            },
-            "type": "component",
-            "extra": {
-                "component": {
-                    "scripts": [
-                        "tinymce.js",
-                        "plugins/*/plugin.js",
-                        "themes/*/theme.js"
-                    ],
-                    "files": [
-                        "tinymce.min.js",
-                        "plugins/*/plugin.min.js",
-                        "themes/*/theme.min.js",
-                        "skins/**"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.1"
-            ],
-            "description": "Web based JavaScript HTML WYSIWYG editor control.",
-            "homepage": "http://www.tinymce.com",
-            "keywords": [
-                "editor",
-                "html",
-                "javascript",
-                "richtext",
-                "tinymce",
-                "wysiwyg"
-            ],
-            "time": "2016-02-11 08:05:42"
         },
         {
             "name": "yiidoc/yii2-redactor",
