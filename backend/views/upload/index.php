@@ -1,11 +1,9 @@
 <?php
 /** @var $this yii\web\View */
+/** @var $model backend\models\UploadForm */
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-if($e = $model->getErrors()){
-    var_dump($e);
-}
 $imgConfig = Yii::$app->params['admin']['images'];
 ?>
 
@@ -31,8 +29,21 @@ $imgConfig = Yii::$app->params['admin']['images'];
     <div class="form_line">
         <?= Html::submitButton('Загрузить', ['class' => 'btn btn-primary', 'name' => 'upload-button']) ?>
     </div>
+<?= $form->errorSummary($model); ?>
 <?php ActiveForm::end(); ?>
 
+<div class="form_messages">
+    <?php
+    if($e = $model->getErrors()){
+        /* TODO оформить вывод ошибок */
+        var_dump($e);
+    }
+    if($r = $model->getResult()){
+        /* TODO оформить вывод результата */
+        var_dump($r);
+    }
+    ?>
+</div>
 
 <table width="600" cellpadding="5" cellspacing="0" border="1">
     <tbody><tr>

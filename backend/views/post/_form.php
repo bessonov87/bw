@@ -9,12 +9,11 @@ use backend\components\editor\TinyMCE;
 /* @var $form yii\widgets\ActiveForm */
 
 // Генерируем рандомный идентификатор, используемый при добавлении изображений для новых статей (у которых еще нет id)
-Yii::$app->response->cookies->remove(new \yii\web\Cookie([
-    'name' => 'r_id'
-]));
+$cookies = Yii::$app->response->cookies;
+$cookies->remove('r_id');
 if (!$model->id) {
     $r_id = Yii::$app->security->generateRandomString(6);
-    Yii::$app->response->cookies->add(new \yii\web\Cookie([
+    $cookies->add(new \yii\web\Cookie([
         'name' => 'r_id',
         'value' => $r_id
     ]));
@@ -25,22 +24,9 @@ if (!$model->id) {
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'author_id')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'author_id')->textInput(['style' => 'width: 150px;']) ?>
 
-    <?= $form->field($model, 'date') ?>
-
-    <?= $form->field($model, 'category')->dropDownList(\common\components\helpers\GlobalHelper::getCategoriesFilter()) ?>
-
-    <?= $form->field($model, 'short')->widget(
-        TinyMCE::className(),[
-            'clientOptions' => [
-                'plugin_upload_post_id' => $model->id,
-                'plugin_upload_r_id' => ($model->id) ? 'null' : $r_id,
-                'plugin_upload_area' => ($model->id) ? 'editpost' : 'addpost',
-            ]
-    ]); ?>
-
-    <?= $form->field($model, 'full')->widget(\yii\redactor\widgets\Redactor::className()); ?>
+    <?= $form->field($model, 'date')->textInput(['style' => 'width: 150px;', 'id' => 'calendar-field']) ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
@@ -49,6 +35,19 @@ if (!$model->id) {
     <?= $form->field($model, 'meta_descr')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'meta_keywords')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'category_id')->dropDownList(\common\components\helpers\GlobalHelper::getCategoriesFilter()) ?>
+
+    <?= $form->field($model, 'short')->widget(
+        TinyMCE::className(),[
+            'clientOptions' => [
+                'plugin_upload_post_id' => ($model->id) ? $model->id : 0,
+                'plugin_upload_r_id' => ($model->id) ? null : $r_id,
+                'plugin_upload_area' => ($model->id) ? 'editpost' : 'addpost',
+            ]
+    ]); ?>
+
+    <?= $form->field($model, 'full')->widget(\yii\redactor\widgets\Redactor::className()); ?>
 
     <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
 

@@ -8,8 +8,10 @@ use Yii;
  * This is the model class for table "images".
  *
  * @property string $id
- * @property string $images
+ * @property string $image_name
+ * @property string $folder
  * @property string $post_id
+ * @property string $r_id
  * @property string $user_id
  * @property string $date
  */
@@ -29,10 +31,10 @@ class Images extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'images', 'post_id', 'user_id'], 'required'],
-            [['id', 'post_id', 'user_id'], 'integer'],
-            [['images'], 'string'],
-            [['date'], 'string', 'max' => 15],
+            [['image_name', 'folder', 'user_id'], 'required'],
+            [['user_id', 'date'], 'integer'],
+            [['post_id', 'r_id'], 'safe'],
+            [['image_name', 'folder'], 'string'],
         ];
     }
 
@@ -43,8 +45,10 @@ class Images extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'images' => 'Images',
+            'image_name' => 'Images',
+            'folder' => 'Папка',
             'post_id' => 'Post ID',
+            'r_id' => 'R ID',
             'user_id' => 'User ID',
             'date' => 'Date',
         ];

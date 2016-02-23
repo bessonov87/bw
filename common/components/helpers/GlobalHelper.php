@@ -296,4 +296,32 @@ class GlobalHelper
         return mb_substr($str,$pos,1,'UTF-8');
     }
 
+    public static function translit($str){
+        $transliterator = \Transliterator::create('Cyrillic-Latin');
+        return $transliterator->transliterate($str);
+    }
+
+    /**
+     * Приведение имени файла
+     *
+     * Удаляет из имени файла нежелательные символы, пробелы заменяет на подчеркивание, русские буквы - на транслит
+     *
+     * @param string $fileName Имя загружаемого пользователем файла
+     * @return string Имя файла
+     */
+    public static function normalizeName($fileName, $timestamp = false){
+        $normalized = self::translit($fileName);  // Транслитерация
+        $normalized = trim($normalized);				// Убираем пробелы в начале и конце
+        $normalized = mb_strtolower($normalized);	// Переводим полученную строку в нижний регистр
+        $normalized = mb_ereg_replace("\s+", "-", $normalized);	// Пробелы заменяем на _
+        $normalized = mb_ereg_replace("[^\.a-z0-9_-]+", "", $normalized);	// Избавляемся от "лишних символов", если они остались
+        $normalized = mb_ereg_replace('[\-]+', '-', $normalized);		// Несколько подряд идущих знаков "-" превращаем в один
+
+        if($timestamp){
+            $normalized = time() . '_' . $normalized;
+        }
+
+        return $normalized;
+    }
+
 }

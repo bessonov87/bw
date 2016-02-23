@@ -93,10 +93,10 @@ class TinyMCE extends InputWidget
         $defaults['theme_advanced_toolbar_align'] = 'left';
         $defaults['theme_advanced_statusbar_location'] = 'bottom';
         $defaults['plugin_upload_area'] = 'addpost';
-        $defaults['plugin_upload_date_dir'] = date('Y-m');
+        $defaults['plugin_upload_date_dir'] = 'posts/'.date('Y-m');
         $defaults['plugin_upload_post_id'] = 0;
         $defaults['plugin_upload_user_id'] = \Yii::$app->user->getId();
-        $defaults['plugin_upload_r_id'] = \Yii::$app->request->cookies->getValue('r_id');
+        $defaults['plugin_upload_r_id'] = \Yii::$app->response->cookies->getValue('r_id');
         //$defaults['content_css'] = $this->_tinymceAssetBundle->baseUrl . "/css/content.css";
         $defaults['content_css'] = \Yii::$app->params['frontendBaseUrl'] . "/bw15/css/theme.css";
         /*$defaults['setup'] = "function(ed) { ed.addButton('dle_quote', {

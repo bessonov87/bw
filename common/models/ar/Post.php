@@ -32,6 +32,7 @@ use common\components\helpers\GlobalHelper;
  * @property integer $allow_catlink
  * @property integer $allow_similar
  * @property integer $allow_rate
+ * @property integer $allow_ad
  * @property integer $approve
  * @property integer $fixed
  * @property integer $category_art
@@ -48,15 +49,26 @@ class Post extends ActiveRecord
     const APPROVED = 1;
     const NOT_APPROVED = 0;
 
+    /*public $allow_comm = 1;
+    public $allow_main = 1;
+    public $allow_catlink = 1;
+    public $allow_similar = 1;
+    public $allow_rate = 1;
+    public $allow_ad = 1;
+    public $approve = 1;
+    public $fixed = 0;
+    public $category_art = 0;
+    public $not_in_related = 0;*/
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['author_id', 'date', 'category_id', 'short', 'full', 'title', 'url'], 'required'],
-            [['author_id', 'category_id', 'views', 'edit_user', 'allow_comm', 'allow_main', 'allow_catlink', 'allow_similar', 'allow_rate', 'approve', 'fixed', 'category_art', 'inm', 'not_in_related'], 'integer'],
-            [['edit_date', 'commentsCount'], 'safe'],
+            [['author_id', 'category_id', 'short', 'full', 'title', 'url'], 'required'],
+            [['author_id', 'category_id', 'views', 'edit_user', 'allow_comm', 'allow_main', 'allow_catlink', 'allow_similar', 'allow_rate', 'allow_ad', 'approve', 'fixed', 'category_art', 'inm', 'not_in_related'], 'integer'],
+            [['edit_date', 'date', 'commentsCount'], 'safe'],
             [['short', 'full'], 'string'],
             [['title', 'meta_title', 'meta_descr', 'meta_keywords', 'edit_reason'], 'string', 'max' => 255],
             [['url'], 'string', 'max' => 100]

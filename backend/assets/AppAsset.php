@@ -14,9 +14,11 @@ class AppAsset extends AssetBundle
     public $jsOptions = ['position' => \yii\web\View::POS_HEAD];
     public $css = [
         'css/site.css',
+        'css/calendar-blue.css',
     ];
     public $js = [
         'js/Chart.min.js',
+        'js/calendar.js',
         'js/site.js',
     ];
     public $depends = [

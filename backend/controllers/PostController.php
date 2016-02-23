@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\ar\Images;
 use Yii;
 use common\models\ar\Post;
 use app\models\PostSearch;
@@ -61,10 +62,17 @@ class PostController extends Controller
     public function actionCreate()
     {
         $model = new Post();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            // Привязка загруженных файлов к id статьи
+            $post_id = $model->id;
+            Images::updateAll(['post_id' => $post_id, 'r_id' => null], ['r_id' => Yii::$app->request->cookies->getValue('r_id')]);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $model->loadDefaultValues();
+            if($model->isNewRecord){
+                $model->date = (new \DateTime('now', new \DateTimeZone('Europe/Moscow')))->format('Y-m-d H:i:s');
+                $model->author_id = Yii::$app->user->getId();
+            }
             return $this->render('create', [
                 'model' => $model,
             ]);
