@@ -202,3 +202,52 @@ a.desc:after {
 .field-uploadform-on_server{
     display: inline-block;
 }
+
+#img_form {
+    margin: 15px 0;
+    border: 1px #333 solid;
+    border-radius: 5px;
+}
+
+.images_table{
+    width: 100%;
+}
+
+.images_table td {
+    padding: 5px;
+}
+
+.fCheck{
+    width: 13px;
+}
+
+.fSize {
+    width: 65px;
+}
+
+.fOriginal {
+    width: 75px;
+}
+
+.fShow {
+    width: 75px;
+}
+
+.fActions {
+    text-align: right;
+}
+
+.fForm_line{
+    border-bottom: 1px #333 solid;
+    padding: 5px 10px;
+}
+
+.fForm_line > div{
+    margin: 0!important;
+    display: inline-block;
+}
+
+.fForm_line:last-child {
+    border-bottom: none;
+}
+

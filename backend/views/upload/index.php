@@ -42,57 +42,73 @@ $imgConfig = Yii::$app->params['admin']['images'];
         /* TODO оформить вывод результата */
         var_dump($r);
     }
+
+    if($e = $fModel->getErrors()){
+        /* TODO оформить вывод ошибок */
+        var_dump($e);
+    }
+    if($r = $fModel->getResult()){
+        /* TODO оформить вывод результата */
+        var_dump($r);
+    }
     ?>
 </div>
 
-<table width="600" cellpadding="5" cellspacing="0" border="1">
-    <tbody><tr>
-        <td>
-            <table width="100%" cellpadding="3" cellspacing="0" border="0">
-                <tbody><tr>
-                    <td>
-                        <strong>Файлы, загруженные для данной публикации</strong>
-                    </td>
-                    <td width="15" align="center">
-                        <input type="checkbox" value="all" id="check_all_box" title="Выделить все">
-                    </td>
-                </tr>
-                </tbody></table>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <form method="post" id="img_form" name="img_form"><div id="inputs">
-                    <table cellpadding="3" cellspacing="0" width="100%" id="uploads"></table><table cellpadding="3" cellspacing="0" width="100%" id="uploads">
-                        <tbody><tr>
-                            <td>
-                                <a href="javascript:insertimage('http://40-weeks.ru/uploads/posts/2015-06/oslozhnenija_1433238343.jpg')">oslozhnenija_1433238343.jpg</a>
-                            </td>
-                            <td width="80">
-                                <a href="javascript:image_show('http://40-weeks.ru/uploads/posts/2015-06/oslozhnenija_1433238343.jpg', 400, 250)">Просмотр</a>
-                            </td>
-                            <td width="80">
-                                &nbsp;
-                            </td>
-                            <td width="60">
-                                400x250
-                            </td>
-                            <td width="15">
-                                <input type="checkbox" class="checkbox_box" name="images_on[]" value="image|172|2015-06/oslozhnenija_1433238343.jpg|img|http://40-weeks.ru/uploads/posts/2015-06/oslozhnenija_1433238343.jpg">
-                            </td>
-                        </tr>
-                        <tr><td colspan="5" align="center">
-                                Нет файлов, загруженных для данной публикации
-                            </td></tr></tbody></table><table cellpadding="3" cellspacing="0" width="100%" id="uploads_1"><tbody><tr><td width="50%">
-                                Выравнивать: <select name="imageAlign" id="imageAlign">
-                                    <option value="left">По левому</option>
-                                    <option value="right">По правому</option>
-                                    <option value="center">По центру</option>
-                                    <option value="none">Нет</option>
-                                </select>
-                            </td><td align="right">
-                                C выделенными: <input type="button" value="Вставить" id="insert_checked" name="add_img"> <input type="submit" value="Удалить" name="del_img_file">
-                            </td></tr></tbody></table></div></form>
-        </td>
-    </tr>
-    </tbody></table>
+<h4>Файлы, загруженные для данной публикации</h4>
+
+<?php $form = ActiveForm::begin(['options' => ['id' => 'img_form']]); ?>
+    <div id="inputs">
+        <table class="images_table">
+        <?php
+        foreach($images as $image):
+        /** @var $image common\models\ar\Images */
+            $thumb = 0;
+            $imageUrl = Yii::$app->params['frontendBaseUrl'].$image->folder.'/'.$image->image_name;
+            $imagePath = Yii::getAlias(Yii::$app->params['admin']['uploadsPathAlias']).$image->folder.'/'.$image->image_name;
+            $thumbPath = Yii::getAlias(Yii::$app->params['admin']['uploadsPathAlias']).$image->folder.'/thumbs/'.$image->image_name;
+            $imageSize = getimagesize($imagePath);
+            if(is_file($thumbPath)){
+                $thumb = 1;
+                $thumbUrl = Yii::$app->params['frontendBaseUrl'].$image->folder.'/thumbs/'.$image->image_name;
+                $thumbSize = getimagesize($thumbPath);
+                $insert = '<a href="javascript:insertthumb(\''.$imageUrl.'|'.$thumbUrl.'\')">'.$image->image_name.'</a>';
+                $show = '<a href="javascript:image_show(\''.$thumbUrl.'\', '.$thumbSize[0].', '.$thumbSize[1].')">Просмотр</a>';
+                $original = '<a href="javascript:image_show(\''.$imageUrl.'\', '.$imageSize[0].', '.$imageSize[1].')">Оригинал</a>';
+                $size = $thumbSize[0].'x'.$thumbSize[1];
+            } else {
+                $thumbUrl = 'none';
+                $insert = '<a href="javascript:insertimage(\''.$imageUrl.'\')">'.$image->image_name.'</a>';
+                $show = '<a href="javascript:image_show(\''.$imageUrl.'\', '.$imageSize[0].', '.$imageSize[1].')">Просмотр</a>';
+                $original = '';
+                $size = $imageSize[0].'x'.$imageSize[1];
+            }
+            $input = $form->field($fModel, 'files[]')->checkbox(['value' => 'image|'.$image->id.'|'.$image->folder.'|'.$image->image_name.'|thumb|'.$thumb, 'label' => false, 'uncheck' => null]);
+            //'<input type="checkbox" class="checkbox_box" name="images[]" value="image|'.$image->id.'|'.$imageUrl.'|thumb|'.$thumbUrl.'">';
+
+        ?>
+        <tr class="fForm_line">
+            <td class="fName"><?= $insert ?></td>
+            <td class="fShow"><?= $show ?></td>
+            <td class="fOriginal"><?= $original ?></td>
+            <td class="fSize"><?= $size ?></td>
+            <td class="fCheck"><?= $input ?></td>
+        </tr>
+        <?php
+        endforeach;
+        ?>
+        <tr class="fForm_line">
+            <td>
+            Выравнивать: <select name="imageAlign" id="imageAlign">
+                            <option value="left">По левому</option>
+                            <option value="right">По правому</option>
+                            <option value="center">По центру</option>
+                            <option value="none">Нет</option>
+                        </select>
+            </td>
+            <td colspan="4" class="fActions">
+                <div>C выбранными:</div><input type="button" value="Вставить" id="insert_checked" name="add_img"> <input type="submit" value="Удалить" name="del_img_file">
+            </td>
+        </tr>
+        </table>
+    </div>
+<?php ActiveForm::end(); ?>

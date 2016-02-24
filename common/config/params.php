@@ -30,6 +30,7 @@ return [
         'allowSocialAuth' => true,
     ],
     'admin' => [
+        'uploadsPathAlias' => '@frontend/web/uploads/',
         'images' => [
             'allowedExt' => ['jpg', 'png', 'gif'],
             'max_pixel' => 400,

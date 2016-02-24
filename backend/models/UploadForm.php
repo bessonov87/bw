@@ -3,12 +3,14 @@
 namespace backend\models;
 
 use common\components\helpers\GlobalHelper;
+use common\models\ar\Files;
 use common\models\ar\Images;
 use Imagine\Image\Box;
 use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\imagine\Image;
+use yii\web\UploadedFile;
 
 class UploadForm extends Model
 {
@@ -22,7 +24,10 @@ class UploadForm extends Model
     public $watermark;
     public $folder = 'files';
 
-    protected $_result = null;
+    private $_result = null;
+    private $_baseUploadPathAlias = '@frontend/web/uploads/';
+    private $_watermarkFileName = 'watermark_dark.png';
+    private $_filesFolder = 'files';
 
     /**
      * @inheritdoc
@@ -59,29 +64,30 @@ class UploadForm extends Model
         ];
     }
 
+    /**
+     * Загружает файл или изоображение
+     *
+     * Результаты загрузки записываются в массив _result и могут быть получены на странице загрузки с помощью метода
+     * getResult() модели.
+     *
+     */
     public function upload(){
-        $options['post_id'] = $this->post_id;
-        $options['user_id'] = $this->user_id;
-        $options['create_thumb'] = $this->create_thumb;
-        $options['max_pixel'] = $this->max_pixel;
-        $options['max_pixel_side'] = $this->max_pixel_side;
-        $options['on_server'] = $this->on_server;
-        $options['watermark'] = $this->watermark;
-        $options['folder'] = $this->folder;
-
+        // Цикл по файлам, выбранным для загрузки
         foreach($this->files as $file) {
+            // Если файл - изображение
             if(getimagesize($file->tempName) !== false){
-                if($imageFileName = $this->uploadImage($file, $options)){
+                if($imageFileName = $this->uploadImage($file)){
                     // Сохраняем в таблице images
                     $image = new Images();
                     $image->image_name = $imageFileName;
-                    $image->folder = $options['folder'];
+                    $image->folder = $this->folder;
                     $image->post_id = $this->post_id;
                     $image->user_id = $this->user_id;
                     if(!$this->post_id){
                         $image->r_id = Yii::$app->request->cookies->getValue('r_id');
                     }
                     $image->date = time();
+                    // Сохраняем в базу. Если не удалось, пытаемся удалить изображения с диска
                     if($image->save()){
                         $this->_result[] = 'Изображение <strong>'.$file->name.'</strong> загружено';
                     } else {
@@ -94,43 +100,75 @@ class UploadForm extends Model
 
                 }
             } else {
-                if($this->uploadFile($file, $options)){
-                    $this->_result[] = 'Файл <strong>'.$file->name.'</strong> загружен';
+                if($fileName = $this->uploadFile($file)){
+                    // Сохраняем в таблице images
+                    $uFile = new Files();
+                    $uFile->name = $fileName;
+                    $uFile->folder = $this->_filesFolder;
+                    $uFile->post_id = $this->post_id;
+                    $uFile->user_id = $this->user_id;
+                    $uFile->size = filesize(Yii::getAlias($this->_baseUploadPathAlias).$this->_filesFolder.'/'.$fileName);
+                    if(!$this->post_id){
+                        $uFile->r_id = Yii::$app->request->cookies->getValue('r_id');
+                    }
+                    // Сохраняем в базу. Если не удалось, пытаемся удалить файл с диска
+                    if($uFile->save()){
+                        $this->_result[] = 'Файл <strong>'.$file->name.'</strong> загружен';
+                    } else {
+                        $this->_result[] = 'Не удалось сохранить файл <strong>'.$file->name.'</strong> в базе данных';
+                        $this->_result[] = $uFile->getErrors();
+                        @unlink(Yii::getAlias('@frontend/web/uploads/').$this->_filesFolder.'/'.$fileName);
+                    }
                 }
             }
         }
     }
 
-    public function uploadFile($file, $options){
-        return true;
+    public function uploadFile(UploadedFile $file){
+        $basePath = Yii::getAlias($this->_baseUploadPathAlias);
+        $resultFileName = GlobalHelper::normalizeName($file->name, true);
+        $resultFilePath = $basePath.$this->_filesFolder.'/'.$resultFileName;
+        if(!is_writeable($basePath.$this->_filesFolder.'/')){
+            $this->_result[] = 'Не удалось загрузить файл. Папка для загрузки не найдена или недоступна для записи';
+            return false;
+        }
+        // Если файл получается сохранить
+        if($file->saveAs($resultFilePath)) {
+            return $resultFileName;
+        }
+        return false;
     }
 
-    public function uploadImage($file, $options){
+    /**
+     * Загружает изображение на диск
+     *
+     * При необходимости производит наложение водяного знака и создание уменьшенной копии
+     *
+     * @param UploadedFile $file
+     * @param $options
+     * @return bool|string
+     */
+    public function uploadImage(UploadedFile $file){
         /** @var $file \yii\web\UploadedFile */
-        $basePath = Yii::getAlias('@frontend/web/uploads/');
+        $basePath = Yii::getAlias($this->_baseUploadPathAlias);
         $resultFileName = GlobalHelper::normalizeName($file->name, true);
-        $resultFilePath = $basePath.$options['folder'].'/'.$resultFileName;
-        $thumbImagePath = $basePath.$options['folder'].'/thumbs/'.$resultFileName;
+        $resultFilePath = $basePath.$this->folder.'/'.$resultFileName;
+        $thumbImagePath = $basePath.$this->folder.'/thumbs/'.$resultFileName;
+        $watermarkImagePath = $basePath.$this->_watermarkFileName;
         // Проверяем существование и права доступа папки для загрузки
-        if($this->checkFolder($basePath.$options['folder'], true)) {
+        if($this->checkFolder($basePath.$this->folder, true)) {
             // Если файл получается сохранить
             if($file->saveAs($resultFilePath)) {
                 // Если отмечена галочка "Создавать уменьшенную копию"
-                if($options['create_thumb']){
-                    $img = Image::getImagine()->open($resultFilePath);
-                    $size = $img->getSize();
-                    // Если размер выбранной стороны изображения больше заданного, создаем уменьшенную копию
-                    $side = 'get'.GlobalHelper::ucfirst($options['max_pixel_side']);
-                    if($size->$side() > $options['max_pixel']){
-                        $ratio = $size->getWidth()/$size->getHeight();
-                        if($options['max_pixel_side'] == 'width'){
-                            $width = $options['max_pixel'];
-                            $height = round($width/$ratio);
-                        } elseif($options['max_pixel_side'] == 'height'){
-                            $height = $options['max_pixel'];
-                            $width = round($height*$ratio);
-                        }
-                        $img->resize(new Box($width, $height))->save($thumbImagePath);
+                if($this->create_thumb){
+                    if($this->createThumb($resultFilePath, $thumbImagePath)){
+                        $this->_result[] = 'Уменьшенная копия изображения создана';
+                    }
+                }
+                // Если отмечена галочка "Добавлять водяной знак"
+                if($this->watermark){
+                    if($this->putWatermark($resultFilePath, $watermarkImagePath)){
+                        $this->_result[] = 'Водяной знак наложен';
                     }
                 }
                 return $resultFileName;
@@ -139,6 +177,11 @@ class UploadForm extends Model
         return false;
     }
 
+    /**
+     * Возвращает массив с результатами
+     *
+     * @return null
+     */
     public function getResult(){
         return $this->_result;
     }
@@ -149,8 +192,8 @@ class UploadForm extends Model
      * Если папки нет, пытается создать. Необязательный аргумент thumbs указывает, нужно ли проверять существование
      * папки для уменьшенных копий изображений. Используется для проверки папки при загрузке изображений.
      *
-     * @param $basePath
      * @param $uploadFolder
+     * @param $thumbs
      * @return bool true, если папка есть и запись в нее разрешена; false в противном случае
      */
     public function checkFolder($uploadFolder, $thumbs = false){
@@ -163,16 +206,94 @@ class UploadForm extends Model
                 $folderResult = true;
             }
         }
-
         if($thumbs){
             $thumbsFolder = $uploadFolder.'/thumbs';
             $thumbsResult = $this->checkFolder($thumbsFolder);
         }
-
         if($folderResult && $thumbsResult){
             return true;
         } else {
             return false;
         }
+    }
+
+    /**
+     * Создает уменьшенную копию изображения
+     *
+     * @param string $sourceFilePath
+     * @param string $thumbImagePath
+     * @return bool
+     */
+    public function createThumb($sourceFilePath, $thumbImagePath){
+        // Если значение 'max_pixel_side' не равно 'width' или 'height', прерываем процесс
+        if(!in_array($this->max_pixel_side, ['width', 'height'])){
+            $this->_result[] = 'Невозможно создать уменьшенную копию изображения. Не определена сторона для уменьшения';
+            return false;
+        }
+        $img = Image::getImagine()->open($sourceFilePath);
+        $size = $img->getSize();
+        // Если размер выбранной стороны изображения больше заданного, создаем уменьшенную копию
+        $side = 'get'.GlobalHelper::ucfirst($this->max_pixel_side);
+        if($size->$side() > $this->max_pixel){
+            $ratio = $size->getWidth()/$size->getHeight();
+            if($this->max_pixel_side == 'width'){
+                $width = $this->max_pixel;
+                $height = round($width/$ratio);
+            } elseif($this->max_pixel_side == 'height'){
+                $height = $this->max_pixel;
+                $width = round($height*$ratio);
+            }
+            if($img->resize(new Box($width, $height))->save($thumbImagePath)){
+                // Если отмечена галочка "Добавлять водяной знак"
+                if($this->watermark){
+                    $watermarkImagePath = Yii::getAlias($this->_baseUploadPathAlias).$this->_watermarkFileName;
+                    if($this->putWatermark($thumbImagePath, $watermarkImagePath)){
+                        $this->_result[] = 'Водяной знак наложен';
+                    }
+                }
+                return true;
+            }
+        }
+    }
+
+    /**
+     * Накладывает водяной знак на изображение и сохраняет его
+     *
+     * Если указан аргумент $saveImagePath, изображение сохранится по этому пути. Иначе изображение с водяным знаком
+     * будет сохранено вместо исходного изображения.
+     *
+     * @param string $sourceImagePath Полный путь к изображению, на которое накладывается водяной знак
+     * @param string $watermarkImagePath Полный путь к водяному знаку
+     * @param int $padding Отступ от нужней и правой границы изображения до водяного знака
+     * @param string|null $saveImagePath Полный путь для сохранения изображения с водяным знаком
+     * @return bool
+     */
+    protected function putWatermark($sourceImagePath, $watermarkImagePath, $padding = 10, $saveImagePath = null){
+        /* TODO Переделать "return false" на исключения */
+        // Получаем размеры изображения и водяного знака
+        if(!$imgSize = getimagesize($sourceImagePath)){
+            $this->_result[] = 'Не удалось наложить водяной знак. Файл не найден или не является изображением';
+            return false;
+        }
+        if(!$watermarkSize = getimagesize($watermarkImagePath)){
+            $this->_result[] = 'Не удалось наложить водяной знак. Водяной знак не найден или не является изображением';
+            return false;
+        }
+        if(($watermarkSize[0] + $padding) > $imgSize[0] || ($watermarkSize[1] + $padding) > $imgSize[1]){
+            $this->_result[] = 'Не удалось наложить водяной знак. Размеры водяного знака превышают размеры изображения';
+            return false;
+        }
+        // Определяем координаты стартовой точки
+        $startX = $imgSize[0] - $watermarkSize[0] - $padding;
+        $startY = $imgSize[1] - $watermarkSize[1] - $padding;
+        // Накладываем водяной знак
+        $img = Image::watermark($sourceImagePath, $watermarkImagePath, [$startX, $startY]);
+        // Если задан путь для сохранения изображения
+        if($saveImagePath) $sourceImagePath = $saveImagePath;
+        // Сохраняем файл
+        if($img->save($sourceImagePath)){
+            return true;
+        }
+        return false;
     }
 }
