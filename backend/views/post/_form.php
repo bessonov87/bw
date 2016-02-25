@@ -47,7 +47,15 @@ if (!$model->id) {
             ]
     ]); ?>
 
-    <?= $form->field($model, 'full')->widget(\yii\redactor\widgets\Redactor::className()); ?>
+    <?= $form->field($model, 'full')->widget(
+        TinyMCE::className(),[
+        'clientOptions' => [
+            'height' => 800,
+            'plugin_upload_post_id' => ($model->id) ? $model->id : 0,
+            'plugin_upload_r_id' => ($model->id) ? null : $r_id,
+            'plugin_upload_area' => ($model->id) ? 'editpost' : 'addpost',
+        ]
+    ]); ?>
 
     <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
 

@@ -45,6 +45,7 @@ class TinyMCE extends InputWidget
      */
     protected function registerClientScript()
     {
+        $this->selectors = $this->options['id'];
         $js = [];
         $view = $this->getView();
 
@@ -65,7 +66,7 @@ class TinyMCE extends InputWidget
 
         $options = Json::encode($this->clientOptions);
 
-        $js[] = "$('".$this->selectors."').tinymce($options);";
+        $js[] = "$('#".$this->selectors."').tinymce($options);";
         $view->registerJs(implode("\n", $js));
     }
 
@@ -99,19 +100,6 @@ class TinyMCE extends InputWidget
         $defaults['plugin_upload_r_id'] = \Yii::$app->response->cookies->getValue('r_id');
         //$defaults['content_css'] = $this->_tinymceAssetBundle->baseUrl . "/css/content.css";
         $defaults['content_css'] = \Yii::$app->params['frontendBaseUrl'] . "/bw15/css/theme.css";
-        /*$defaults['setup'] = "function(ed) { ed.addButton('dle_quote', {
-			title : 'Вставка цитаты',
-			image : '/admin/js/editor/tiny_mce/themes/advanced/img/dle_quote.gif',
-			onclick : function() {
-				// Add you own code to execute something on click
-				ed.execCommand('mceReplaceContent',false,'[quote]' + ed.selection.getContent() + '[/quote]');
-			}
-	           }); }";
-        $defaults[''] = '';
-        $defaults[''] = '';
-        $defaults[''] = '';
-        $defaults[''] = '';*/
-        //$defaults[''] = '';
 
         return $defaults;
     }
