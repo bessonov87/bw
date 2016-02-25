@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\ar\Files;
 use common\models\ar\Images;
 use Yii;
 use common\models\ar\Post;
@@ -66,6 +67,7 @@ class PostController extends Controller
             // Привязка загруженных файлов к id статьи
             $post_id = $model->id;
             Images::updateAll(['post_id' => $post_id, 'r_id' => null], ['r_id' => Yii::$app->request->cookies->getValue('r_id')]);
+            Files::updateAll(['post_id' => $post_id, 'r_id' => null], ['r_id' => Yii::$app->request->cookies->getValue('r_id')]);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             $model->loadDefaultValues();
