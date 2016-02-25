@@ -44,21 +44,33 @@ $imgConfig = Yii::$app->params['admin']['images'];
 <div class="form_messages">
     <?php
     if($e = $model->getErrors()){
-        /* TODO оформить вывод ошибок */
-        var_dump($e);
+        echo '<div class="alert alert-warning">';
+            foreach($e as $error){
+                echo '<p>'.$error.'</p>';
+            }
+        echo '</div>';
     }
     if($r = $model->getResult()){
-        /* TODO оформить вывод результата */
-        var_dump($r);
+        echo '<div class="alert alert-warning">';
+        foreach($r as $message){
+            echo '<p>'.$message.'</p>';
+        }
+        echo '</div>';
     }
 
     if($e = $fModel->getErrors()){
-        /* TODO оформить вывод ошибок */
-        var_dump($e);
+        echo '<div class="alert alert-warning">';
+        foreach($e as $error){
+            echo '<p>'.$error.'</p>';
+        }
+        echo '</div>';
     }
     if($r = $fModel->getResult()){
-        /* TODO оформить вывод результата */
-        var_dump($r);
+        echo '<div class="alert alert-warning">';
+        foreach($r as $message){
+            echo '<p>'.$message.'</p>';
+        }
+        echo '</div>';
     }
     ?>
 </div>
