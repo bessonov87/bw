@@ -9,6 +9,10 @@ use common\models\ar\User;
 use Yii;
 use yii\base\Widget;
 
+/**
+ * Class SiteSummary Виджет, выводит информацию о статьях, пользователях, комментариях и ошибках
+ * @package app\components\widgets
+ */
 class SiteSummary extends Widget
 {
     public function init(){
@@ -23,6 +27,10 @@ class SiteSummary extends Widget
         return '@app/views/site/widgets';
     }
 
+    /**
+     * Получение информации о статьях, пользователях, комментариях и ошибках из базы данных
+     * @return mixed
+     */
     public function getSummary(){
         $today_begin = date("Y-m-d")." 00:00:00";
         $today_end = date("Y-m-d")." 23:59:59";

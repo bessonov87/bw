@@ -6,7 +6,10 @@ use Yii;
 use yii\base\Widget;
 use common\models\ar\User;
 
-
+/**
+ * Class UserWidget Виждет, выводит информацию о текущем пользователе Админпанели
+ * @package app\components\widgets
+ */
 class UserWidget extends Widget
 {
     public function init(){

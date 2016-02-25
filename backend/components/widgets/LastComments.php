@@ -6,6 +6,10 @@ use common\models\ar\Comment;
 use Yii;
 use yii\base\Widget;
 
+/**
+ * Class LastComments Виджет, выводящий последние комментарии на странице Dashboard
+ * @package app\components\widgets
+ */
 class LastComments extends Widget
 {
     public $commNum = 5;

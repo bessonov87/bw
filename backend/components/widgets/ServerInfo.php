@@ -5,6 +5,10 @@ namespace app\components\widgets;
 use Yii;
 use yii\base\Widget;
 
+/**
+ * Class ServerInfo Виджет, выводящий общую информацию о сервере на странице Dashboard
+ * @package app\components\widgets
+ */
 class ServerInfo extends Widget
 {
     public function init(){
@@ -19,6 +23,11 @@ class ServerInfo extends Widget
         return '@app/views/site/widgets';
     }
 
+    /**
+     * Возвращает информацию о сервере
+     *
+     * @return mixed
+     */
     public function getServerInfo(){
         $dbInfo = Yii::$app->db->createCommand( "SHOW TABLE STATUS" )->queryAll();
         $dbsize = 0;
@@ -71,6 +80,13 @@ class ServerInfo extends Widget
         return $serverInfo;
     }
 
+    /**
+     * Выбирает атрибут из строки dsn PDO
+     *
+     * @param string $name Имя атрибута
+     * @param string $dsn
+     * @return string|null
+     */
     private function getDsnAttribute($name, $dsn)
     {
         if (preg_match('/' . $name . '=([^;]*)/', $dsn, $match)) {

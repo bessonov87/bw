@@ -5,9 +5,19 @@ namespace app\components\widgets;
 use Yii;
 use yii\base\Widget;
 
+/**
+ * Class YandexMetrika Виджет, выводит график посещаемости за последний месяц на странице Dashboard
+ * @package app\components\widgets
+ */
 class YandexMetrika extends Widget
 {
+    /**
+     * @var string период графика по умолчанию
+     */
     public $period = 'month';
+    /**
+     * @var string тип графика по умолчанию
+     */
     public $graphType = 'line';
 
     public function init(){
@@ -25,6 +35,12 @@ class YandexMetrika extends Widget
         return '@app/views/site/widgets';
     }
 
+    /**
+     * Получение данных Метрики
+     *
+     * @param $period
+     * @return mixed
+     */
     public function getData($period){
         if($period == 'today') {
             $start = date("Ymd");

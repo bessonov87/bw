@@ -4,6 +4,10 @@ namespace backend\components\grids;
 
 use yii\grid\ActionColumn;
 
+/**
+ * Class BwActionColumn устанавливает CSS стили для действий
+ * @package backend\components\grids
+ */
 class BwActionColumn extends ActionColumn
 {
     public $contentOptions = [

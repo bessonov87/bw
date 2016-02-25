@@ -14,7 +14,7 @@ use yii\widgets\InputWidget;
 class TinyMCE extends InputWidget
 {
     /**
-     * @var string the language to use. Defaults to null (en).
+     * @var string the language to use.
      */
     public $language = 'ru';
     /**
@@ -41,7 +41,7 @@ class TinyMCE extends InputWidget
     }
 
     /**
-     * Registers tinyMCE js plugin
+     * Регистрирует tinyMCE js plugin
      */
     protected function registerClientScript()
     {
@@ -70,6 +70,11 @@ class TinyMCE extends InputWidget
         $view->registerJs(implode("\n", $js));
     }
 
+    /**
+     * Опции tinyMCE по умолчанию
+     *
+     * @return mixed
+     */
     public function defaultOptions(){
         $defaults['theme'] = 'advanced';
         $defaults['skin'] = 'cirkuit';
