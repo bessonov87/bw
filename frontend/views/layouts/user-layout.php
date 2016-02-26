@@ -102,7 +102,6 @@ IeAsset::register($this);
                     <div id="sidebar-item-content">
                         <?php
                             if(!Yii::$app->user->isGuest && Yii::$app->request->get('username') === Yii::$app->user->identity->username){
-                                var_dump(Yii::$app->user->identity);
                                 $items[] = ['label' => 'Моя страница'];
                             }
                             echo SidebarMenuWidget::widget([

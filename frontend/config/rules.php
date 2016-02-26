@@ -12,6 +12,11 @@ return [
         'suffix' => '/',
     ],
     [
+        'pattern' => 'user/<username:[А-Яа-яA-Za-z0-9_-]+>/edit',
+        'route' => 'user/edit',
+        'suffix' => '/',
+    ],
+    [
         'pattern' => '<cat:[/A-Za-z0-9_-]+>/<id:\d+>-<alt:[A-Za-z0-9_-]+>',
         'route' => 'post/redirect',
         'suffix' => '/'

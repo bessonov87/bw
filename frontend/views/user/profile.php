@@ -12,6 +12,12 @@ $this->title = "Профиль пользователя ".$user->username.". ".Y
     <div id="content-item-content">
         <div id="content-small-14">
 
+            <?php
+            if(Yii::$app->request->get('username') === Yii::$app->user->identity->username){
+                echo '<div style="text-align: center;"><a class="btn btn-success" href="/user/'.Yii::$app->user->identity->username.'/edit/">Редактировать профиль</a></div>';
+            }
+            ?>
+
             <div class="user_profile">
                 <div class="user_rating">
 
@@ -21,7 +27,7 @@ $this->title = "Профиль пользователя ".$user->username.". ".Y
             </div>
 
             <div class="user_about">
-                <img src="<?= $user->avatar ?>">
+                <div class="img_square" style="background: url('<?= $user->avatar ?>') 50% 0"></div>
                 <h3>О себе</h3>
                 <p class="user_info"><?= $user->profile->info ?></p>
             </div>

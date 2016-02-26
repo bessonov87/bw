@@ -1,6 +1,7 @@
 <?php
 namespace common\components\helpers;
 
+use common\models\ar\Countries;
 use Yii;
 use common\models\ar\Category;
 use yii\helpers\ArrayHelper;
@@ -227,6 +228,20 @@ class GlobalHelper
         }
     }
 
+    public static function getMonthsList(){
+        for($i=1;$i<=12;$i++){
+            $array[sprintf('%02d', $i)] = self::ucfirst(self::rusMonth($i));
+        }
+        return $array;
+    }
+
+    public static function getYearsList(){
+        for($i=1945;$i<=2015;$i++){
+            $array[$i] = $i;
+        }
+        return $array;
+    }
+
     public static function rusZodiac($zodiac, $case = 'i', $invert = false) {
         $rootZodiac = [1 => 'Ов', 'Тел', 'Близнец', 'Рак', 'Л', 'Дев', 'Вес', 'Скорпион', 'Стрел', 'Козерог', 'Водоле', 'Рыб'];
         $endZodiac[1] =  ['i' => 'ен', 'r' => 'на',  'd' => 'ну',  'v' => 'на',  't' => 'ном',  'p' => 'не'];
@@ -322,6 +337,22 @@ class GlobalHelper
         }
 
         return $normalized;
+    }
+
+    public static function getCountriesList(){
+        $countries = Countries::find()
+            ->select('title_ru')
+            ->asArray()
+            ->all();
+
+        $countriesList[null] = '';
+
+        foreach($countries as $c){
+            $country = $c['title_ru'];
+            $countriesList[$country] = $country;
+        }
+
+        return $countriesList;
     }
 
 }
