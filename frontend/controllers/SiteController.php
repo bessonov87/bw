@@ -511,6 +511,7 @@ class SiteController extends Controller
         // VK
         if($client instanceof \yii\authclient\clients\VKontakte)
         {
+            $client->scope = 'email';
             $auth_params = $client->getAccessToken()->getParams();
             var_dump($auth_params);
             $email = ArrayHelper::getValue($auth_params,'email','');
