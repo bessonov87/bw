@@ -26,6 +26,7 @@ return [
                     'class' => 'yii\authclient\clients\VKontakte',
                     'clientId' => '5321829',
                     'clientSecret' => 'ZpCs0DRICDe9xJpArFOp',
+                    'attributeNames' => ['uid', 'email', 'first_name', 'last_name', 'nickname', 'screen_name', 'sex', 'bdate', 'city', 'country', 'timezone', 'photo'],
                 ],
                 // и т.д.
             ],
