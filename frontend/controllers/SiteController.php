@@ -522,16 +522,21 @@ class SiteController extends Controller
                 //Yii::$app->session->setFlash('social_avatar', $vk_data['photo_max_orig']);
             }
             //var_dump($email);
+            $userInfo['source_id'] = $attributes['id'];
             $userInfo['username'] = ($attributes['screen_name']) ? $attributes['screen_name'] : GlobalHelper::usernameFromEmail($attributes['email']);
             $userInfo['email'] = $attributes['email'];
             $userInfo['name'] = $attributes['first_name'];
             $userInfo['surname'] = $attributes['last_name'];
             $userInfo['birth_date'] = date('Y-m-d', strtotime($attributes['bdate']));
-            var_dump($userInfo);
-            var_dump($vk_data['photo_max_orig']);
+            //var_dump($userInfo);
+            //var_dump($vk_data['photo_max_orig']);
         }
 
-        var_dump($attributes); die();
+        //var_dump($attributes); die();
+
+        if(!isset($userInfo['email'])){
+            throw new BadRequestHttpException('Не удалось получить email адрес');
+        }
 
         /* @var $auth Auth */
         $auth = Auth::find()->where([
@@ -544,15 +549,15 @@ class SiteController extends Controller
                 $user = $auth->user;
                 Yii::$app->user->login($user);
             } else { // регистрация
-                if (isset($attributes['email']) && User::find()->where(['email' => $attributes['email']])->exists()) {
+                if (isset($userInfo['email']) && User::find()->where(['email' => $userInfo['email']])->exists()) {
                     Yii::$app->getSession()->setFlash('error', [
                         Yii::t('app', "Пользователь с такой электронной почтой как в {client} уже существует, но с ним не связан. Для начала войдите на сайт использую электронную почту, для того, что бы связать её.", ['client' => $client->getTitle()]),
                     ]);
                 } else {
                     $password = Yii::$app->security->generateRandomString(6);
                     $user = new User([
-                        'username' => $attributes['login'],
-                        'email' => $attributes['email'],
+                        'username' => $userInfo['username'],
+                        'email' => $userInfo['email'],
                         'password' => $password,
                     ]);
                     $user->generateAuthKey();
@@ -562,7 +567,7 @@ class SiteController extends Controller
                         $auth = new Auth([
                             'user_id' => $user->id,
                             'source' => $client->getId(),
-                            'source_id' => (string)$attributes['id'],
+                            'source_id' => (string)$userInfo['source_id'],
                         ]);
                         if ($auth->save()) {
                             $transaction->commit();
