@@ -228,7 +228,14 @@ class GlobalHelper
         }
     }
 
+    public static function getDaysList(){
+        $array = range(1, 31);
+        array_unshift($array, '');
+        return $array;
+    }
+
     public static function getMonthsList(){
+        $array[0] = '';
         for($i=1;$i<=12;$i++){
             $array[sprintf('%02d', $i)] = self::ucfirst(self::rusMonth($i));
         }
@@ -236,6 +243,7 @@ class GlobalHelper
     }
 
     public static function getYearsList(){
+        $array[0] = '';
         for($i=1945;$i<=2015;$i++){
             $array[$i] = $i;
         }
@@ -290,7 +298,7 @@ class GlobalHelper
      */
     public static function dateFormat($timestamp){
         if(!$timestamp){
-            $timestamp = time();
+            return '-';
         }
         $year = date('Y', $timestamp);
         $month = static::rusMonth(date('m', $timestamp), 'r');
@@ -339,9 +347,17 @@ class GlobalHelper
         return $normalized;
     }
 
+    /**
+     * Возвращает список стран в формате массива
+     *
+     * Ключ массива и значение одинаковы - название страны на русском языке
+     *
+     * @return mixed
+     */
     public static function getCountriesList(){
         $countries = Countries::find()
             ->select('title_ru')
+            ->orderBy('title_ru')
             ->asArray()
             ->all();
 

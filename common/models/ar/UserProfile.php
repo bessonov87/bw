@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "user_profile".
  *
  * @property string $user_id
+ * @property string $sex
  * @property string $name
  * @property string $surname
  * @property string $birth_date
@@ -39,7 +40,8 @@ class UserProfile extends \yii\db\ActiveRecord
             [['birth_date', 'last_visit'], 'safe'],
             [['info'], 'string'],
             [['name', 'surname'], 'string', 'max' => 50],
-            [['country'], 'string', 'max' => 3],
+            [['sex'], 'string', 'max' => 1],
+            [['country'], 'string', 'max' => 60],
             [['avatar'], 'string', 'max' => 100],
             [['signature'], 'string', 'max' => 255],
             [['last_ip'], 'string', 'max' => 40]
@@ -54,6 +56,7 @@ class UserProfile extends \yii\db\ActiveRecord
         return [
             'user_id' => 'User ID',
             'name' => 'Name',
+            'sex' => 'Пол',
             'surname' => 'Surname',
             'birth_date' => 'Birth Date',
             'country' => 'Country',

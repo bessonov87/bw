@@ -27,6 +27,7 @@ class EditProfileForm extends UserProfile
         return [
             [['birthYear', 'birthMonth', 'birthDay'], 'integer'],
             [['info'], 'string', 'max' => 1000],
+            [['sex'], 'string', 'max' => 1],
             [['name', 'surname'], 'string', 'max' => 50],
             [['country'], 'string', 'max' => 60],
             [['city'], 'string', 'max' => 50],
@@ -48,13 +49,20 @@ class EditProfileForm extends UserProfile
         return [
             'image' => 'Фотография/Аватар',
             'name' => 'Имя',
+            'sex' => 'Пол',
             'surname' => 'Фамилия',
             'info' => 'Информация о себе',
             'signature' => 'Подпись',
         ];
     }
 
-    public function uploadAvatar($avatar){
+    /**
+     * Загружает аватар
+     *
+     * @param \yii\web\UploadedFile $avatar
+     * @return bool
+     */
+    public function uploadAvatar(\yii\web\UploadedFile $avatar){
         $uploadPath = Yii::getAlias(Yii::$app->params['admin']['uploadsPathAlias'].'/fotos/');
         $avatarFileName = 'foto_' . Yii::$app->user->getId() . '.' . $avatar->extension;
         $avatarFilePath = $uploadPath . $avatarFileName;
@@ -66,6 +74,11 @@ class EditProfileForm extends UserProfile
         return false;
     }
 
+    /**
+     * Сохраняет профиль, предварительно задавая некоторые значения
+     *
+     * @return bool
+     */
     public function saveProfile(){
         $this->birth_date = sprintf('%04d', $this->birthYear) . '-' . sprintf('%02d', $this->birthMonth) . '-' . sprintf('%02d', $this->birthDay);
         if($this->save()){

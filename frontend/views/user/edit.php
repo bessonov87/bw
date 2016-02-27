@@ -31,11 +31,13 @@ $this->title = "Редактирование профиля пользовате
 
             <?= $form->field($model, 'surname') ?>
 
+            <?= $form->field($model, 'sex')->radioList(['f' => 'Женский', 'm' => 'Мужской']) ?>
+
             <label class="control-label">Дата рождения</label>
             <div style="margin-bottom: 15px;">
             <?= Html::activeDropDownList($model, 'birthYear', GlobalHelper::getYearsList(), ['class' => 'form-select', 'style' => 'width:90px;']) ?>
             <?= Html::activeDropDownList($model, 'birthMonth', GlobalHelper::getMonthsList(), ['class' => 'form-select', 'style' => 'width:130px;']) ?>
-            <?= Html::activeDropDownList($model, 'birthDay', range(1, 31), ['class' => 'form-select', 'style' => 'width:80px;']) ?>
+            <?= Html::activeDropDownList($model, 'birthDay', GlobalHelper::getDaysList(), ['class' => 'form-select', 'style' => 'width:80px;']) ?>
             </div>
 
             <label class="control-label">Место жительства (Страна/Город)</label>

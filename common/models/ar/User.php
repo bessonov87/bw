@@ -68,10 +68,12 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findIdentity($id)
     {
         //return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
-        return static::find()
+        $identity = static::find()
             ->where(['id' => $id])
             ->andWhere(['not in', 'status', [self::STATUS_DELETED, self::STATUS_BANNED]])
             ->one();
+        static::registerLastVisit($identity->id);
+        return $identity;
     }
 
     /**
@@ -293,6 +295,10 @@ class User extends ActiveRecord implements IdentityInterface
         return Yii::$app->params['paths']['avatar'].$avatar;
     }
 
+    /**
+     * Возвращает город/страну пользователя (выводится в профиле)
+     * @return string
+     */
     public function getLocation(){
         if($this->profile->country){
             if(strlen($this->profile->country) == 2){
@@ -310,7 +316,22 @@ class User extends ActiveRecord implements IdentityInterface
         return $country.'/'.$city;
     }
 
+    /**
+     * Форматирует дату регистрации пользователя
+     * @return bool|string
+     */
     public function getRegisterDate(){
         return date('Y-m-d H:i', $this->created_at);
+    }
+
+    /**
+     * Регистрирует последний визит в профиле пользователя
+     * @param $user_id
+     */
+    public static function registerLastVisit($user_id){
+        $profile = UserProfile::findOne($user_id);
+        $profile->last_visit = time();
+        $profile->last_ip = Yii::$app->request->getUserIP();
+        $profile->save();
     }
 }

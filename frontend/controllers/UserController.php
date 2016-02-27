@@ -67,8 +67,11 @@ class UserController extends Controller{
             if($model->validate()) {
                 if($avatar) $model->uploadAvatar($avatar);
                 if($model->saveProfile()){
-                    Yii::$app->session->setFlash('success', 'Профиль успешно изменен.');
-                    $this->redirect('/user/'.$username.'/');
+                    /*Yii::$app->session->setFlash('success', 'Профиль успешно изменен.');
+                    $this->redirect('/user/'.$username.'/');*/
+                    Yii::$app->session->setFlash('success','Профиль успешно изменен',false);
+                    $this->redirect(['user/profile', 'username' => $username]);
+                    //$this->redirect(array('index','param'=>'Профиль успешно изменен'));
                 }
             }
         }
