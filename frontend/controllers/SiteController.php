@@ -570,6 +570,7 @@ class SiteController extends Controller
                         $profile->name = $userInfo['name'];
                         $profile->surname = $userInfo['surname'];
                         $profile->birth_date = $userInfo['birth_date'];
+                        $profile->save();
 
                         $auth = new Auth([
                             'user_id' => $user->id,
