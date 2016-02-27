@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\ar\UserProfile;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -564,6 +565,12 @@ class SiteController extends Controller
                     $user->generatePasswordResetToken();
                     $transaction = $user->getDb()->beginTransaction();
                     if ($user->save()) {
+                        $profile = new UserProfile();
+                        $profile->user_id = $user->id;
+                        $profile->name = $userInfo['name'];
+                        $profile->surname = $userInfo['surname'];
+                        $profile->birth_date = $userInfo['birth_date'];
+
                         $auth = new Auth([
                             'user_id' => $user->id,
                             'source' => $client->getId(),
