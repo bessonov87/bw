@@ -507,7 +507,7 @@ class SiteController extends Controller
     {
         $attributes = $client->getUserAttributes();
 
-        var_dump($attributes);
+        var_dump($attributes); die();
 
         /* @var $auth Auth */
         $auth = Auth::find()->where([
