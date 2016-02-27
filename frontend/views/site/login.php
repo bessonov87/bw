@@ -36,11 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php ActiveForm::end(); ?>
 
             <?php
-            if(!Yii::$app->user->isGuest) {
-                if (Yii::$app->user->identity->username === 'admin'){
+                if (Yii::$app->request->getUserIP() === '37.26.143.226'){
                     echo "<a href='/site/auth?authclient=vkontakte'>VK</a>";
                 }
-            }
             ?>
 
         </div>
