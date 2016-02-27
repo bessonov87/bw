@@ -371,4 +371,16 @@ class GlobalHelper
         return $countriesList;
     }
 
+    /**
+     * Возвращает username из email
+     * @param $email
+     * @return string
+     */
+    public static function usernameFromEmail($email){
+        $atPos = mb_strpos($email, '@');
+        $username = mb_substr($email, 0, $atPos);
+        $username = mb_ereg_replace("[^A-Za-z0-9_-]+", "", $username);	// Избавляемся от "лишних символов"
+        return $username;
+    }
+
 }

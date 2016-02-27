@@ -521,7 +521,13 @@ class SiteController extends Controller
                 $vk_data = array_shift($vk_data_response);
                 //Yii::$app->session->setFlash('social_avatar', $vk_data['photo_max_orig']);
             }
-            var_dump($email);
+            //var_dump($email);
+            $userInfo['username'] = ($attributes['screen_name']) ? $attributes['screen_name'] : GlobalHelper::usernameFromEmail($attributes['email']);
+            $userInfo['email'] = $attributes['email'];
+            $userInfo['name'] = $attributes['first_name'];
+            $userInfo['surname'] = $attributes['last_name'];
+            $userInfo['birth_date'] = date('Y-m-d', strtotime($attributes['bdate']));
+            var_dump($userInfo);
             var_dump($vk_data['photo_max_orig']);
         }
 
