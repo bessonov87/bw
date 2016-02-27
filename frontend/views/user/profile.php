@@ -13,8 +13,10 @@ $this->title = "Профиль пользователя ".$user->username.". ".Y
         <div id="content-small-14">
 
             <?php
-            if(Yii::$app->request->get('username') === Yii::$app->user->identity->username){
-                echo '<div style="text-align: center;"><a class="btn btn-success" href="/user/'.Yii::$app->user->identity->username.'/edit/">Редактировать профиль</a></div>';
+            if(!Yii::$app->user->isGuest) {
+                if (Yii::$app->request->get('username') === Yii::$app->user->identity->username) {
+                    echo '<div style="text-align: center;"><a class="btn btn-success" href="/user/' . Yii::$app->user->identity->username . '/edit/">Редактировать профиль</a></div>';
+                }
             }
             ?>
 
