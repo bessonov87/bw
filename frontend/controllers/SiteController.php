@@ -512,6 +512,7 @@ class SiteController extends Controller
         if($client instanceof \yii\authclient\clients\VKontakte)
         {
             $auth_params = $client->getAccessToken()->getParams();
+            var_dump($auth_params);
             $email = ArrayHelper::getValue($auth_params,'email','');
             // Аватарка из VK да ПОБОЛЬШЕ!!!
             $vk_data_response = $client->api('users.get','POST',['uids'=>  $attributes['id'] , 'fields'=> 'photo_max_orig']);
