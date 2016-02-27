@@ -511,19 +511,18 @@ class SiteController extends Controller
         // VK
         if($client instanceof \yii\authclient\clients\VKontakte)
         {
-            $client->scope = 'email';
             $auth_params = $client->getAccessToken()->getParams();
-            var_dump($auth_params);
+            //var_dump($auth_params);
             $email = ArrayHelper::getValue($auth_params,'email','');
             // Аватарка из VK да ПОБОЛЬШЕ!!!
             $vk_data_response = $client->api('users.get','POST',['uids'=>  $attributes['id'] , 'fields'=> 'photo_max_orig']);
-            /*if($vk_data_response = ArrayHelper::getValue($vk_data_response,'response',false))
+            if($vk_data_response = ArrayHelper::getValue($vk_data_response,'response',false))
             {
                 $vk_data = array_shift($vk_data_response);
                 //Yii::$app->session->setFlash('social_avatar', $vk_data['photo_max_orig']);
-            }*/
+            }
             var_dump($email);
-            var_dump($vk_data_response);
+            var_dump($vk_data['photo_max_orig']);
         }
 
         var_dump($attributes); die();
