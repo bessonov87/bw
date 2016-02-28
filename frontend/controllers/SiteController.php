@@ -529,6 +529,7 @@ class SiteController extends Controller
             $userInfo['name'] = $attributes['first_name'];
             $userInfo['surname'] = $attributes['last_name'];
             $userInfo['birth_date'] = date('Y-m-d', strtotime($attributes['bdate']));
+            $userInfo['sex'] = ($attributes['sex'] == 2) ? 'm' : 'f';
             //var_dump($userInfo);
             //var_dump($vk_data['photo_max_orig']);
         }
@@ -544,7 +545,14 @@ class SiteController extends Controller
         }
         // FACEBOOK
         if($client instanceof \yii\authclient\clients\Facebook) {
-            var_dump($attributes); die();
+            //var_dump($attributes); die();
+            $userInfo['source_id'] = $attributes['id'];
+            $userInfo['username'] = GlobalHelper::usernameFromEmail($attributes['email']);
+            $userInfo['email'] = $attributes['email'];
+            $userInfo['name'] = $attributes['name'];
+            $userInfo['surname'] = '';
+            $userInfo['birth_date'] = '';
+            $userInfo['sex'] = '';
         }
 
         //var_dump($attributes); die();
