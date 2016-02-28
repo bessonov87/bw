@@ -91,7 +91,7 @@ class Mailru extends OAuth2 {
      * @inheritdoc
      */
     protected function defaultTitle() {
-        return 'Mailru';
+        return 'Mail.ru';
     }
     /**
      * @inheritdoc
