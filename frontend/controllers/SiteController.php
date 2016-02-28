@@ -556,14 +556,14 @@ class SiteController extends Controller
         }
         // GOOGLE
         if($client instanceof \yii\authclient\clients\GoogleOAuth) {
-            var_dump($attributes); die();
+            //var_dump($attributes); die();
             $userInfo['source_id'] = $attributes['id'];
-            $userInfo['username'] = GlobalHelper::usernameFromEmail($attributes['email']);
-            $userInfo['email'] = $attributes['email'];
-            $userInfo['name'] = $attributes['name'];
-            $userInfo['surname'] = '';
+            $userInfo['username'] = GlobalHelper::usernameFromEmail($attributes['emails'][0]["value"]);
+            $userInfo['email'] = $attributes['emails'][0]["value"];
+            $userInfo['name'] = $attributes['name']["givenName"];
+            $userInfo['surname'] = $attributes['name']["familyName"];
             $userInfo['birth_date'] = '';
-            $userInfo['sex'] = '';
+            $userInfo['sex'] = ($attributes['gender'] == 'male') ? 'm' : 'f';
         }
 
         //var_dump($attributes); die();
