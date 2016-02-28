@@ -28,6 +28,12 @@ return [
                     'clientSecret' => 'ZpCs0DRICDe9xJpArFOp',
                     'scope' => 'email',
                 ],
+                'odnoklassniki' => [
+                    'class' => 'frontend\components\auth\Odnoklassniki',
+                    'applicationKey' => 'odnoklassniki_app_public_key',
+                    'clientId' => 'odnoklassniki_app_id',
+                    'clientSecret' => 'odnoklassniki_client_secret',
+                ],
                 // и т.д.
             ],
         ]
