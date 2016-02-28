@@ -534,9 +534,13 @@ class SiteController extends Controller
         }
         // YANDEX
         if($client instanceof \yii\authclient\clients\YandexOAuth){
-
-            var_dump($attributes); die();
-
+            $userInfo['source_id'] = $attributes['id'];
+            $userInfo['username'] = ($attributes['login']) ? $attributes['login'] : GlobalHelper::usernameFromEmail($attributes['emails'][0]);
+            $userInfo['email'] = $attributes['emails'][0];
+            $userInfo['name'] = $attributes['first_name'];
+            $userInfo['surname'] = $attributes['last_name'];
+            $userInfo['birth_date'] = $attributes['birthday'];
+            $userInfo['sex'] = ($attributes['sex'] == 'male') ? 'm' : 'f';
         }
 
         //var_dump($attributes); die();
@@ -576,6 +580,9 @@ class SiteController extends Controller
                         $profile->name = $userInfo['name'];
                         $profile->surname = $userInfo['surname'];
                         $profile->birth_date = $userInfo['birth_date'];
+                        if(isset($userInfo['sex'])){
+                            $profile->sex = $userInfo['sex'];
+                        }
                         $profile->save();
 
                         $auth = new Auth([
