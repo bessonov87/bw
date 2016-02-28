@@ -565,6 +565,17 @@ class SiteController extends Controller
             $userInfo['birth_date'] = '';
             $userInfo['sex'] = ($attributes['gender'] == 'male') ? 'm' : 'f';
         }
+        // MAIL.RU
+        if($client instanceof \frontend\components\auth\Mailru) {
+            var_dump($attributes); die();
+            $userInfo['source_id'] = $attributes['id'];
+            $userInfo['username'] = GlobalHelper::usernameFromEmail($attributes['emails'][0]["value"]);
+            $userInfo['email'] = $attributes['emails'][0]["value"];
+            $userInfo['name'] = $attributes['name']["givenName"];
+            $userInfo['surname'] = $attributes['name']["familyName"];
+            $userInfo['birth_date'] = '';
+            $userInfo['sex'] = ($attributes['gender'] == 'male') ? 'm' : 'f';
+        }
 
         //var_dump($attributes); die();
 

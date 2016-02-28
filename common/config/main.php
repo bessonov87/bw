@@ -41,6 +41,11 @@ return [
                     'clientId' => '2de9eb2993f341eea212f95b71b11429',
                     'clientSecret' => 'd23cc79f700a49bc891c1c621bee1f5c',
                 ],
+                'mailru' => [
+                    'class' => 'frontend\components\auth\Mailru',
+                    'clientId' => '742178',
+                    'clientSecret' => '18d8ee2f97a100edeee850456577ef30',
+                ],
                 // и т.д.
             ],
         ]
