@@ -567,14 +567,14 @@ class SiteController extends Controller
         }
         // MAIL.RU
         if($client instanceof \frontend\components\auth\Mailru) {
-            var_dump($attributes); die();
             $userInfo['source_id'] = $attributes['id'];
-            $userInfo['username'] = GlobalHelper::usernameFromEmail($attributes['emails'][0]["value"]);
+            $userInfo['username'] = GlobalHelper::usernameFromEmail($attributes[0]['email']);
             $userInfo['email'] = $attributes['emails'][0]["value"];
-            $userInfo['name'] = $attributes['name']["givenName"];
-            $userInfo['surname'] = $attributes['name']["familyName"];
-            $userInfo['birth_date'] = '';
-            $userInfo['sex'] = ($attributes['gender'] == 'male') ? 'm' : 'f';
+            $userInfo['name'] = $attributes[0]["first_name"];
+            $userInfo['surname'] = $attributes[0]["last_name"];
+            $userInfo['birth_date'] = date('Y-m-d', strtotime($attributes[0]["birthday"]));
+            $userInfo['sex'] = ($attributes[0]["sex"] == 0) ? 'm' : 'f';
+            var_dump($userInfo); die();
         }
 
         //var_dump($attributes); die();
