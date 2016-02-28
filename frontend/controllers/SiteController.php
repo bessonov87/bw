@@ -585,7 +585,7 @@ class SiteController extends Controller
             } else { // регистрация
                 if (isset($userInfo['email']) && User::find()->where(['email' => $userInfo['email']])->exists()) {
                     Yii::$app->getSession()->setFlash('error', [
-                        Yii::t('app', "Пользователь с такой электронной почтой как в <strong>{client} (".$userInfo['email'].")</strong> уже существует, но с ним не связан. Для начала войдите на сайт использую электронную почту, для того, что бы связать её.", ['client' => $client->getTitle()]),
+                        Yii::t('app', "Пользователь с такой электронной почтой как в <strong>{client} (".$userInfo['email'].")</strong> уже существует, но с ним не связан. Для начала <a href='/site/login'>войдите на сайт</a>, используя электронную почту, чтобы связать её.<br>Если вы забыли свой пароль, можете восстановить его.", ['client' => $client->getTitle()]),
                     ]);
                 } else {
                     $password = Yii::$app->security->generateRandomString(6);
