@@ -15,7 +15,9 @@ return [
             'class' => 'yii\authclient\Collection',
             'clients' => [
                 'google' => [
-                    'class' => 'yii\authclient\clients\GoogleOpenId'
+                    'class' => 'yii\authclient\clients\GoogleOAuth',
+                    'clientId' => '616365204145-8n22kcvmq7lvi9ldsahdsq1vh65g8l0b.apps.googleusercontent.com',
+                    'clientSecret' => 'amtIr4rLG0gDkOEGp3eHEJkJ',
                 ],
                 'facebook' => [
                     'class' => 'yii\authclient\clients\Facebook',

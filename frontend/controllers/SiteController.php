@@ -554,6 +554,17 @@ class SiteController extends Controller
             $userInfo['birth_date'] = '';
             $userInfo['sex'] = '';
         }
+        // GOOGLE
+        if($client instanceof \yii\authclient\clients\GoogleOAuth) {
+            var_dump($attributes); die();
+            $userInfo['source_id'] = $attributes['id'];
+            $userInfo['username'] = GlobalHelper::usernameFromEmail($attributes['email']);
+            $userInfo['email'] = $attributes['email'];
+            $userInfo['name'] = $attributes['name'];
+            $userInfo['surname'] = '';
+            $userInfo['birth_date'] = '';
+            $userInfo['sex'] = '';
+        }
 
         //var_dump($attributes); die();
 

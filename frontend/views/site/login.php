@@ -40,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     echo "<a href='/site/auth?authclient=vkontakte'>VK</a> ";
                     echo " <a href='/site/auth?authclient=yandex'>YA</a>";
                     echo " <a href='/site/auth?authclient=facebook'>FB</a>";
+                    echo " <a href='/site/auth?authclient=google'>GO</a>";
                 }
             ?>
 
