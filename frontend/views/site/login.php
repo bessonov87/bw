@@ -36,12 +36,14 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php ActiveForm::end(); ?>
 
             <?php
-                if (Yii::$app->request->getUserIP() === '37.26.143.226'){
+                if (Yii::$app->request->getUserIP() === '37.26.143.226' || Yii::$app->request->getUserIP() === '127.0.0.1'){
                     echo "<a href='/site/auth?authclient=vkontakte'>VK</a> ";
                     echo " <a href='/site/auth?authclient=yandex'>YA</a>";
                     echo " <a href='/site/auth?authclient=facebook'>FB</a>";
                     echo " <a href='/site/auth?authclient=google'>GO</a>";
                     echo " <a href='/site/auth?authclient=mailru'>MR</a>";
+
+                    echo \app\components\widgets\AuthChoice::widget();
                 }
             ?>
 
