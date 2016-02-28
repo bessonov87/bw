@@ -19,8 +19,8 @@ return [
                 ],
                 'facebook' => [
                     'class' => 'yii\authclient\clients\Facebook',
-                    'clientId' => 'facebook_client_id',
-                    'clientSecret' => 'секретный_ключ_facebook_client',
+                    'clientId' => '980427198678106',
+                    'clientSecret' => '32c93df394004bbce4684fcaf584f524',
                 ],
                 'vkontakte' => [
                     'class' => 'yii\authclient\clients\VKontakte',

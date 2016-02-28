@@ -542,6 +542,10 @@ class SiteController extends Controller
             $userInfo['birth_date'] = $attributes['birthday'];
             $userInfo['sex'] = ($attributes['sex'] == 'male') ? 'm' : 'f';
         }
+        // FACEBOOK
+        if($client instanceof \yii\authclient\clients\Facebook) {
+            var_dump($attributes); die();
+        }
 
         //var_dump($attributes); die();
 
