@@ -37,7 +37,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php
                 if (Yii::$app->request->getUserIP() === '37.26.143.226'){
-                    echo "<a href='/site/auth?authclient=vkontakte'>VK</a>";
+                    echo "<a href='/site/auth?authclient=vkontakte'>VK</a> ";
+                    echo " <a href='/site/auth?authclient=yandex'>YA</a>";
                 }
             ?>
 

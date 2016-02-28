@@ -34,6 +34,11 @@ return [
                     'clientId' => 'odnoklassniki_app_id',
                     'clientSecret' => 'odnoklassniki_client_secret',
                 ],
+                'yandex' => [
+                    'class' => 'yii\authclient\clients\YandexOAuth',
+                    'clientId' => '2de9eb2993f341eea212f95b71b11429',
+                    'clientSecret' => 'd23cc79f700a49bc891c1c621bee1f5c',
+                ],
                 // и т.д.
             ],
         ]

@@ -532,6 +532,12 @@ class SiteController extends Controller
             //var_dump($userInfo);
             //var_dump($vk_data['photo_max_orig']);
         }
+        // YANDEX
+        if($client instanceof \yii\authclient\clients\YandexOAuth){
+
+            var_dump($attributes); die();
+
+        }
 
         //var_dump($attributes); die();
 
