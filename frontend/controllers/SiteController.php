@@ -567,6 +567,7 @@ class SiteController extends Controller
         }
         // MAIL.RU
         if($client instanceof \frontend\components\auth\Mailru) {
+            var_dump($attributes[0]); die();
             $userInfo['source_id'] = $attributes['id'];
             $userInfo['username'] = GlobalHelper::usernameFromEmail($attributes[0]['email']);
             $userInfo['email'] = $attributes['emails'][0]["value"];
