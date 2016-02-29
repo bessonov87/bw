@@ -32,9 +32,9 @@ return [
                 ],
                 'odnoklassniki' => [
                     'class' => 'frontend\components\auth\Odnoklassniki',
-                    'applicationKey' => 'odnoklassniki_app_public_key',
-                    'clientId' => 'odnoklassniki_app_id',
-                    'clientSecret' => 'odnoklassniki_client_secret',
+                    'applicationKey' => 'CBANKJELEBABABABA',
+                    'clientId' => '1246276608',
+                    'clientSecret' => '5D187AE7585B556E04E28BDA',
                 ],
                 'yandex' => [
                     'class' => 'yii\authclient\clients\YandexOAuth',

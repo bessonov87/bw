@@ -1,0 +1,134 @@
+/* google, facebook, vkontakte, odnoklassniki, yandex, mailru */
+.ext-auth{
+    display: inline-block;
+    width: 250px;
+    padding-left: 30px;
+    border-left: 1px #bfbfbf solid;
+}
+
+.auth-btn {
+    display: block;
+    padding: 0px 10px;
+    padding-left: 52px;
+    margin: 0;
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 16px;
+    width: 180px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 3px;
+    color: #fff;
+    position: relative;
+    cursor: pointer;
+    background-color: #cccccc;
+    vertical-align: middle;
+    outline: 0;
+    white-space: nowrap;
+    box-sizing: border-box;
+    background-image: none;
+    -webkit-transition: background-color 300ms ease-out,color 300ms ease-out;
+    transition: background-color 300ms ease-out,color 300ms ease-out;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
+
+.auth-btn:hover {
+    text-decoration: none;
+    color: #FFFFEE;
+}
+
+.auth-vkontakte {
+    background-color: #6995c3;
+    border: 1px #427cc2 solid;
+}
+
+.auth-vkontakte:hover {
+    background-color: #5889c3;
+}
+
+.auth-google {
+    background-color: #db4a39;
+    border: 1px #c33025 solid;
+}
+
+.auth-google:hover {
+    background-color: #ca3625;
+}
+
+.auth-facebook {
+    background-color: #3a589b;
+    border: 1px #3a4e91 solid;
+}
+
+.auth-facebook:hover {
+    background-color: #324c86;
+}
+
+.auth-odnoklassniki {
+    background-color: #F59944;
+    border: 1px #cf6700 solid;
+}
+
+.auth-odnoklassniki:hover {
+    background-color: #e68945;
+}
+
+.auth-yandex {
+    background-color: #F00;
+    border: 1px #e60000 solid;
+}
+
+.auth-yandex:hover {
+    background-color: #f00000;
+}
+
+.auth-mailru {
+    background-color: #168de2;
+    border: 1px #167acc solid;
+}
+
+.auth-mailru:hover {
+    background-color: #1378c0;
+}
+
+.icon-social{
+    width: 36px;
+    height: 33px;
+    position: absolute;
+    top: 3px;
+    left: 0px;
+}
+
+.icon-vkontakte {
+    background: url("/bw15/images/social-icons.png") 0 -32px;
+    border-right: 1px #427cc2 solid;
+}
+
+.icon-google {
+    background: url("/bw15/images/social-icons.png") 0 -96px;
+    border-right: 1px #b42f25 solid;
+}
+
+.icon-facebook {
+    background: url("/bw15/images/social-icons.png") 0 -64px;
+    border-right: 1px #31427b solid;
+}
+
+.icon-odnoklassniki {
+    background: url("/bw15/images/social-icons.png") 0 -160px;
+    border-right: 1px #cf6700 solid;
+}
+
+.icon-yandex {
+    background: url("/bw15/images/social-icons.png") 0 0px;
+    border-right: 1px #de0000 solid;
+}
+
+.icon-mailru {
+    background: url("/bw15/images/social-icons.png") 0 -128px;
+    border-right: 1px #136fb7 solid;
+}

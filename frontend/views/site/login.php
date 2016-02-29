@@ -16,7 +16,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div id="content-item-content">
         <div id="content-small-14">
             <p>Войдите на сайт, чтобы получить возможность добавлять комментарии, выставлять оценки и выполнять другие действия, доступные только авторизованным посетителям.</p>
+            <p>Для входа вы можете использовать как классическую схему с использованием логина и пароля, так и популярные социальные сети, если вы там зарегистрированы.</p>
 
+            <div class="login-form">
+                <h4>С использованием логина/пароля:</h4>
             <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
             <?= $form->field($model, 'username') ?>
@@ -34,18 +37,17 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
 
             <?php ActiveForm::end(); ?>
+            </div>
 
+            <div class="ext-auth"><h4>Через социальные сети:</h4>
             <?php
                 if (Yii::$app->request->getUserIP() === '37.26.143.226' || Yii::$app->request->getUserIP() === '127.0.0.1'){
-                    echo "<a href='/site/auth?authclient=vkontakte'>VK</a> ";
-                    echo " <a href='/site/auth?authclient=yandex'>YA</a>";
-                    echo " <a href='/site/auth?authclient=facebook'>FB</a>";
-                    echo " <a href='/site/auth?authclient=google'>GO</a>";
-                    echo " <a href='/site/auth?authclient=mailru'>MR</a>";
-
                     echo \app\components\widgets\AuthChoice::widget();
                 }
             ?>
+            </div>
+
+
 
         </div>
         <div class="clear"></div>

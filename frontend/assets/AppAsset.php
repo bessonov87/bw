@@ -23,6 +23,7 @@ class AppAsset extends AssetBundle
         'bw15/css/normalize.css',
         'bw15/css/fonts.css',
         'bw15/css/theme.css',
+        'bw15/css/social-auth.css',
         'bw15/libs/owl-carousel/owl.carousel.css',
         'bw15/libs/fancybox/jquery.fancybox.css',
         'bw15/libs/font-awesome-4.2.0/css/font-awesome.min.css',

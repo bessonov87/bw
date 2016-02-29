@@ -27,7 +27,7 @@ class AuthChoice extends Widget
      */
     public function run()
     {
-        return Html::tag('div', '+++++ '.$this->renderMainContent(), ['class' => 'ext-auth']);
+        return Html::tag('div', $this->renderMainContent(), ['class' => 'social-auth']);
     }
 
     /**
@@ -39,12 +39,8 @@ class AuthChoice extends Widget
      */
     public function clientLink($client)
     {
-        $text = Html::tag('span', '', ['class' => 'bw-auth-icon ' . $client->getName()]);
-        $text .= Html::tag('span', $client->getTitle(), ['class' => 'bw-auth-title']);
-
-        $text = ''.$client->getTitle();
-
-        return Html::a($text, $this->createClientUrl($client), ['class' => 'bw-auth-link ' . $client->getName()]);
+        $text = '<i class="icon-social icon-'.$client->getName().'"></i> '.$client->getTitle();
+        return Html::a($text, $this->createClientUrl($client), ['class' => 'auth-btn auth-' . $client->getName()]);
     }
 
     /**
@@ -79,6 +75,7 @@ class AuthChoice extends Widget
             //$content[] = Html::tag('li', $this->clientLink($externalService), ['class' => 'bw-auth-client']);
             $content .= $this->clientLink($externalService);
         }
+        return $content;
     }
 
     /**
