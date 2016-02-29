@@ -578,7 +578,7 @@ class SiteController extends Controller
         }
         // ODNOKLASSNIKI
         if($client instanceof \frontend\components\auth\Odnoklassniki) {
-            var_dump($attributes[0]); die();
+            var_dump($attributes); die();
             $userInfo['source_id'] = $attributes['id'];
             $userInfo['username'] = GlobalHelper::usernameFromEmail($attributes[0]['email']);
             $userInfo['email'] = $attributes[0]["email"];
