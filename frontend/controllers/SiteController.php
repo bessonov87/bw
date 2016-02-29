@@ -576,7 +576,7 @@ class SiteController extends Controller
             $userInfo['birth_date'] = date('Y-m-d', strtotime($attributes[0]["birthday"]));
             $userInfo['sex'] = ($attributes[0]["sex"] == 0) ? 'm' : 'f';
         }
-        // ODNOKLASSNIKI
+        /*// ODNOKLASSNIKI
         if($client instanceof \frontend\components\auth\Odnoklassniki) {
             var_dump($attributes); die();
             $userInfo['source_id'] = $attributes['uid'];
@@ -586,9 +586,7 @@ class SiteController extends Controller
             $userInfo['surname'] = $attributes["last_name"];
             $userInfo['birth_date'] = $attributes["birthday"];
             $userInfo['sex'] = ($attributes["gender"] == 'male') ? 'm' : 'f';
-        }
-
-        //var_dump($attributes); die();
+        }*/
 
         if(!isset($userInfo['email']) || empty($userInfo['email'])){
             throw new BadRequestHttpException('Не удалось получить email адрес');
@@ -607,7 +605,9 @@ class SiteController extends Controller
             } else { // регистрация
                 if (isset($userInfo['email']) && User::find()->where(['email' => $userInfo['email']])->exists()) {
                     Yii::$app->getSession()->setFlash('error', [
-                        Yii::t('app', "Пользователь с такой электронной почтой как в <strong>{client} (".$userInfo['email'].")</strong> уже существует, но с ним не связан. Для начала <a href='/site/login'>войдите на сайт</a>, используя электронную почту, чтобы связать её.<br>Если вы забыли свой пароль, можете восстановить его.", ['client' => $client->getTitle()]),
+                        Yii::t('app', "Пользователь с электронной почтой как в <strong>{client} (".$userInfo['email'].")</strong> уже существует, но не связан с этим аккаунтом. Вероятно, вы уже регистрировались на нашем сайте с помощью другой социальной сети, к которой привязан email <strong>".$userInfo['email']."</strong>, или с использование классического способа регистрации.
+                        Для входа на сайт используйте тот сервис, который вы использовали в первый раз. Если это невозможно, перейдите <a href='/site/login'>на эту страницу</a> и пройдите процедуру восстановления доступа, указав email <strong>".$userInfo['email']."</strong>. На этот адрес будет отправлено письмо с дальнейшими действиями. После восстановления доступа вы сможете привязать
+                        к своему аккаунту любую из социальных сетей и далее входить на сайт в один клик.", ['client' => $client->getTitle()]),
                     ]);
                 } else {
                     $password = Yii::$app->security->generateRandomString(6);
