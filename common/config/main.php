@@ -35,6 +35,7 @@ return [
                     'applicationKey' => 'CBANKJELEBABABABA',
                     'clientId' => '1246276608',
                     'clientSecret' => '5D187AE7585B556E04E28BDA',
+                    'scope' => 'email',
                 ],
                 'yandex' => [
                     'class' => 'yii\authclient\clients\YandexOAuth',

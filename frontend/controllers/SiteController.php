@@ -579,18 +579,18 @@ class SiteController extends Controller
         // ODNOKLASSNIKI
         if($client instanceof \frontend\components\auth\Odnoklassniki) {
             var_dump($attributes); die();
-            $userInfo['source_id'] = $attributes['id'];
+            $userInfo['source_id'] = $attributes['uid'];
             $userInfo['username'] = GlobalHelper::usernameFromEmail($attributes[0]['email']);
-            $userInfo['email'] = $attributes[0]["email"];
-            $userInfo['name'] = $attributes[0]["first_name"];
-            $userInfo['surname'] = $attributes[0]["last_name"];
-            $userInfo['birth_date'] = date('Y-m-d', strtotime($attributes[0]["birthday"]));
-            $userInfo['sex'] = ($attributes[0]["sex"] == 0) ? 'm' : 'f';
+            if($attributes['has_email']) $userInfo['email'] = $attributes[0]["email"];
+            $userInfo['name'] = $attributes["first_name"];
+            $userInfo['surname'] = $attributes["last_name"];
+            $userInfo['birth_date'] = $attributes["birthday"];
+            $userInfo['sex'] = ($attributes["gender"] == 'male') ? 'm' : 'f';
         }
 
         //var_dump($attributes); die();
 
-        if(!isset($userInfo['email'])){
+        if(!isset($userInfo['email']) || empty($userInfo['email'])){
             throw new BadRequestHttpException('Не удалось получить email адрес');
         }
 
