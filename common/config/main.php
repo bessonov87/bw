@@ -30,13 +30,13 @@ return [
                     'clientSecret' => 'ZpCs0DRICDe9xJpArFOp',
                     'scope' => 'email',
                 ],
-                'odnoklassniki' => [
+                /*'odnoklassniki' => [
                     'class' => 'frontend\components\auth\Odnoklassniki',
                     'applicationKey' => 'CBANKJELEBABABABA',
                     'clientId' => '1246276608',
                     'clientSecret' => '5D187AE7585B556E04E28BDA',
                     'scope' => 'email',
-                ],
+                ],*/
                 'yandex' => [
                     'class' => 'yii\authclient\clients\YandexOAuth',
                     'clientId' => '2de9eb2993f341eea212f95b71b11429',
