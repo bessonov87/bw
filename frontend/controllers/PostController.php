@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\components\behaviors\UrlBehavior;
 use Yii;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
@@ -19,6 +20,19 @@ use frontend\models\form\SearchForm;
  * Post controller
  */
 class PostController extends Controller{
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'url' => [
+                'class' => UrlBehavior::className(),
+                'exceptions' => ['redirect'],
+            ],
+        ];
+    }
 
     /**
      * Отображает анонсы статей

@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use common\models\ar\UserProfile;
+use frontend\components\behaviors\UrlBehavior;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -51,6 +52,10 @@ class SiteController extends Controller
                         'roles' => ['@'],
                     ],
                 ],
+            ],
+            'url' => [
+                'class' => UrlBehavior::className(),
+                'allow' => ['feedback'],
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
