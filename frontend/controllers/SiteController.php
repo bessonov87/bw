@@ -575,7 +575,17 @@ class SiteController extends Controller
             $userInfo['surname'] = $attributes[0]["last_name"];
             $userInfo['birth_date'] = date('Y-m-d', strtotime($attributes[0]["birthday"]));
             $userInfo['sex'] = ($attributes[0]["sex"] == 0) ? 'm' : 'f';
-            var_dump($userInfo); die();
+        }
+        // ODNOKLASSNIKI
+        if($client instanceof \frontend\components\auth\Odnoklassniki) {
+            var_dump($attributes[0]); die();
+            $userInfo['source_id'] = $attributes['id'];
+            $userInfo['username'] = GlobalHelper::usernameFromEmail($attributes[0]['email']);
+            $userInfo['email'] = $attributes[0]["email"];
+            $userInfo['name'] = $attributes[0]["first_name"];
+            $userInfo['surname'] = $attributes[0]["last_name"];
+            $userInfo['birth_date'] = date('Y-m-d', strtotime($attributes[0]["birthday"]));
+            $userInfo['sex'] = ($attributes[0]["sex"] == 0) ? 'm' : 'f';
         }
 
         //var_dump($attributes); die();
