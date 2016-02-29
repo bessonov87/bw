@@ -40,11 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
 
             <div class="ext-auth"><h4>Через социальные сети:</h4>
-            <?php
-                if (Yii::$app->request->getUserIP() === '37.26.143.226' || Yii::$app->request->getUserIP() === '127.0.0.1'){
-                    echo \app\components\widgets\AuthChoice::widget();
-                }
-            ?>
+                <?= \app\components\widgets\AuthChoice::widget() ?>
             </div>
 
 
