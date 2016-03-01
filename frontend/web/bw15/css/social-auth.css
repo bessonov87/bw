@@ -12,6 +12,20 @@
     margin-bottom: 10px;
 }
 
+.auth-label {
+    display: inline-block;
+    padding: 0 10px;
+    padding-left: 52px;
+    margin: 0;
+    margin-right: 8px;
+    height: 40px;
+    line-height: 40px;
+    color: white;
+    font-size: 16px;
+    border-radius: 3px;
+    position: relative;
+}
+
 .auth-btn {
     display: block;
     padding: 0px 10px;

@@ -12,8 +12,8 @@ return [
         'suffix' => '/',
     ],
     [
-        'pattern' => 'user/<username:[А-Яа-яA-Za-z0-9_-]+>/edit',
-        'route' => 'user/edit',
+        'pattern' => 'user/<username:[А-Яа-яA-Za-z0-9_-]+>/<action:[a-z0-9]+>',
+        'route' => 'user/<action>',
         'suffix' => '/',
     ],
     [

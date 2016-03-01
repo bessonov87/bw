@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\ar\Auth;
 use frontend\components\behaviors\UrlBehavior;
 use common\models\ar\UserProfile;
 use frontend\models\form\EditProfileForm;
@@ -59,6 +60,13 @@ class UserController extends Controller{
         return $this->render('profile', ['user' => $this->user]);
     }
 
+    /**
+     * Редактирование профиля пользователя
+     *
+     * @return string
+     * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
+     */
     public function actionEdit(){
         $username = \Yii::$app->request->get('username');
         if($username !== \Yii::$app->user->identity->username){
@@ -82,6 +90,18 @@ class UserController extends Controller{
         }
 
         return $this->render('edit', ['model' => $model, 'user' => $this->user]);
+    }
+
+    public function actionSocial(){
+        //var_dump(Yii::$app->request->get('username'));
+        $username = \Yii::$app->request->get('username');
+        if($username !== \Yii::$app->user->identity->username){
+            throw new ForbiddenHttpException('Доступ запрещен');
+        }
+        $userId = \Yii::$app->user->getId();
+        $auths = Auth::find()->where(['user_id' => $userId])->all();
+
+        return $this->render('social', ['auths' => $auths]);
     }
 
     public function getUser(){

@@ -15,7 +15,8 @@ $this->title = "Профиль пользователя ".$user->username.". ".Y
             <?php
             if(!Yii::$app->user->isGuest) {
                 if (Yii::$app->request->get('username') === Yii::$app->user->identity->username) {
-                    echo '<div style="text-align: center;"><a class="btn btn-success" href="/user/' . Yii::$app->user->identity->username . '/edit/">Редактировать профиль</a></div>';
+                    echo '<div class="profile-action"><a class="btn btn-success" href="/user/' . Yii::$app->user->identity->username . '/edit/">Редактировать профиль</a></div>';
+                    echo '<div class="profile-action"><a class="btn btn-success" href="/user/' . Yii::$app->user->identity->username . '/social/">Привязать аккаунты в социальных сетях</a></div>';
                 }
             }
             ?>
