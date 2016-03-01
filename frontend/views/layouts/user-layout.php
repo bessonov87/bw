@@ -11,6 +11,7 @@ use common\widgets\Alert;
 use app\components\widgets\SidebarMenuWidget;
 use app\components\widgets\UserWidget;
 use app\components\widgets\PopularWidget;
+use app\components\widgets\FlashWidget;
 //use app\components\widgets\AdvertWidget;
 
 AppAsset::register($this);
@@ -34,6 +35,7 @@ IeAsset::register($this);
     </head>
     <body>
     <?php $this->beginBody() ?>
+    <?= FlashWidget::widget() ?>
     <div id="page-wrap">
         <div id="header">
             <div id="logo-text"><h1>Женский журнал - Секреты здоровья и красоты</h1></div>
