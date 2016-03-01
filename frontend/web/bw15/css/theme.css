@@ -1312,3 +1312,27 @@ ol.popular li:hover:after {
     display: inline-block;
     margin-right: 10px;
 }
+
+.flash-message {
+    background: #fefefe;
+    background: rgba(250, 250, 250, 0.95);
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    min-height: 130px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    display: none;
+}
+
+.alert {
+    opacity: 1;
+}
+
+.flash-message-close{
+    display: inline-block;
+    float: right;
+    cursor: pointer;
+}

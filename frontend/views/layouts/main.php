@@ -17,6 +17,7 @@ use app\components\widgets\LoginWidget;
 use app\components\widgets\CalendarWidget;
 use app\components\widgets\PopularWidget;
 use app\components\widgets\SearchWidget;
+use app\components\widgets\FlashWidget;
 
 AppAsset::register($this);
 IeAsset::register($this);
@@ -40,6 +41,7 @@ IeAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
+<?= FlashWidget::widget() ?>
 <div id="page-wrap">
     <div id="header">
         <div id="logo-text"><h1>Женский журнал - Секреты здоровья и красоты</h1></div>
@@ -53,13 +55,13 @@ IeAsset::register($this);
             if (Yii::$app->user->isGuest) {
                echo '<li><a href="/site/login">Вход</a></li>';
                 echo '<li><a href="/site/signup">Регистрация</a></li>';
-                echo '<li><a href="http://beauty-women.ru/advertising/">Реклама на сайте</a></li>';
+                echo '<li><a href="/advertising/">Реклама на сайте</a></li>';
             } else {
                 echo '<li><a href="/site/logout" data-method="post">Выход ('.Yii::$app->user->identity->username.')</a></li>';
                 echo '<li><a href="/user/'.Yii::$app->user->identity->username.'/">Моя страница</a></li>';
              }
             ?>
-            <li><a href="http://beauty-women.ru/feedback.php">Обратная связь</a></li>
+            <li><a href="/site/feedback">Обратная связь</a></li>
             <li><a href="#cats" title="Разделы">Разделы</a></li>
             <li><a href="http://beauty-women.ru/" title="Женский журнал" class="main-page">Главная</a></li>
         </ul>

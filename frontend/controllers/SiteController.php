@@ -654,7 +654,7 @@ class SiteController extends Controller
             if($auth->user_id != Yii::$app->user->getId()){ // Если аккаунт привязан к другому пользователю
                 Yii::$app->session->setFlash('error', 'Данный аккаунт '.$client->getTitle().' привязан к учетной записи другого пользователя сайта. Привязать аккаунт к двум учетным записям невозможно.');
             } else {
-                Yii::$app->session->setFlash('info', 'Данный аккаунт '.$client->getTitle().' ужк привязан к вашей учетной записи.');
+                Yii::$app->session->setFlash('info', 'Данный аккаунт '.$client->getTitle().' уже привязан к вашей учетной записи.');
             }
             if (!$auth) { // добавляем внешний сервис аутентификации
                 $auth = new Auth([
