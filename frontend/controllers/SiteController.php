@@ -145,7 +145,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            Yii::$app->session->setFlash('success', 'Вход произведен. Теперь вы можете использовать все дополнительные возможности.');
+            Yii::$app->session->setFlash('success', 'Вход произведен. Теперь вы можете использовать все дополнительные возможности сайта.');
             $this->redirect($this->getPreviosUrl());
         } else {
             return $this->render('login', [
@@ -520,16 +520,13 @@ class SiteController extends Controller
         if($client instanceof \yii\authclient\clients\VKontakte)
         {
             $auth_params = $client->getAccessToken()->getParams();
-            //var_dump($auth_params);
             $email = ArrayHelper::getValue($auth_params,'email','');
             // Аватарка из VK да ПОБОЛЬШЕ!!!
             $vk_data_response = $client->api('users.get','POST',['uids'=>  $attributes['id'] , 'fields'=> 'photo_max_orig']);
             if($vk_data_response = ArrayHelper::getValue($vk_data_response,'response',false))
             {
                 $vk_data = array_shift($vk_data_response);
-                //Yii::$app->session->setFlash('social_avatar', $vk_data['photo_max_orig']);
             }
-            //var_dump($email);
             $userInfo['source_id'] = $attributes['id'];
             $userInfo['username'] = ($attributes['screen_name']) ? $attributes['screen_name'] : GlobalHelper::usernameFromEmail($attributes['email']);
             $userInfo['email'] = $attributes['email'];
@@ -537,8 +534,6 @@ class SiteController extends Controller
             $userInfo['surname'] = $attributes['last_name'];
             $userInfo['birth_date'] = date('Y-m-d', strtotime($attributes['bdate']));
             $userInfo['sex'] = ($attributes['sex'] == 2) ? 'm' : 'f';
-            //var_dump($userInfo);
-            //var_dump($vk_data['photo_max_orig']);
         }
         // YANDEX
         if($client instanceof \yii\authclient\clients\YandexOAuth){
@@ -609,7 +604,7 @@ class SiteController extends Controller
             if ($auth) { // авторизация
                 $user = $auth->user;
                 Yii::$app->user->login($user);
-                var_dump($user);
+                Yii::$app->session->setFlash('success', 'Вход произведен. Теперь вы можете использовать все дополнительные возможности сайта.');
             } else { // регистрация
                 if (isset($userInfo['email']) && User::find()->where(['email' => $userInfo['email']])->exists()) {
                     Yii::$app->getSession()->setFlash('error', [
@@ -645,6 +640,7 @@ class SiteController extends Controller
                         ]);
                         if ($auth->save()) {
                             $transaction->commit();
+                            Yii::$app->session->setFlash('success', 'Вход на сайт произведен. Для вас была автоматически создана учетная запись. Информация о ней отправлена на ваш email (<strong>('.$userInfo['email'].')</strong>). В дальнейшем вы можете входить на сайт как с помощью {client}, так и с помощью своего логина и пароля.');
                             Yii::$app->user->login($user);
                         } else {
                             print_r($auth->getErrors());
