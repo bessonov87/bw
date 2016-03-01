@@ -12,6 +12,7 @@ class FlashWidget extends Widget
         $flashes = \Yii::$app->session->getAllFlashes(false);
         if(!empty($flashes)){
             foreach($flashes as $type => $flash){
+                if($type == 'error') $type = 'danger';
                 $content .= Html::tag('div', $flash, ['class' => 'alert alert-'.$type]);
             }
             $content .= Html::tag('div', 'Закрыть <i class="fa fa-times"></i>', ['class' => 'flash-message-close']);
