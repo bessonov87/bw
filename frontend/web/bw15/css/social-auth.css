@@ -6,6 +6,12 @@
     border-left: 1px #bfbfbf solid;
 }
 
+.ext-auth-small{
+    display: block;
+    width: 200px;
+    margin-bottom: 10px;
+}
+
 .auth-btn {
     display: block;
     padding: 0px 10px;
@@ -19,6 +25,31 @@
     line-height: 40px;
     border-radius: 3px;
     color: #fff;
+    position: relative;
+    cursor: pointer;
+    background-color: #cccccc;
+    vertical-align: middle;
+    outline: 0;
+    white-space: nowrap;
+    box-sizing: border-box;
+    background-image: none;
+    -webkit-transition: background-color 300ms ease-out,color 300ms ease-out;
+    transition: background-color 300ms ease-out,color 300ms ease-out;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
+
+.auth-btn-small {
+    display: inline-block;
+    margin: 0;
+    margin-right: 5px;
+    width: 35px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 3px;
     position: relative;
     cursor: pointer;
     background-color: #cccccc;
@@ -131,4 +162,28 @@
 .icon-mailru {
     background: url("/bw15/images/social-icons.png") 0 -128px;
     border-right: 1px #136fb7 solid;
+}
+
+.icon-vkontakte-small {
+    background: url("/bw15/images/social-icons.png") 0 -32px;
+}
+
+.icon-google-small {
+    background: url("/bw15/images/social-icons.png") 0 -96px;
+}
+
+.icon-facebook-small {
+    background: url("/bw15/images/social-icons.png") 0 -64px;
+}
+
+.icon-odnoklassniki-small {
+    background: url("/bw15/images/social-icons.png") 0 -160px;
+}
+
+.icon-yandex-small {
+    background: url("/bw15/images/social-icons.png") 0 0px;
+}
+
+.icon-mailru-small {
+    background: url("/bw15/images/social-icons.png") 0 -128px;
 }

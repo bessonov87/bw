@@ -27,9 +27,13 @@ use common\models\ar\User;
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
                 <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton('Войти', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
+                <div class="ext-auth-small">
+                    <div style="text-align: center">Войти через социальные сети:</div>
+                    <?= \app\components\widgets\AuthChoice::widget(['inlineForm' => true]) ?>
+                </div>
         </div></div>
 
     <?php

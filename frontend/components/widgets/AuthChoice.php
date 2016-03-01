@@ -13,6 +13,10 @@ class AuthChoice extends Widget
      * This component will be used to fetch services value if it is not set.
      */
     public $clientCollection = 'authClientCollection';
+    /**
+     * @var bool выводить маленькие кнопки для inline формы входа?
+     */
+    public $inlineForm = false;
 
     /**
      * Initializes the widget.
@@ -39,8 +43,15 @@ class AuthChoice extends Widget
      */
     public function clientLink($client)
     {
-        $text = '<i class="icon-social icon-'.$client->getName().'"></i> '.$client->getTitle();
-        return Html::a($text, $this->createClientUrl($client), ['class' => 'auth-btn auth-' . $client->getName()]);
+        if(!$this->inlineForm){
+            $text = '<i class="icon-social icon-'.$client->getName().'"></i> '.$client->getTitle();
+            $class = 'auth-btn';
+        } else {
+            $text = '<i class="icon-social icon-'.$client->getName().'-small"></i>';
+            $class = 'auth-btn-small';
+        }
+        return Html::a($text, $this->createClientUrl($client), ['class' => $class.' auth-' . $client->getName(), 'title' => $client->getTitle()]);
+
     }
 
     /**

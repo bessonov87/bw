@@ -24,7 +24,7 @@ class UrlBehavior extends Behavior
     public function afterAction(){
         $action = $this->owner->action->id;
         //$route = $this->owner->module->requestedRoute;
-        var_dump(Yii::$app->session->get('previosUrl'));
+        //var_dump(Yii::$app->session->get('previosUrl'));
         $url = Yii::$app->request->absoluteUrl;
         if(!empty($this->exceptions) && empty($this->allow)) {
             if(in_array($action, $this->exceptions)){
@@ -39,7 +39,7 @@ class UrlBehavior extends Behavior
 
         if($this->allowRecording) {
             Yii::$app->session->set('previosUrl', $url);
-            var_dump($url);
+            //var_dump($url);
         }
     }
 }

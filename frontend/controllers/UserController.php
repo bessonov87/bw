@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\components\behaviors\UrlBehavior;
 use common\models\ar\UserProfile;
 use frontend\models\form\EditProfileForm;
 use yii\filters\AccessControl;
@@ -34,6 +35,10 @@ class UserController extends Controller{
                         'roles' => ['@'],
                     ],
                 ],
+            ],
+            'url' => [
+                'class' => UrlBehavior::className(),
+                'exceptions' => ['edit'],
             ],
         ];
     }

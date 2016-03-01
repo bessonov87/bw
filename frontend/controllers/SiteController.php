@@ -82,6 +82,7 @@ class SiteController extends Controller
             'auth' => [
                 'class' => 'yii\authclient\AuthAction',
                 'successCallback' => [$this, 'onAuthSuccess'],
+                'successUrl' => Yii::$app->session->get('previosUrl'),
             ],
         ];
     }
@@ -144,7 +145,8 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            Yii::$app->session->setFlash('success', 'Вход произведен. Теперь вы можете использовать все дополнительные возможности.');
+            $this->redirect($this->getPreviosUrl());
         } else {
             return $this->render('login', [
                 'model' => $model,
@@ -161,7 +163,7 @@ class SiteController extends Controller
     {
         Yii::$app->user->logout();
 
-        return $this->goHome();
+        return $this->goBack();
     }
 
     /**
@@ -209,7 +211,7 @@ class SiteController extends Controller
             if ($user = $model->signup()) {
                 $activation = (Yii::$app->params['emailActivation']) ? ' Ваша учетная запись пока не является активной. На адрес email, указанный вами при регистрации было отправлено письмо с данными для активации учетной записи. Проверьте свою электронную почту и следуйте инструкциям из письма.' : '';
                 Yii::$app->session->setFlash('success', 'Спасибо за регистрацию. Теперь вы можете войти на сайт используя свои имя пользователя и пароль.'.$activation);
-                return $this->goHome();
+                return $this->redirect($this->getPreviosUrl());
             }
         }
 
@@ -259,7 +261,7 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
             Yii::$app->session->setFlash('success', 'Новый пароль сохранен. Теперь вы можете войти на сайт, используя новый пароль.');
 
-            return $this->goHome();
+            return $this->redirect(['site/login']);
         }
 
         return $this->render('resetPassword', [
@@ -277,7 +279,7 @@ class SiteController extends Controller
         if($model->userFound){
             if($model->activateUser()) {
                 Yii::$app->session->setFlash('success', 'Ваш Email адрес подтвержден. Теперь вы можете пользоваться всеми функциями, доступными для авторизованных пользователей сайта.');
-                return $this->goHome();
+                return $this->redirect($this->getPreviosUrl());
             } else {
                 Yii::$app->session->setFlash('error', 'Ошибка.');
             }
@@ -662,6 +664,14 @@ class SiteController extends Controller
                 $auth->save();
             }
         }
+    }
+
+    /**
+     * Возвращает URL последней просмотренной страницы
+     * @return mixed
+     */
+    public function getPreviosUrl(){
+        return ($url = Yii::$app->session->get('previosUrl')) ? $url : Yii::$app->params['frontendBaseUrl'];
     }
 
 }
