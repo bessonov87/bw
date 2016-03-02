@@ -15,6 +15,9 @@ use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 use Yii;
 
+/**
+ * User controller
+ */
 class UserController extends Controller{
 
     public $defaultAction = 'all';
@@ -92,6 +95,12 @@ class UserController extends Controller{
         return $this->render('edit', ['model' => $model, 'user' => $this->user]);
     }
 
+    /**
+     * Привязка аккаунтов социальных сетей к учетной записи пользователя
+     *
+     * @return string
+     * @throws ForbiddenHttpException
+     */
     public function actionSocial(){
         //var_dump(Yii::$app->request->get('username'));
         $username = \Yii::$app->request->get('username');
@@ -104,6 +113,12 @@ class UserController extends Controller{
         return $this->render('social', ['auths' => $auths]);
     }
 
+    /**
+     * Получает объект класса User по username
+     *
+     * @return array|null|\yii\db\ActiveRecord
+     * @throws NotFoundHttpException
+     */
     public function getUser(){
         $user = User::find()
             ->where(['username' => \Yii::$app->request->get('username')])

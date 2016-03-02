@@ -6,7 +6,12 @@ use yii\widgets\LinkPager;
 use yii\helpers\Html;
 use common\components\helpers\GlobalHelper;
 
-
+/**
+ * Переопределяет метод renderPageButton стандартного LinkPager YII2
+ *
+ * @author Sergey Bessonov <bessonov87@gmail.com>
+ * @since 1.0
+ */
 class MyLinkPager extends LinkPager
 {
     public $cat = '';
@@ -38,6 +43,5 @@ class MyLinkPager extends LinkPager
         $url .= '/';
 
         return Html::tag('li', Html::a($label, $url, $linkOptions), $options);
-        //return Html::tag('li', Html::a($label, $this->pagination->createUrl($page), $linkOptions), $options);
     }
 }

@@ -7,7 +7,7 @@ use yii\base\Model;
 use Yii;
 
 /**
- * Signup form
+ * Форма регистрации
  */
 class SignupForm extends Model
 {

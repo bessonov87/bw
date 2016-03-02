@@ -7,7 +7,7 @@ use yii\base\Model;
 use Yii;
 
 /**
- * Password reset form
+ * Форма сброса пароля
  */
 class ResetPasswordForm extends Model
 {

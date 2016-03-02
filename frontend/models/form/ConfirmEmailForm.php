@@ -7,7 +7,7 @@ use yii\base\Model;
 use common\models\ar\User;
 
 /**
- * Password reset form
+ * Форма подтверждения email адреса
  */
 class ConfirmEmailForm extends Model
 {

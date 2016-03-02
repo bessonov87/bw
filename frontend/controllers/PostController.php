@@ -87,15 +87,6 @@ class PostController extends Controller{
             }
             // Добавляем к списку подкатегорий запрашиваемую категорию
             $subCats[] = $categoryId[0];
-            /*// Получаем список постов для данных категорий
-            $cateroryPostIds = PostCategory::find()
-                ->asArray()
-                ->where(['in', 'category_id', $categoryIds])
-                ->all();
-            // Выбираем только ID постов
-            $postIds = ArrayHelper::getColumn($cateroryPostIds, 'post_id');*/
-            // Добавляем условие к запросу на выборку статей
-            //$query->andWhere(['in', 'category_id', implode(',', $subCats)]);
             $query->andWhere('category_id IN ('.implode(',', $subCats).')');
         }
         // Если выборка по датам
@@ -133,27 +124,27 @@ class PostController extends Controller{
         return $this->render('short', ['posts' => $posts, 'pages' => $pages, 'categories' => $categories, 'subCategories' => $subCategories]);
     }
 
+    /**
+     * Рендерит статью, получая ее по ID
+     *
+     * Если необходимо, вставляет дополнительные материалы: дополнения, рекламу и т.д.
+     *
+     * @return string
+     * @throws NotFoundHttpException
+     * @throws \Exception
+     */
     public function actionFull()
     {
-        //$request = Yii::$app->request;
-        //$post = Post::find()->where(['id' => $request->get('id'), 'approve' => Post::APPROVED])->one();
-        // или можно без approve
-        //$post = Post::findOne($request->get('id'));
-        // или
-
         // Определяем Id
         // Если это статья-категория, берем из params, иначе из request->get
         $postId = (array_key_exists('category_art', Yii::$app->params)) ? Yii::$app->params['category_art'] : Yii::$app->request->get('id');
-
         $post = Post::findOne([
             'id' => $postId,
             'approve' => Post::APPROVED,
         ]);
-
         if(is_null($post)){
             throw new NotFoundHttpException('Статьи с данным адресом на сайте не существует. Проверьте правильно ли вы скопировали или ввели адрес в адресную строку. Если вы перешли на эту страницу по ссылке с данного сайта, сообщите пожалуйста о неработающей ссылке нам с помощью обратной связи.');
         }
-
         // Записываем id текущей категории в виде массива в глобальный параметр
         Yii::$app->params['category'] = [$post->category_id];
 
@@ -176,7 +167,6 @@ class PostController extends Controller{
 
         // Поиск и замена ссылок на другие страницы сайта (ссылки в формате [link=<id_статьи>]<текст_ссылки>[/link])
         $this->replaceLinks($post);
-
         // Применение дополнительных методов для обработки полного текста статей
         if($m = GlobalHelper::getCategories()[$post->category_id]['add_method']){
             $methodName = 'full'.ucfirst($m);
@@ -184,16 +174,12 @@ class PostController extends Controller{
                 PostAdditions::$methodName($post);
             }
         }
-
         // Социальные кнопки
         $post->full .= SocialButtonsWidget::widget();
-
         // Вставка рекламных материалов
         $this->insertAdvert($post);
-
         // Обновление количества просмотров статьи
         $post->updateCounters(['views' => 1]);
-
         // Если статья-категория, используем представление full_cat.php, иначе full.php
         $viewFile = (array_key_exists('category_art', Yii::$app->params)) ? 'full_cat' : 'full';
 
@@ -299,6 +285,11 @@ class PostController extends Controller{
     }
 
 
+    /**
+     * Заменяет конструкцию вида [link=<id_статьи>]<текст>[/link] на ссылку на статью с данным ID
+     *
+     * @param $post
+     */
     protected function replaceLinks($post) {
         // Поиск ссылок на другие страницы сайта
         preg_match_all("@\[link=([0-9]{1,5})\](.*?)\[/link\]@", $post->full, $matches);

@@ -5,6 +5,12 @@ namespace frontend\models\form;
 use Yii;
 use yii\base\Model;
 
+/**
+ * Форма обратной связи
+ *
+ * @author Sergey Bessonov <bessonov87@gmail.com>
+ * @since 1.0
+ */
 class Contact2Form extends Model
 {
     public $name, $email, $subject, $message, $ip;

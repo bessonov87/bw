@@ -3,6 +3,12 @@ namespace app\components;
 
 use yii\web\HttpException;
 
+/**
+ * Исключение "Доступ временно запрещен"
+ *
+ * @author Sergey Bessonov <bessonov87@gmail.com>
+ * @since 1.0
+ */
 class TemporaryUnavailableException extends HttpException
 {
     /**

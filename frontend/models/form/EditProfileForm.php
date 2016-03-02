@@ -13,6 +13,12 @@ use Yii;
 use yii\imagine\Image;
 use app\components\StartPoint;
 
+/**
+ * Форма редактирования профиля пользователя
+ *
+ * @author Sergey Bessonov <bessonov87@gmail.com>
+ * @since 1.0
+ */
 class EditProfileForm extends UserProfile
 {
     public $birthYear;

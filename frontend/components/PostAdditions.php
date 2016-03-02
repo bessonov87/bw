@@ -20,6 +20,10 @@ use common\components\helpers\GlobalHelper;
  */
 class PostAdditions
 {
+    /**
+     * Тестовый
+     * @param $post
+     */
     public static function fullFaceMask($post){
         $post->full .= 'А!!!';
     }

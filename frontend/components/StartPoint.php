@@ -5,6 +5,12 @@ use Imagine\Image\BoxInterface;
 use Imagine\Image\Point as OriginalPoint;
 use Imagine\Image\PointInterface;
 
+/**
+ * Стартовая точка для кропа изображения с помощью Imagine::crop()
+ *
+ * @author Sergey Bessonov <bessonov87@gmail.com>
+ * @since 1.0
+ */
 class StartPoint implements PointInterface
 {
     /**

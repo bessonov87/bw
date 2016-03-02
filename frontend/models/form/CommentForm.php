@@ -8,6 +8,12 @@ use Yii;
 use yii\base\Model;
 use yii\helpers\HtmlPurifier;
 
+/**
+ * Форма добавления комментариев
+ *
+ * @author Sergey Bessonov <bessonov87@gmail.com>
+ * @since 1.0
+ */
 class CommentForm extends Model
 {
     public $user_id;
@@ -47,6 +53,11 @@ class CommentForm extends Model
         ];
     }
 
+    /**
+     * Добавление комментария
+     *
+     * @return null|string
+     */
     public function addComment(){
         if ($this->validate()) {
             $comment = new Comment();

@@ -269,6 +269,12 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * Подтверждение email
+     *
+     * @param string $token
+     * @return string|Response
+     */
     public function actionConfirmEmail($token = 'none'){
         if(!Yii::$app->user->isGuest) {
             if (Yii::$app->user->identity->status == User::STATUS_ACTIVE) {
@@ -291,6 +297,11 @@ class SiteController extends Controller
     }
 
 
+    /**
+     * Обратная связь
+     *
+     * @return string
+     */
     public function actionFeedback()
     {
         $model = new Contact2Form();
@@ -310,6 +321,11 @@ class SiteController extends Controller
         return $this->render('contact2Form', ['model' => $model]);
     }
 
+    /**
+     * Поиск по сайту
+     *
+     * @return string
+     */
     public function actionSearch() {
         $posts = [];
         $date = date('Y-m-d H:i:s');
@@ -512,6 +528,14 @@ class SiteController extends Controller
     }
 
 
+    /**
+     * CallBack метод для oAuth авторизации через внешние сервисы
+     *
+     * @param $client
+     * @throws BadRequestHttpException
+     * @throws \yii\base\Exception
+     * @throws \yii\db\Exception
+     */
     public function onAuthSuccess($client)
     {
         $attributes = $client->getUserAttributes();

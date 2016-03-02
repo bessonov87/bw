@@ -10,6 +10,12 @@ use app\components\widgets\CalendarWidget;
 use app\components\widgets\RatingWidget;
 use app\components\widgets\FavoriteWidget;
 
+/**
+ * Обрабатывает все AJAX запросы приложения
+ *
+ * @author Sergey Bessonov <bessonov87@gmail.com>
+ * @since 1.0
+ */
 class AjaxController extends Controller
 {
     /**
@@ -25,6 +31,12 @@ class AjaxController extends Controller
         return '';
     }
 
+    /**
+     * Выставление оценки для статьи
+     *
+     * @return string
+     * @throws \Exception
+     */
     public function actionRating(){
         $message = '';
         if((Yii::$app->request->get('score') == 1 || Yii::$app->request->get('score') == -1) && Yii::$app->request->get('post_id')){
@@ -39,7 +51,8 @@ class AjaxController extends Controller
                     if ($rating->save()) {
                         $message = 'Спасибо! Ваш голос засчитан';
                     } else {
-                        $message = current($rating->errors)[0];
+                        $err = $rating->errors;
+                        $message = current($err)[0];
                     }
                 } catch(IntegrityException $e) {
                     if(strpos($e->errorInfo[2], 'foreign key')){
@@ -55,6 +68,12 @@ class AjaxController extends Controller
         return RatingWidget::widget(['post_id' => $postId, 'message' => $message]);
     }
 
+    /**
+     * Добавление статьи в избранное
+     *
+     * @return string
+     * @throws \Exception
+     */
     public function actionFavorite() {
         $message = '';
         $postId = 0;
@@ -69,7 +88,8 @@ class AjaxController extends Controller
                 if ($favorite->save()) {
                     $message = 'Статья добавлена в избранное!';
                 } else {
-                    $message = current($favorite->errors)[0];
+                    $err = $favorite->errors;
+                    $message = current($err)[0];
                 }
             } catch(IntegrityException $e) {
                 if(strpos($e->errorInfo[2], 'foreign key')){
