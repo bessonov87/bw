@@ -20,24 +20,24 @@ class ReportController extends Controller
         $summaryInfo = '<h3>Отчет за '.date('d.m.Y').'</h3>';
         $summaryInfo .= '<hr>';
         $summaryInfo .= '<h4>Статьи</h4>';
-        $summaryInfo .= '<p>Всего: '.$siteSummary['postsCount'].'</p>';
-        $summaryInfo .= '<p>Сегодня: '.$siteSummary['postsToday'].'</p>';
-        $summaryInfo .= '<p>Вчера: '.$siteSummary['postsYesterday'].'</p>';
+        $summaryInfo .= 'Всего: '.$siteSummary['postsCount'].'<br>';
+        $summaryInfo .= 'Сегодня: '.$siteSummary['postsToday'].'<br>';
+        $summaryInfo .= 'Вчера: '.$siteSummary['postsYesterday'].'<br>';
         $summaryInfo .= '<hr>';
         $summaryInfo .= '<h4>Пользователи</h4>';
-        $summaryInfo .= '<p>Всего: '.$siteSummary['usersCount'].'</p>';
-        $summaryInfo .= '<p>Сегодня: '.$siteSummary['usersToday'].'</p>';
-        $summaryInfo .= '<p>Вчера: '.$siteSummary['usersYesterday'].'</p>';
+        $summaryInfo .= 'Всего: '.$siteSummary['usersCount'].'<br>';
+        $summaryInfo .= 'Сегодня: '.$siteSummary['usersToday'].'<br>';
+        $summaryInfo .= 'Вчера: '.$siteSummary['usersYesterday'].'<br>';
         $summaryInfo .= '<hr>';
         $summaryInfo .= '<h4>Комментарии</h4>';
-        $summaryInfo .= '<p>Всего: '.$siteSummary['commentsCount'].'</p>';
-        $summaryInfo .= '<p>Сегодня: '.$siteSummary['commentsToday'].'</p>';
-        $summaryInfo .= '<p>Вчера: '.$siteSummary['commentsYesterday'].'</p>';
+        $summaryInfo .= 'Всего: '.$siteSummary['commentsCount'].'<br>';
+        $summaryInfo .= 'Сегодня: '.$siteSummary['commentsToday'].'<br>';
+        $summaryInfo .= 'Вчера: '.$siteSummary['commentsYesterday'].'<br>';
         $summaryInfo .= '<hr>';
         $summaryInfo .= '<h4>Ошибки</h4>';
-        $summaryInfo .= '<p>Всего: '.$siteSummary['errorsCount'].'</p>';
-        $summaryInfo .= '<p>Сегодня: '.$siteSummary['errorsToday'].'</p>';
-        $summaryInfo .= '<p>Вчера: '.$siteSummary['errorsYesterday'].'</p>';
+        $summaryInfo .= 'Всего: '.$siteSummary['errorsCount'].'<br>';
+        $summaryInfo .= 'Сегодня: '.$siteSummary['errorsToday'].'<br>';
+        $summaryInfo .= 'Вчера: '.$siteSummary['errorsYesterday'].'<br>';
 
         Yii::$app->mailer->compose()
             ->setFrom(Yii::$app->params['supportEmail'])
