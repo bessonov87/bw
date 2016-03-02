@@ -20,14 +20,25 @@ use yii\helpers\Url;
  */
 class SidebarMenuWidget extends Widget
 {
+    /**
+     * @var array список элементов меню
+     */
     public $items = [];
-
+    /**
+     * @var string класс обертки меню
+     */
     public $cssClass = 'sidebar_menu';
 
+    /**
+     * @inheritdoc
+     */
     public function init() {
         parent::init();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function run() {
         if(empty($this->items)) {
             return '';

@@ -11,14 +11,23 @@ use yii\base\Widget;
  */
 class ServerInfo extends Widget
 {
+    /**
+     * @inheritdoc
+     */
     public function init(){
         parent::init();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function run(){
         return $this->render('server-info', ['serverInfo' => $this->serverInfo]);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getViewPath(){
         return '@app/views/site/widgets';
     }

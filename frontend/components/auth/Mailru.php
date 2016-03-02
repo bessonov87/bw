@@ -52,10 +52,16 @@ class Mailru extends OAuth2 {
     protected function initUserAttributes() {
         return $this->api('users.getInfo', 'GET');
     }
+    /**
+     * @inheritdoc
+     */
     public function api($apiSubUrl, $method = 'GET', array $params = [ ], array $headers = [ ]) {
         $params['method'] = $apiSubUrl;
         return parent::api($this->apiBaseUrl, $method, $params, $headers);
     }
+    /**
+     * @inheritdoc
+     */
     protected function determineContentTypeByRaw($rawContent) {
         //determine json array's too
         if (preg_match('/^\\[.*\\]$/is', $rawContent)) {

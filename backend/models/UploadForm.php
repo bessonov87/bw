@@ -12,6 +12,9 @@ use yii\helpers\ArrayHelper;
 use yii\imagine\Image;
 use yii\web\UploadedFile;
 
+/**
+ * Форма загрузки файлов
+ */
 class UploadForm extends Model
 {
     public $files = [];
@@ -124,6 +127,12 @@ class UploadForm extends Model
         }
     }
 
+    /**
+     * Загружает файл на диск
+     *
+     * @param UploadedFile $file
+     * @return bool|string
+     */
     public function uploadFile(UploadedFile $file){
         $basePath = Yii::getAlias($this->_baseUploadPathAlias);
         $resultFileName = GlobalHelper::normalizeName($file->name, true);

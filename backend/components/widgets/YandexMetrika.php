@@ -20,10 +20,16 @@ class YandexMetrika extends Widget
      */
     public $graphType = 'line';
 
+    /**
+     * @inheritdoc
+     */
     public function init(){
         parent::init();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function run(){
         return $this->render('metrika-graph', [
             'data' => $this->getData($this->period),
@@ -31,6 +37,9 @@ class YandexMetrika extends Widget
         ]);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getViewPath(){
         return '@app/views/site/widgets';
     }

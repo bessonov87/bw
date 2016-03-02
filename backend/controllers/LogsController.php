@@ -9,8 +9,15 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\Pagination;
 
+/**
+ * Class LogsController
+ * @package backend\controllers
+ */
 class LogsController extends Controller
 {
+    /**
+     * @var string действие по умолчанию
+     */
     public $defaultAction = 'db';
 
     /**

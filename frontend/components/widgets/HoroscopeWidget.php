@@ -16,10 +16,16 @@ use yii\base\Widget;
  */
 class HoroscopeWidget extends Widget
 {
+    /**
+     * @inheritdoc
+     */
     public function init(){
         parent::init();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function run(){
         $xmlString = Yii::$app->cache->get('daily_horoscope');
         if(!$xmlString) {

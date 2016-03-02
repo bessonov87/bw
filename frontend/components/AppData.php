@@ -1,11 +1,21 @@
 <?php
 namespace app\components;
 
-
+/**
+ * Различные данные, необходимые в разных местах приложения
+ *
+ * @author Sergey Bessonov <bessonov87@gmail.com>
+ * @since 1.0
+ */
 class AppData
 {
+    /**
+     * @var string базовый путь для URL со ссылками на лунные календари стрижек
+     */
     public static $moonHairLinksBase = "/horoscope/lunnyj-kalendar-strizhek/";
-
+    /**
+     * @var array список ссылок на статьи с лунными календарями на месяц стрижек по годам
+     */
     public static $moonHairMonthLinks = [
         '2015' => [
             1 => "2095-lunnyj-kalendar-strizhek-na-yanvar-2015-goda.html",
@@ -36,9 +46,13 @@ class AppData
             "2428-lunnyj-kalendar-strizhek-na-dekabr-2016-goda.html"
         ],
     ];
-
+    /**
+     * @var string базовый путь для URL со ссылками на лунные календари
+     */
     public static $moonCalLinksBase = "/horoscope/lunnyj-kalendar-na-god/";
-
+    /**
+     * @var array список ссылок на статьи с лунными календарями на месяц по годам
+     */
     public static $moonCalMonthLinks = [
         '2016' => [
             1 => '2434-lunnyj_kalendar_na_janvar_2016_goda.html',

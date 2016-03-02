@@ -14,18 +14,36 @@ use yii\helpers\Html;
  */
 class CommentsWidget extends Widget
 {
+    /**
+     * @var array комментарии
+     */
     public $comments;
+    /**
+     * @var object frontend\models\form\CommentForm
+     */
     public $addCommModel;
+    /**
+     * @var int шаг вложенности в дереве комментариев
+     */
     private $_treeStep;
 
+    /**
+     * @inheritdoc
+     */
     public function getViewPath(){
         return '@app/views/post';
     }
 
+    /**
+     * @inheritdoc
+     */
     public function init(){
         parent::init();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function run(){
         if(!is_array($this->comments)) return '';
         // Переиндексируем комментарии относительно id комментария, на который данный отвечает

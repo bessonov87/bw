@@ -3,13 +3,8 @@
 namespace app\components\widgets;
 
 use yii\base\Widget;
-use yii\db\ActiveRecord;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
-use yii\helpers\Url;
-use common\models\ar\Post;
-use common\components\helpers\GlobalHelper;
 
 /**
  * CalendarWidget отвечает за формирование календаря в сайдбаре
@@ -24,18 +19,27 @@ use common\components\helpers\GlobalHelper;
  */
 class CalendarWidget extends Widget
 {
-    public $month;
-    public $year;
+    /**
+     * @var string месяц календаря в формате yyyy-mm
+     */
     public $date;
+    /**
+     * @var bool выводить кнопки управления или нет
+     */
     public $noControls = false;
 
+    /**
+     * @inheritdoc
+     */
     public function init(){
         parent::init();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function run(){
         if(is_null($this->date)) $this->date = date('Y-m');
-
         $rows = (new Query())
             ->select('COUNT(*) as count, DAY(date) as day')
             ->from('{{%post}}')
@@ -43,7 +47,6 @@ class CalendarWidget extends Widget
             ->groupBy("DAY( `date` )")
             ->all();
         $rows = ArrayHelper::index($rows, 'day');
-
         return $this->renderFile('@app/views/site/calendar.php', ['posts' => $rows,'date' => $this->date, 'noControls' => $this->noControls]);
     }
 }

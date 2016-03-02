@@ -15,14 +15,23 @@ use yii\base\Widget;
  */
 class SiteSummary extends Widget
 {
+    /**
+     * @inheritdoc
+     */
     public function init(){
         parent::init();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function run(){
         return $this->render('site-summary', ['summary' => $this->summary]);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getViewPath(){
         return '@app/views/site/widgets';
     }
@@ -54,6 +63,5 @@ class SiteSummary extends Widget
         $summary['errorsYesterday'] = Log::find()->where(['between', 'log_time', strtotime($yesterday_begin), strtotime($yesterday_end)])->count();
 
         return $summary;
-
     }
 }

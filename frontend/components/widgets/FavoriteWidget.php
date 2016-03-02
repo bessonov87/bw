@@ -8,8 +8,6 @@ use common\models\ar\FavoritePosts;
 /**
  * FavoriteWidget формирует блок добавления статьи в избранное
  *
- * Описание класса
- *
  * @author Sergey Bessonov <bessonov87@gmail.com>
  * @version 1.0
  */
@@ -24,23 +22,30 @@ class FavoriteWidget extends Widget
      */
     public $message;
 
+    /**
+     * @inheritdoc
+     */
     public function getViewPath(){
         return '@app/views/post';
     }
 
+    /**
+     * @inheritdoc
+     */
     public function init(){
         parent::init();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function run(){
         if(!$this->post_id) return '';
-
         /* TODO: Посчитать количество добавлений в избранное и есть ли в избранном у текущего пользователя */
         $favorites = FavoritePosts::find()
             ->where(['post_id' => $this->post_id])
             ->asArray()
             ->all();
-
         // количество добавлений статьи в избранное
         $options['favorites_num'] = count($favorites);
         // есть ли в избранном у текущего пользователя

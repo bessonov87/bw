@@ -45,29 +45,16 @@ class CategorySearch extends Category
     public function search($params)
     {
         $query = Category::find();
-
+        // Подзапрос для получения количества статей в категориях и возможности сортировки по этому параметру
         $subQuery = Post::find()
             ->select('category_id, count(id) as post_count')
             ->groupBy('category_id');
-        //var_dump($subQuery);
-
         $query->leftJoin(['postsNum' => $subQuery], 'postsNum.category_id = id');
-
         $query->select('{{%category}}.*, postsNum.post_count');
-
-        //$query->select('category.*, count(post.id) as countP')->joinWith('postCount')->groupBy('category.id');
-        //$query->join('LEFT JOIN', '{{%post}}', [$this->tableName().'.id' => '{{%post}}.category_id']);
-        //$query->select('category.*, count(post.*)')->joinWith('posts',true,'LEFT OUTER JOIN')->groupBy('category.id');
-
-        //var_dump($query->);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
-        //var_dump($dataProvider);
-
-
 
         /**
          * Setup your sorting attributes
@@ -89,11 +76,6 @@ class CategorySearch extends Category
                 ]
             ]
         ]);
-
-
-
-
-
 
         $this->load($params);
 

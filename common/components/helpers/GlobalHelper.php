@@ -6,20 +6,34 @@ use Yii;
 use common\models\ar\Category;
 use yii\helpers\ArrayHelper;
 
+/**
+ * GlobalHelper содержит дополнительные часто применяемые функции
+ *
+ * @author Sergey Bessonov <bessonov87@gmail.com>
+ * @version 1.0
+ */
 class GlobalHelper
 {
-
     /**
-     * Convert BR tags to newlines and carriage returns.
+     * Преобразует тэги <br> в перевод строки и возврат каретки
      *
-     * @param string The string to convert
-     * @return string The converted string
+     * @param $string string Строка для конвертирования
+     * @return string Конвертированная строка
      */
     public static function br2nl ( $string )
     {
         return preg_replace('/\<br(\s*)?\/?\>/i', PHP_EOL, $string);
     }
 
+    /**
+     * Возвращает путь к аватару пользователя
+     *
+     * Используется при выводе комментариев. Информация о пользователь передается в виде массива. В случае, если
+     * "пользователь" представляет собой объект класса \common\models\ar\User следует использовать его метод getAvatar()
+     *
+     * @param $user
+     * @return string
+     */
     public static function avatarSrc($user){
         $avatar = $user['profile']['avatar'];
         $avatarPath = '/uploads/fotos/';
@@ -30,30 +44,31 @@ class GlobalHelper
     }
 
     /**
-     * Получаем список всех категорий статей
+     * Возвращает список всех категорий статей
      *
      * Обращение к БД происходит только при первом вызове метода. Результат записывается в params.
      * При последующих вызовах метода, результат берется из свойства params.
      *
-     * @return mixed
+     * @return array Список категорий в виде массива, индексированного по id категории
      */
     public static function getCategories(){
-        if(isset(Yii::$app->params['categories']) && !empty(Yii::$app->params['categories'])){
-
-        } else {
+        if(!isset(Yii::$app->params['categories']) || empty(Yii::$app->params['categories'])){
             // Получаем из базы все категории и переиндексируем по ID
             Yii::$app->params['categories'] = ArrayHelper::index(Category::find()->asArray()->all(), 'id');
         }
-
         return Yii::$app->params['categories'];
     }
 
     /**
      * Возвращает список категорий в формате ['id' => 'name']
      *
+     * Применяется в админке в фильтре по категориям статей
+     *
      * @return array
      */
     public static function getCategoriesFilter(){
+        $categoriesFilter = [];
+        $mainCats = [];
         $categories = self::getCategories();
         if(!$categories) return ['0' => 'Нет категорий'];
         foreach($categories as $cat){
@@ -78,8 +93,8 @@ class GlobalHelper
      *
      * Url определяется с учетом наличия основной категории, если передан ID подкатегории
      *
-     * @param $id
-     * @return string
+     * @param $id int ID категории
+     * @return string Относительный URL категории (в виде category или category/subcategory)
      */
     public static function getCategoryUrlById($id){
         $categories = self::getCategories();
@@ -228,12 +243,27 @@ class GlobalHelper
         }
     }
 
-    public static function getDaysList(){
-        $array = range(1, 31);
+    /**
+     * Возвращает список из дней в виде массива ('число' => 'число')
+     *
+     * Нулевой элемент массива - пустая строка
+     *
+     * @param $days int Количество дней (по умолчанию 31)
+     * @return array
+     */
+    public static function getDaysList($days = 31){
+        $array = range(1, $days);
         array_unshift($array, '');
         return $array;
     }
 
+    /**
+     * Возвращает список месяцев в виде массива
+     *
+     * Нулевой элемент массива - пустая строка
+     *
+     * @return array
+     */
     public static function getMonthsList(){
         $array[0] = '';
         for($i=1;$i<=12;$i++){
@@ -242,14 +272,33 @@ class GlobalHelper
         return $array;
     }
 
-    public static function getYearsList(){
+    /**
+     * Возвращает список годов в виде массива ('год' => 'год')
+     *
+     * Нулевой элемент массива - пустая строка
+     *
+     * @param int $from С какого года начать
+     * @param int $to Каким годом закончить
+     * @return array
+     */
+    public static function getYearsList($from = 1945, $to = 2015){
         $array[0] = '';
-        for($i=1945;$i<=2015;$i++){
+        for($i=$from;$i<=$to;$i++){
             $array[$i] = $i;
         }
         return $array;
     }
 
+    /**
+     * Преобразование номера знака Зодиака в название
+     *
+     * Аналогично методу rusMonth(), описанному выше
+     *
+     * @param $zodiac int|string Номер знака или название (если invert = true)
+     * @param string $case Падеж
+     * @param bool|false $invert Инвертировать поиск (искать номер знака Зодиака по названию)
+     * @return int|string
+     */
     public static function rusZodiac($zodiac, $case = 'i', $invert = false) {
         $rootZodiac = [1 => 'Ов', 'Тел', 'Близнец', 'Рак', 'Л', 'Дев', 'Вес', 'Скорпион', 'Стрел', 'Козерог', 'Водоле', 'Рыб'];
         $endZodiac[1] =  ['i' => 'ен', 'r' => 'на',  'd' => 'ну',  'v' => 'на',  't' => 'ном',  'p' => 'не'];

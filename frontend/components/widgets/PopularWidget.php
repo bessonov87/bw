@@ -59,10 +59,16 @@ class PopularWidget extends Widget
      */
     private $_defaultListType = 'ol';
 
+    /**
+     * @inheritdoc
+     */
     public function init(){
         parent::init();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function run(){
         // Получаем список из numPosts постов отсортированных по количеству просмотров
         $posts = Post::find()
@@ -105,6 +111,12 @@ class PopularWidget extends Widget
         return $result;
     }
 
+    /**
+     * Обрезает заголовок статьи до максимально заданной длины
+     *
+     * @param string $title заголовок статьи
+     * @return string укороченный заголовок
+     */
     protected function cutTitle($title){
         if(strlen($title) <= $this->maxTitle) return $title;
         $newTitle = '';

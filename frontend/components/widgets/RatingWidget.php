@@ -22,14 +22,23 @@ class RatingWidget extends Widget
      */
     public $message;
 
+    /**
+     * @inheritdoc
+     */
     public function getViewPath(){
         return '@app/views/post';
     }
 
+    /**
+     * @inheritdoc
+     */
     public function init(){
         parent::init();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function run(){
         if(!$this->post_id) return '';
 

@@ -5,7 +5,7 @@ namespace app\components\log;
 use yii\log\DbTarget;
 
 /**
- * BwDbTarget сохраняет лог в таблицу базы данных.
+ * BwDbTarget сохраняет сообщения лога в таблицу базы данных.
  *
  * @author Sergey Bessonov <bessonov87@gmail.com>
  * @since 1.0

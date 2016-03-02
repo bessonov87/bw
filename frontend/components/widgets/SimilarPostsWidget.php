@@ -9,8 +9,8 @@ use yii\base\Widget;
 /**
  * Вывод похожих статей
  *
- * @param $posts Статьи, выбранные в качестве похожих для текущей
- * @param $options Опции в формате массива
+ * @param $posts array Статьи, выбранные в качестве похожих для текущей
+ * @param $options array Опции в формате массива
  *
  * Возможные опции:
  * boolean list - формировать упорядоченный/неупорядоченный список
@@ -24,24 +24,41 @@ use yii\base\Widget;
  */
 class SimilarPostsWidget extends Widget {
 
+    /**
+     * @var array список статей
+     */
     public $posts;
+    /**
+     * @var bool "ручная" установка ссылок на статьи
+     */
     public $manual = false;
+    /**
+     * @var bool выводить в виде html-списка
+     */
     public $list = true;
+    /**
+     * @var string тип html-списка
+     */
     public $listType = 'ol';
+    /**
+     * @var string класс
+     */
     public $class = 'similar_posts';
+    /**
+     * @var int максимальная длина заголовка
+     */
     public $maxTitle = 150;
 
-    /*public $options = [
-        'manual' => false,
-        'list' => true,
-        'listType' => 'ul',
-        'class' => 'similar_posts'
-    ];*/
-
+    /**
+     * @inheritdoc
+     */
     public function init(){
         parent::init();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function run(){
         if(!is_array($this->posts)){
             return '';

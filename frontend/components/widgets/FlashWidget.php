@@ -5,8 +5,17 @@ namespace app\components\widgets;
 use yii\base\Widget;
 use yii\helpers\Html;
 
+/**
+ * FlashWidget выводит flash сообщения в специальном div, фиксированном в верхней части страницы
+ *
+ * @author Sergey Bessonov <bessonov87@gmail.com>
+ * @version 1.0
+ */
 class FlashWidget extends Widget
 {
+    /**
+     * @inheritdoc
+     */
     public function run(){
         $content = '';
         $flashes = \Yii::$app->session->getAllFlashes(false);

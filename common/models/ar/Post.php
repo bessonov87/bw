@@ -110,12 +110,6 @@ class Post extends ActiveRecord
         ];
     }
 
-    // Первый способ связи
-    /*public function getCategories(){
-        return $this->hasMany(Category::className(), ['id' => 'category_id'])
-            ->viaTable('post_category', ['post_id' => 'id']);
-    }*/
-
     /**
      * Возвращает название статуса статьи по значению из базы
      *
@@ -138,28 +132,6 @@ class Post extends ActiveRecord
             self::NOT_APPROVED => 'Запрещена',
         ];
     }
-
-    /*// Второй способ связи
-    public function getPostCategories(){
-        return $this->hasMany(PostCategory::className(), ['post_id' => 'id']);
-    }
-
-    // Одна категория для статьи
-    public function getPostCategory(){
-        return $this->hasOne(PostCategory::className(), ['post_id' => 'id']);
-    }
-
-    public function getCategory(){
-        $category = $this->hasOne(Category::className(), ['id' => 'category_id'])
-            ->via('postCategory');
-        return $category;
-    }
-
-    public function getCategories(){
-        $categories = $this->hasMany(Category::className(), ['id' => 'category_id'])
-            ->via('postCategories')->asArray();
-        return $categories;
-    }*/
 
     /**
      * @return \yii\db\ActiveQuery
@@ -240,11 +212,19 @@ class Post extends ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'author_id']);
     }
 
+    /**
+     * Возвращает рейтинг статьи (сумму выставленных плюсов и минусов)
+     * @return integer
+     */
     public function getPostsRating(){
         $rates = $this->hasMany(PostsRating::className(), ['post_id' => 'id'])->sum('score');
         return $rates;
     }
 
+    /**
+     * Возвращает относительную ссылку на статью
+     * @return string
+     */
     public function getLink(){
         $cat = GlobalHelper::getCategoryUrlById($this->category_id);
         return Url::to(['post/full', 'cat' => $cat, 'id' => $this->id, 'alt' => $this->url]);
@@ -255,10 +235,17 @@ class Post extends ActiveRecord
         return substr(\Yii::$app->params['frontendBaseUrl'], 0, -1).\Yii::$app->urlManagerFrontend->createUrl(['post/full', 'cat' => $cat, 'id' => $this->id, 'alt' => $this->url]);
     }
 
+    /**
+     * Возвращает абсолютную ссылку на статью
+     * @return string
+     */
     public function getAbsoluteLink() {
         return \Yii::$app->params['frontendBaseUrl'].substr($this->link, 1);
     }
 
+    /**
+     * @inheritdoc
+     */
     public static function tableName(){
         return '{{%post}}';
     }

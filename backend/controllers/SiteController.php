@@ -53,13 +53,19 @@ class SiteController extends Controller
         ];
     }
 
+    /**
+     * Главная страница админки с основной информацией о приложении (Dashboard)
+     * @return string
+     */
     public function actionIndex()
     {
-        // Получаем основную информацию о количестве пользователей, комментариев, статей, ошибок
-
         return $this->render('dashboard');
     }
 
+    /**
+     * Вход в админку
+     * @return string|\yii\web\Response
+     */
     public function actionLogin()
     {
         if (!\Yii::$app->user->isGuest) {
@@ -76,6 +82,10 @@ class SiteController extends Controller
         }
     }
 
+    /**
+     * Выход из админки
+     * @return \yii\web\Response
+     */
     public function actionLogout()
     {
         Yii::$app->user->logout();
@@ -83,6 +93,9 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
+    /**
+     * Получение токена Яндекс API
+     */
     public function actionToken(){
         $yandex_get_token_url = "https://oauth.yandex.ru/token";
 

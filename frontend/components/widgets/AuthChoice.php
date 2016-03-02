@@ -6,6 +6,11 @@ use yii\helpers\Html;
 use yii\base\Widget;
 use Yii;
 
+/**
+ * Выводит кнопки для oAuth авторизации
+ *
+ * (Переработанный виджет из расширения yii\authclient)
+ */
 class AuthChoice extends Widget
 {
     /**
@@ -37,9 +42,7 @@ class AuthChoice extends Widget
     /**
      * Outputs client auth link.
      * @param \yii\authclient\ClientInterface $client external auth client instance.
-     * @param string $text link text, if not set - default value will be generated.
-     * @param array $htmlOptions link HTML options.
-     * @throws InvalidConfigException on wrong configuration.
+     * @return string
      */
     public function clientLink($client)
     {
@@ -61,12 +64,6 @@ class AuthChoice extends Widget
      */
     public function createClientUrl($client)
     {
-        /*$this->autoRender = false;
-        $url = $this->getBaseAuthUrl();
-        $url[$this->clientIdGetParamName] = $provider->getId();
-
-        return Url::to($url);*/
-
         return '/site/auth?authclient='.$client->getName();
     }
 
@@ -75,15 +72,8 @@ class AuthChoice extends Widget
      */
     protected function renderMainContent()
     {
-        /*$content = [];
-        foreach ($this->getClients() as $externalService) {
-            //$content[] = Html::tag('li', $this->clientLink($externalService), ['class' => 'bw-auth-client']);
-            $content[] = $this->clientLink($externalService);
-        }
-        return Html::ul($content, ['class' => 'bw-auth-clients clear', 'encode' => false]);*/
         $content = '';
         foreach ($this->getClients() as $externalService) {
-            //$content[] = Html::tag('li', $this->clientLink($externalService), ['class' => 'bw-auth-client']);
             $content .= $this->clientLink($externalService);
         }
         return $content;

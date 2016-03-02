@@ -12,9 +12,17 @@ use yii\filters\VerbFilter;
 use backend\models\UploadForm;
 use yii\web\UploadedFile;
 
+/**
+ * Class UploadController Загрузка файлов
+ * @package backend\controllers
+ */
 class UploadController extends Controller
 {
+    /**
+     * @var string Layout name
+     */
     public $layout = 'main-upload';
+
     /**
      * @inheritdoc
      */
@@ -50,6 +58,10 @@ class UploadController extends Controller
         ];
     }
 
+    /**
+     * Отображает форму загрузки файлов и список загруженных для статьи файлов
+     * @return string
+     */
     public function actionIndex()
     {
         /*$post_id = Yii::$app->request->get('post_id');

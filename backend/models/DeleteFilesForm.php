@@ -6,11 +6,21 @@ use common\models\ar\Images;
 use Yii;
 use yii\base\Model;
 
+/**
+ * Class DeleteFilesForm Модель для работы с формой удаления файлов на странице загрузки
+ * @package backend\models
+ */
 class DeleteFilesForm extends Model
 {
+    /**
+     * @var array список файлов для удаления
+     */
     public $files;
-
+    /**
+     * @var array результат работы
+     */
     private $_result = [];
+
     /**
      * @inheritdoc
      */
@@ -21,6 +31,9 @@ class DeleteFilesForm extends Model
         ];
     }
 
+    /**
+     * Удаляет файлы, отмеченные "галочкой"
+     */
     public function delete(){
         if(is_array($this->files)){
             foreach($this->files as $file){
@@ -49,6 +62,7 @@ class DeleteFilesForm extends Model
                         }
                     }
                 } elseif($filesArray[0] == 'file') {
+                    /* TODO Удаление файлов */
                     $baseId = $filesArray[1];
                 }
             }
