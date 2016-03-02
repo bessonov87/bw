@@ -1306,6 +1306,7 @@ ol.popular li:hover:after {
     width: 390px;
     display: inline-block;
     vertical-align: top;
+    padding-right: 15px;
 }
 
 .profile-action{

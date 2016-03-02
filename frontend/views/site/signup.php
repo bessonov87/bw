@@ -25,9 +25,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
-                <?= $form->field($model, 'username') ?>
+                <?= $form->field($model, 'username', ['enableAjaxValidation' => true]) ?>
 
-                <?= $form->field($model, 'email') ?>
+                <?= $form->field($model, 'email', ['enableAjaxValidation' => true]) ?>
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
 

@@ -25,6 +25,7 @@ use frontend\models\form\SignupForm;
 use frontend\models\form\ContactForm;
 use app\components\TemporaryUnavailableException;
 use common\components\helpers\GlobalHelper;
+use yii\widgets\ActiveForm;
 
 /**
  * Site controller
@@ -207,6 +208,13 @@ class SiteController extends Controller
     public function actionSignup()
     {
         $model = new SignupForm();
+
+        // AJAX валидация
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
                 $activation = (Yii::$app->params['emailActivation']) ? ' Ваша учетная запись пока не является активной. На адрес email, указанный вами при регистрации было отправлено письмо с данными для активации учетной записи. Проверьте свою электронную почту и следуйте инструкциям из письма.' : '';

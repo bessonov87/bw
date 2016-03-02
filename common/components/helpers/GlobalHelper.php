@@ -2,6 +2,10 @@
 namespace common\components\helpers;
 
 use common\models\ar\Countries;
+use backend\models\Log;
+use common\models\ar\Comment;
+use common\models\ar\Post;
+use common\models\ar\User;
 use Yii;
 use common\models\ar\Category;
 use yii\helpers\ArrayHelper;
@@ -430,6 +434,55 @@ class GlobalHelper
         $username = mb_substr($email, 0, $atPos);
         $username = mb_ereg_replace("[^A-Za-z0-9_-]+", "", $username);	// Избавляемся от "лишних символов"
         return $username;
+    }
+
+    public static function getMetrikaData($params){
+        $metrikaBaseUrl = "http://api-metrika.yandex.ru/stat/v1/data?";
+        foreach($params as $key => $value){
+            $getData[] = $key.'='.$value;
+        }
+        $getData[] = 'id='.Yii::$app->params['YandexCounterID'];
+        $getData[] = 'oauth_token='.Yii::$app->params['YandexToken'];
+        $getParams = implode('&', $getData);
+        $metrikaUrl = $metrikaBaseUrl.$getParams;
+        //stat/traffic/summary.json?id=".Yii::$app->params['YandexCounterID']."&pretty=1&date1=$start&date2=$end&oauth_token=".Yii::$app->params['YandexToken'];
+        var_dump($metrikaUrl);
+
+        $ch = curl_init();
+        curl_setopt ($ch, CURLOPT_URL,$metrikaUrl);
+        curl_setopt ($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6");
+        curl_setopt ($ch, CURLOPT_TIMEOUT, 60);
+        curl_setopt ($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+        $metrikaData = curl_exec ($ch);
+        curl_close($ch);
+
+        return json_decode($metrikaData);
+    }
+
+    public static function getSiteSummary() {
+        $today_begin = date("Y-m-d")." 00:00:00";
+        $today_end = date("Y-m-d")." 23:59:59";
+        $yesterday_begin = date("Y-m-d 00:00:00", time()-86400);
+        $yesterday_end = date("Y-m-d 23:59:59", time()-86400);
+        // Статьи
+        $summary['postsCount'] = Post::find()->count();
+        $summary['postsToday'] = Post::find()->where(['between', 'date', $today_begin, $today_end])->count();
+        $summary['postsYesterday'] = Post::find()->where(['between', 'date', $yesterday_begin, $yesterday_end])->count();
+        // Пользователи
+        $summary['usersCount'] = User::find()->count();
+        $summary['usersToday'] = User::find()->where(['between', 'created_at', strtotime($today_begin), strtotime($today_end)])->count();
+        $summary['usersYesterday'] = User::find()->where(['between', 'created_at', strtotime($yesterday_begin), strtotime($yesterday_end)])->count();
+        // Комментарии
+        $summary['commentsCount'] = Comment::find()->count();
+        $summary['commentsToday'] = Comment::find()->where(['between', 'date', $today_begin, $today_end])->count();
+        $summary['commentsYesterday'] = Comment::find()->where(['between', 'date', $yesterday_begin, $yesterday_end])->count();
+        // Ошибки
+        $summary['errorsCount'] = Log::find()->count();
+        $summary['errorsToday'] = Log::find()->where(['between', 'log_time', strtotime($today_begin), strtotime($today_end)])->count();
+        $summary['errorsYesterday'] = Log::find()->where(['between', 'log_time', strtotime($yesterday_begin), strtotime($yesterday_end)])->count();
+
+        return $summary;
     }
 
 }

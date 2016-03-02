@@ -99,6 +99,20 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Finds user by email
+     *
+     * @param string $email
+     * @return static|null
+     */
+    public static function findByEmail($email)
+    {
+        return static::find()
+            ->where(['email' => $email])
+            ->andWhere(['not in', 'status', [self::STATUS_DELETED, self::STATUS_BANNED]])
+            ->one();
+    }
+
+    /**
      * Finds user by password reset token
      *
      * @param string $token password reset token
