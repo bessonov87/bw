@@ -139,7 +139,7 @@ $(document).ready(function() {
         }
         // Отправка запроса
         $.ajax({
-            url: 'http://bw.dev/ajax/rating',
+            url: '/ajax/rating',
             type: 'GET',
             data: {
                 'post_id' : postId,
@@ -156,7 +156,7 @@ $(document).ready(function() {
         var postId = $('#post-id').text();
         // Отправка запроса
         $.ajax({
-            url: 'http://bw.dev/ajax/favorite',
+            url: '/ajax/favorite',
             type: 'GET',
             data: {
                 'post_id' : postId,
@@ -175,22 +175,6 @@ $(document).ready(function() {
             $('#moon_tomorrow').toggleClass('today_active');
             $('#moon_today').toggleClass('today_active');
         });
-        /*{
-         if(day == "today")
-         {
-         $("#today_block").show();
-         $("#tomorrow_block").hide();
-         $("#moon_tomorrow").removeClass("today_active");
-         $("#moon_today").addClass("today_active");
-         }
-         else if(day == "tomorrow")
-         {
-         $("#today_block").hide();
-         $("#tomorrow_block").show();
-         $("#moon_tomorrow").addClass("today_active");
-         $("#moon_today").removeClass("today_active");
-         }
-         }*/
     });
 
 });
