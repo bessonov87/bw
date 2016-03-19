@@ -133,6 +133,18 @@ IeAsset::register($this);
         </div>
         <div id="sidebar">
 
+            <!-- Блок Гороскопы на месяц -->
+            <div id="sidebar-item">
+                <div id="sidebar-item-top" class="sidebar-item-pink">Актуальные гороскопы</div>
+                <div id="sidebar-item-content">
+                    <div class="blockmenu">
+                        <a href="/horoscope/na-mesjac/2844-goroskop-na-mart-2016.html">Гороскоп на март</a>
+                        <a href="/horoscope/na-mesjac/2857-goroskop-na-aprel-2016.html">Гороскоп на апрель</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Конец Блок Гороскопы на месяц -->
+
             <!-- Блок Гороскоп -->
             <div id="sidebar-item">
                 <div id="sidebar-item-top" class="sidebar-item-pink"><a href="http://astrolis.ru/goroskop/na-den/" target="_blank">Гороскоп на сегодня</a></div>
