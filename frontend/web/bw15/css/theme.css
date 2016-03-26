@@ -555,8 +555,8 @@ body {
 
 @media screen and (min-width:1000px) {
     .fixed {
-        position: relative;
-        top: 0;
+        position: fixed;
+        top: 15px;
     }
 }
 
