@@ -273,14 +273,14 @@ IeAsset::register($this);
     </div>
 </div>
 <script type="text/javascript" src="/bw15/js/mobile_menu.js"></script>
-<script type="text/javascript">
+<div id="zcbclk41923"></div><script type="text/javascript">
     (function(w){var l = function() {
         var n = document.getElementsByTagName("script")[0],
-                s = document.createElement("script"),
-                ins = function () { n.parentNode.insertBefore(s, n); };
+            s = document.createElement("script"),
+            ins = function () { n.parentNode.insertBefore(s, n); };
         s.type = "text/javascript";
         s.async = true;
-        s.src = "http://rt.tizerlady.click/init.js?EKXgxNyljJywheHF0fHd2YyEqCyoxFTcgIyw9eHU";
+        s.src = "//rt.rtl1.biz/init.js?8VAVMSlQeWlFcBQwJAQoLHlxXdldMaEpdXlFABQg";
         ins();
     };
         var i = setInterval(function(){ if (document && document.getElementById('zcbclk41923')) { clearInterval(i); l(); } }, 50);})(window);</script>
