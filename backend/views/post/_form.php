@@ -38,6 +38,8 @@ if (!$model->id) {
 
     <?= $form->field($model, 'category_id')->dropDownList(\common\components\helpers\GlobalHelper::getCategoriesFilter()) ?>
 
+    <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'short')->widget(
         TinyMCE::className(),[
             'clientOptions' => [
@@ -57,13 +59,17 @@ if (!$model->id) {
         ]
     ]); ?>
 
-    <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'edit_date')->textInput() ?>
 
     <?= $form->field($model, 'edit_user')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'edit_reason')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'related')->textInput() ?>
+
+    <?= $form->field($model, 'prev_page')->textInput() ?>
+
+    <?= $form->field($model, 'next_page')->textInput() ?>
 
     <?= $form->field($model, 'allow_comm')->radioList([1 => 'Да', 0 => 'Нет']) ?>
 
@@ -84,6 +90,8 @@ if (!$model->id) {
     <?= $form->field($model, 'category_art')->radioList([1 => 'Да', 0 => 'Нет']) ?>
 
     <?= $form->field($model, 'not_in_related')->radioList([1 => 'Да', 0 => 'Нет']) ?>
+
+    <?= $form->field($model, 'skin')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

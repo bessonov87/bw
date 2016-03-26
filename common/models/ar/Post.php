@@ -23,6 +23,9 @@ use common\components\helpers\GlobalHelper;
  * @property string $meta_descr
  * @property string $meta_keywords
  * @property string $url
+ * @property string $related
+ * @property string $prev_page
+ * @property string $next_page
  * @property string $views
  * @property string $edit_date
  * @property string $edit_user
@@ -38,6 +41,7 @@ use common\components\helpers\GlobalHelper;
  * @property integer $category_art
  * @property integer $inm
  * @property integer $not_in_related
+ * @property integer $skin
  *
  * @property Comment[] $comments
  * @property FavoritePosts[] $favoritePosts
@@ -67,9 +71,9 @@ class Post extends ActiveRecord
     {
         return [
             [['author_id', 'category_id', 'short', 'full', 'title', 'url'], 'required'],
-            [['author_id', 'category_id', 'views', 'edit_user', 'allow_comm', 'allow_main', 'allow_catlink', 'allow_similar', 'allow_rate', 'allow_ad', 'approve', 'fixed', 'category_art', 'inm', 'not_in_related'], 'integer'],
-            [['edit_date', 'date', 'commentsCount'], 'safe'],
-            [['short', 'full'], 'string'],
+            [['author_id', 'category_id', 'views', 'edit_user', 'allow_comm', 'allow_main', 'allow_catlink', 'allow_similar', 'allow_rate', 'allow_ad', 'approve', 'fixed', 'category_art', 'inm', 'not_in_related', 'skin'], 'integer'],
+            [['edit_date', 'date', 'commentsCount', 'prev_page', 'next_page'], 'safe'],
+            [['short', 'full', 'related'], 'string'],
             [['title', 'meta_title', 'meta_descr', 'meta_keywords', 'edit_reason'], 'string', 'max' => 255],
             [['url'], 'string', 'max' => 100]
         ];
@@ -92,6 +96,7 @@ class Post extends ActiveRecord
             'meta_descr' => 'Meta Descr',
             'meta_keywords' => 'Meta Keywords',
             'url' => 'Url',
+            'related' => 'Похожие',
             'views' => 'Views',
             'edit_date' => 'Edit Date',
             'edit_user' => 'Edit User',
@@ -107,6 +112,7 @@ class Post extends ActiveRecord
             'inm' => 'Inm',
             'not_in_related' => 'Not In Related',
             'commentsCount' => 'Комменты',
+            'skin' => 'SkinCare Id',
         ];
     }
 
