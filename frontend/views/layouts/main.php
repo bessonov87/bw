@@ -145,15 +145,6 @@ IeAsset::register($this);
             </div>
             <!-- Конец Блок Гороскопы на месяц -->
 
-            <!-- Блок Гороскоп -->
-            <div id="sidebar-item">
-                <div id="sidebar-item-top" class="sidebar-item-pink"><a href="http://astrolis.ru/goroskop/na-den/" target="_blank">Гороскоп на сегодня</a></div>
-                <div id="sidebar-item-content">
-                    <?= HoroscopeWidget::widget() ?>
-                </div>
-            </div>
-            <!-- Конец Блок Гороскоп -->
-
             <!-- Блок Боковое меню -->
             <a name="cats"></a>
             <div id="sidebar-item">
