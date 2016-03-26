@@ -553,6 +553,13 @@ body {
     text-align: center;
 }
 
+@media screen and (min-width:1000px) {
+    .fixed {
+        position: relative;
+        top: 0;
+    }
+}
+
 @media screen and (min-width:768px) and (max-width:1000px) {
     #header{width:100%;}
     #top-nav{width:100%;}
@@ -570,7 +577,6 @@ body {
     #container-wrap{background:#fff;width:98%;padding:1%;}
     #content{width:100%!important;float:left!important;}
     #sidebar {float:none;margin: 0 auto;display:block;}
-    .fixed{position: relative;top: 0;}
     #zcbclk28002{overflow: hidden;}
     #content-item-top h1 {font-size: 1.0em;line-height: 30px;}
 }
@@ -587,7 +593,6 @@ body {
     #container-wrap{background:#fff;width:98%;padding:1%;}
     #content{width:100%!important;float:left!important;}
     #sidebar {float:none;margin: 0 auto;display:block;}
-    .fixed{position: relative;top: 0;}
     .container-4{width: 170px;}
     .container-4 input#search{width: 170px;}
     #header{background: url(../images/logo_do_400.png) no-repeat;background-color:white;}
