@@ -93,7 +93,7 @@ class HoroController extends Controller
         $string = str_replace('[year]', $this->year, $string);
 
         // Img Alt
-        $string = str_replace('[alt]', $this->alt, $string);
+        $string = str_replace('[alt]', $this->replace($this->alt), $string);
 
         // Месяцы
         if(preg_match('@\[month_([a-z]{1})\]@si', $string)){
