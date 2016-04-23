@@ -212,7 +212,7 @@ class SiteController extends Controller
         // AJAX валидация
         if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
+            return ActiveForm::validate($model, ['username', 'email']);
         }
 
         if ($model->load(Yii::$app->request->post())) {
