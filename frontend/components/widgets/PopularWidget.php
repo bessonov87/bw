@@ -81,6 +81,7 @@ class PopularWidget extends Widget
         if(!in_array($this->listType, $this->_listTypes)){
             $this->listType = $this->_defaultListType;
         }
+        $populars = [];
         // Пробегаемся по выбранным numPosts постам
         foreach($posts as $post){
             // Проверяем соответствует ли заголовок статьи максимальной длине (maxTitle). Если нет, укорачиваем его
@@ -102,7 +103,10 @@ class PopularWidget extends Widget
         }
         // Определяем тип списка и вызываем соответствующий метод Html-хелпера для создания списка
         $list = $this->listType;
-        $result = Html::$list($populars, ['encode' => false, 'class' => $this->listClass]);
+        $result = '';
+        if(!empty($populars)) {
+            $result = Html::$list($populars, ['encode' => false, 'class' => $this->listClass]);
+        }
         // Если необходимо, заворачиваем список в контейнер div
         if($this->container){
             $result = Html::tag('div', $result, ['class' => ($this->containerClass)?$this->containerClass:'container_'.$this->listClass]);

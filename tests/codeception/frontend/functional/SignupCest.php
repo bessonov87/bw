@@ -3,7 +3,7 @@
 namespace tests\codeception\frontend\functional;
 
 use tests\codeception\frontend\_pages\SignupPage;
-use common\models\User;
+use common\models\ar\User;
 
 class SignupCest
 {
@@ -47,17 +47,17 @@ class SignupCest
         $I->wantTo('ensure that signup works');
 
         $signupPage = SignupPage::openBy($I);
-        $I->see('Signup', 'h1');
-        $I->see('Please fill out the following fields to signup:');
+        $I->see('Регистрация', 'h1');
+        $I->see('Пожалуйста заполните все поля формы:');
 
         $I->amGoingTo('submit signup form with no data');
 
         $signupPage->submit([]);
 
         $I->expectTo('see validation errors');
-        $I->see('Username cannot be blank.', '.help-block');
+        $I->see('Логин cannot be blank.', '.help-block');
         $I->see('Email cannot be blank.', '.help-block');
-        $I->see('Password cannot be blank.', '.help-block');
+        $I->see('Пароль cannot be blank.', '.help-block');
 
         $I->amGoingTo('submit signup form with not correct email');
         $signupPage->submit([
@@ -67,8 +67,8 @@ class SignupCest
         ]);
 
         $I->expectTo('see that email address is wrong');
-        $I->dontSee('Username cannot be blank.', '.help-block');
-        $I->dontSee('Password cannot be blank.', '.help-block');
+        $I->dontSee('Логин cannot be blank.', '.help-block');
+        $I->dontSee('Пароль cannot be blank.', '.help-block');
         $I->see('Email is not a valid email address.', '.help-block');
 
         $I->amGoingTo('submit signup form with correct email');
@@ -76,15 +76,18 @@ class SignupCest
             'username' => 'tester',
             'email' => 'tester.email@example.com',
             'password' => 'tester_password',
+            'passwordRepeat' => 'tester_password',
+            'captcha' => 'testme',
         ]);
+        $I->dontSee('The verification code is incorrect.', '.help-block');
 
         $I->expectTo('see that user is created');
-        $I->seeRecord('common\models\User', [
+        $I->seeRecord('common\models\ar\User', [
             'username' => 'tester',
             'email' => 'tester.email@example.com',
         ]);
 
         $I->expectTo('see that user logged in');
-        $I->seeLink('Logout (tester)');
+        $I->seeLink('Выход (tester)');
     }
 }
