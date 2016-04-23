@@ -10,7 +10,7 @@ use yii\codeception\BasePage;
  */
 class ContactPage extends BasePage
 {
-    public $route = 'site/contact';
+    public $route = 'site/feedback';
 
     /**
      * @param array $contactData
@@ -18,9 +18,9 @@ class ContactPage extends BasePage
     public function submit(array $contactData)
     {
         foreach ($contactData as $field => $value) {
-            $inputType = $field === 'body' ? 'textarea' : 'input';
-            $this->actor->fillField($inputType . '[name="ContactForm[' . $field . ']"]', $value);
+            $inputType = $field === 'message' ? 'textarea' : 'input';
+            $this->actor->fillField($inputType . '[name="Contact2Form[' . $field . ']"]', $value);
         }
-        $this->actor->click('contact-button');
+        $this->actor->click('Отправить');
     }
 }

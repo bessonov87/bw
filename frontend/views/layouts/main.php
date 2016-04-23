@@ -53,7 +53,7 @@ IeAsset::register($this);
         <ul class="solidblockmenu">
             <?php
             if (Yii::$app->user->isGuest) {
-               echo '<li><a href="/site/login">Вход</a></li>';
+               echo '<li>'.Html::a('Вход', ['site/login']).'</li>';
                 echo '<li><a href="/site/signup">Регистрация</a></li>';
                 echo '<li><a href="/advertising/">Реклама на сайте</a></li>';
             } else {
