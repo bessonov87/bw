@@ -138,7 +138,7 @@ IeAsset::register($this);
                 <div id="sidebar-item-top" class="sidebar-item-pink">Актуальные гороскопы</div>
                 <div id="sidebar-item-content">
                     <div class="blockmenu">
-                        <a href="/horoscope/na-mesjac/2844-goroskop-na-mart-2016.html">Гороскоп на март</a>
+                        <a href="/horoscope/na-mesjac/3233-goroskop-na-maj-2016-goda.html">Гороскоп на май</a>
                         <a href="/horoscope/na-mesjac/2857-goroskop-na-aprel-2016.html">Гороскоп на апрель</a>
                     </div>
                 </div>
