@@ -11,7 +11,7 @@ $(function(){
         });
     }
 
-    $(document).on('click', "button[name='mybutton']", function(){
+    $(document).on('click', "button[name='login-button-2']", function(){
         console.log('Login clicked!');
         var username = $('#loginform-username').val();
         dataLayer.push({
