@@ -20,4 +20,14 @@ $(function(){
         });
     });
 
+    $(document).on('click', "#calendar-prev", function(){
+        console.log('Calendar clicked!');
+        var month = $('.calendar_nowmonth').find('a').text();
+        console.log(month);
+        dataLayer.push({
+            'month': month,
+            'event': 'event_change_month'
+        });
+    });
+
 });
