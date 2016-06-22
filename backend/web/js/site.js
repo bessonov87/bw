@@ -10,4 +10,14 @@ $(function(){
             singleClick: true
         });
     }
+
+    $(document).on('click', "button[name='mybutton']", function(){
+        console.log('Login clicked!');
+        var username = $('#loginform-username').val();
+        dataLayer.push({
+            'username': username,
+            'event': 'event_username_login'
+        });
+    });
+
 });
