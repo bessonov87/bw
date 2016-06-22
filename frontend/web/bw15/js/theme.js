@@ -184,4 +184,26 @@ $(document).ready(function() {
         else $('.floating').removeClass('fixed');
     });
 
+
+
+
+    $(document).on('click', "button[name='login-button-2']", function(){
+        console.log('Login clicked!');
+        var username = $('#loginform-username').val();
+        dataLayer.push({
+            'username': username,
+            'event': 'event_username_login'
+        });
+    });
+
+    $(document).on('click', "#calendar-prev", function(){
+        console.log('Calendar clicked!');
+        var month = $('.calendar_nowmonth').find('a').text();
+        console.log(month);
+        dataLayer.push({
+            'month': month,
+            'event': 'event_change_month'
+        });
+    });
+
 });
