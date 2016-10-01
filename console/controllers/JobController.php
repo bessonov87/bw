@@ -17,6 +17,8 @@ class JobController extends Controller
             ->orderBy(['id' => SORT_DESC])
             ->all();
 
+        echo "========= Found ".count($posts)." articles =========\n\n";
+
         foreach ($posts as $post){
             /** @var Post $post */
             $replaced_count = 0;
@@ -43,7 +45,7 @@ class JobController extends Controller
             if($replaced_count || $matches_count){
                 /* Save */
             } else {
-                echo "**** Matches not found!!! ID: {$post->id}.";
+                echo "**** Matches not found!!! ID: {$post->id}. Matches: {$matches_count}. Replaces: {$replaced_count}.\n";
             }
 
             if($test) {
