@@ -18,6 +18,7 @@ class JobController extends Controller
 
         foreach ($posts as $post){
             /** @var Post $post */
+            $replaced_count = 0;
             $text = $post->full;
             $text = str_ireplace('skincaremask', 'beauty-women', $text, $replaced_count);
 
@@ -32,7 +33,23 @@ class JobController extends Controller
 
             preg_match_all($pattern, $text, $matches);
 
-            var_dump($matches);
+            if($matches[0]){
+                foreach ($matches[0] as $key => $full){
+                    $oldId = $matches[1][$key];
+                    $newId = $oldId + 2857;
+                    $text = str_ireplace('[link='.$oldId.']', '[link='.$newId.']', $text);
+                    if($test){
+                        echo "== Replaced $oldId with $newId\n";
+                    }
+                    $matches_count++;
+                }
+            }
+
+            if($replaced_count || $matches_count){
+                /* Save */
+            } else {
+                echo "**** Matches not found!!! ID: {$post->id}.";
+            }
 
             if($test) {
                 echo "********** ID: {$post->id}. Matches: {$matches_count}. Replaces: {$replaced_count}. TEXT: {$text}\n\n";
@@ -55,6 +72,7 @@ class JobController extends Controller
 <p>&nbsp;</p>
 <p><strong>Очень важный момент</strong>: не стоит применять пилинг на коже вокруг глаз.</p>
 ';
+        $test = 1;
         $matches_count = 0;
         $pattern = '/\[link=([0-9]{1,3})\]/si';
         /*$text = preg_replace_callback($pattern, function ($matches) use(&$matches_count){
@@ -64,9 +82,27 @@ class JobController extends Controller
             return '[link='.$newId.']';
         }, $text);*/
 
+        $replaced_count = 0;
+
         preg_match_all($pattern, $text, $matches);
 
-        var_dump($matches);
+        if($matches[0]){
+            foreach ($matches[0] as $key => $full){
+                $oldId = $matches[1][$key];
+                $newId = $oldId + 2857;
+                $text = str_ireplace('[link='.$oldId.']', '[link='.$newId.']', $text);
+                if($test){
+                    echo "== Replaced $oldId with $newId\n";
+                }
+                $matches_count++;
+            }
+        }
+
+        if($replaced_count || $matches_count){
+            /* Save */
+        } else {
+            echo "**** Matches not found!!! ID: {$post->id}.";
+        }
 
         echo "$matches_count \n\n";
         echo $text;
