@@ -39,8 +39,10 @@ class JobController extends Controller
                 }
             }
 
+            echo "{$post->id}: matches {$matches_count}.\n";
             if($matches_count){
                 /* Save */
+                echo "!!! Saved ID: {$post->id}";
             } else {
                 echo "**** Matches not found!!! ID: {$post->id}. Matches: {$matches_count}.\n";
             }
