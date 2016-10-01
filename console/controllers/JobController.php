@@ -19,15 +19,17 @@ class JobController extends Controller
         foreach ($posts as $post){
             /** @var Post $post */
             $text = $post->full;
-            $text = str_ireplace('skincaremask', 'beauty-women', $text);
+            $text = str_ireplace('skincaremask', 'beauty-women', $text, $replaced_count);
 
+            $matches_count = 0;
             $pattern = '/\[link=([0-9]{1,3})\]/si';
-            $text = preg_replace_callback($pattern, function ($matches){
+            $text = preg_replace_callback($pattern, function ($matches) use($matches_count){
                 var_dump($matches);
+                $matches_count = count($matches);
             }, $text);
 
             if($test) {
-                echo "********** TEXT: {$text}\n\n";
+                echo "********** ID: {$post->id}. Matches: {$matches_count}. Replaces: {$replaced_count}. TEXT: {$text}\n\n";
             }
         }
     }
