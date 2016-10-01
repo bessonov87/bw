@@ -21,9 +21,8 @@ class JobController extends Controller
 
         foreach ($posts as $post){
             /** @var Post $post */
-            $replaced_count = 0;
             $text = $post->full;
-            $text = str_ireplace('skincaremask', 'beauty-women', $text, $replaced_count);
+            $text = str_ireplace('skincaremask', 'beauty-women', $text);
 
             $matches_count = 0;
             $pattern = '/\[link=([0-9]{1,3})\]/si';
@@ -35,21 +34,19 @@ class JobController extends Controller
                     $oldId = $matches[1][$key];
                     $newId = $oldId + 2857;
                     $text = str_ireplace('[link='.$oldId.']', '[link='.$newId.']', $text);
-                    if($test){
-                        echo "== Replaced $oldId with $newId\n";
-                    }
+                    echo "== Replaced $oldId with $newId\n";
                     $matches_count++;
                 }
             }
 
-            if($replaced_count || $matches_count){
+            if($matches_count){
                 /* Save */
             } else {
-                echo "**** Matches not found!!! ID: {$post->id}. Matches: {$matches_count}. Replaces: {$replaced_count}.\n";
+                echo "**** Matches not found!!! ID: {$post->id}. Matches: {$matches_count}.\n";
             }
 
             if($test) {
-                echo "********** ID: {$post->id}. Matches: {$matches_count}. Replaces: {$replaced_count}. TEXT: {$text}\n\n";
+                echo "********** ID: {$post->id}. Matches: {$matches_count}. TEXT: {$text}\n\n";
             }
         }
     }
