@@ -20,11 +20,13 @@ class JobController extends Controller
         echo "========= Found ".count($posts)." articles =========\n\n";
 
         foreach ($posts as $post){
+            echo "\n---------------- {$post->id} -------------------.\n";
             /** @var Post $post */
             $text = $post->full;
             $text = str_ireplace('skincaremask', 'beauty-women', $text);
 
             $matches_count = 0;
+            $matchesFlag = false;
             $pattern = '/\[link=([0-9]{1,3})\]/si';
 
             preg_match_all($pattern, $text, $matches);
@@ -36,11 +38,12 @@ class JobController extends Controller
                     $text = str_ireplace('[link='.$oldId.']', '[link='.$newId.']', $text);
                     echo "== Replaced $oldId with $newId\n";
                     $matches_count++;
+                    $matchesFlag = true;
                 }
             }
 
             echo "{$post->id}: matches {$matches_count}.\n";
-            if($matches_count){
+            if($matchesFlag){
                 /* Save */
                 echo "!!! Saved ID: {$post->id}";
             } else {
