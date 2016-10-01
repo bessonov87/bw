@@ -25,7 +25,7 @@ class PostAdditions
      * @param $post
      */
     public static function fullFaceMask($post){
-        $post->full .= 'А!!!';
+        $post->full .= '';
     }
 
     /**
