@@ -24,7 +24,7 @@ class JobController extends Controller
             $matches_count = 0;
             $pattern = '/\[link=([0-9]{1,3})\]/si';
             $text = preg_replace_callback($pattern, function ($matches) use(&$matches_count){
-                var_dump($matches);
+                //var_dump($matches);
                 $matches_count += 1;
                 $newId = 2857 + $matches[1];
                 return '[link='.$newId.']';
