@@ -46,13 +46,13 @@ class JobController extends Controller
             if($matchesFlag){
                 /* Save */
                 echo "!!! Saved ID: {$post->id}";
+                if($test) {
+                    echo "********** ID: {$post->id}. Matches: {$matches_count}. TEXT: {$text}\n\n";
+                }
             } else {
                 echo "**** Matches not found!!! ID: {$post->id}. Matches: {$matches_count}.\n";
             }
 
-            if($test) {
-                echo "********** ID: {$post->id}. Matches: {$matches_count}. TEXT: {$text}\n\n";
-            }
         }
     }
 
