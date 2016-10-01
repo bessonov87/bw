@@ -23,12 +23,16 @@ class JobController extends Controller
 
             $matches_count = 0;
             $pattern = '/\[link=([0-9]{1,3})\]/si';
-            $text = preg_replace_callback($pattern, function ($matches) use(&$matches_count){
+            /*$text = preg_replace_callback($pattern, function ($matches) use(&$matches_count){
                 //var_dump($matches);
                 $matches_count += 1;
                 $newId = 2857 + $matches[1];
                 return '[link='.$newId.']';
-            }, $text);
+            }, $text);*/
+
+            preg_match_all($pattern, $text, $matches);
+
+            var_dump($matches);
 
             if($test) {
                 echo "********** ID: {$post->id}. Matches: {$matches_count}. Replaces: {$replaced_count}. TEXT: {$text}\n\n";
@@ -53,12 +57,16 @@ class JobController extends Controller
 ';
         $matches_count = 0;
         $pattern = '/\[link=([0-9]{1,3})\]/si';
-        $text = preg_replace_callback($pattern, function ($matches) use(&$matches_count){
+        /*$text = preg_replace_callback($pattern, function ($matches) use(&$matches_count){
             //var_dump($matches);
             $matches_count += 1;
             $newId = 2857 + $matches[1];
             return '[link='.$newId.']';
-        }, $text);
+        }, $text);*/
+
+        preg_match_all($pattern, $text, $matches);
+
+        var_dump($matches);
 
         echo "$matches_count \n\n";
         echo $text;
