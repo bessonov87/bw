@@ -55,8 +55,8 @@ class PostController extends Controller{
         // Получаем список всех категорий, переиндексированный по id категорий
         $categories = GlobalHelper::getCategories();
         // Создаем объект ActiveQuery, общий для всех вариантов (категорий, поиска, вывода по датам)
-        $query = Post::find()->where(['approve' => Post::APPROVED])
-            ->orderBy(['date' => SORT_DESC]);
+        $query = Post::find()->where(['approve' => Post::APPROVED]);
+
         // Определяем тип
         $type = Yii::$app->request->get('type');
         $subCategories = '';
@@ -114,8 +114,12 @@ class PostController extends Controller{
         if(!$type || $type == 'index') {
             $query->andWhere(['allow_main' => 1]);
         }
+
         // Постраничная навигация
         $countPosts = clone $query;
+
+        $query->orderBy(['date' => SORT_DESC]);
+
         $pages = new Pagination(['totalCount' => $countPosts->count(), 'route' => 'post/short']);
         $posts = $query->offset($pages->offset)
             ->limit($pages->limit)

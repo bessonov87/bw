@@ -1,11 +1,9 @@
 <?php
 namespace common\models\ar;
 
-use yii\db\ActiveRecord;
+use common\models\PostCategory as BasePostCategory;
 
-class PostCategory extends ActiveRecord
+class PostCategory extends BasePostCategory
 {
-    public static function tableName(){
-        return '{{%post_category}}';
-    }
+
 }

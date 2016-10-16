@@ -40,13 +40,26 @@ class CalendarWidget extends Widget
      */
     public function run(){
         if(is_null($this->date)) $this->date = date('Y-m');
+
+        $startOfMonth = strtotime($this->date);
+        $endOfMonth = strtotime("+1 month", $startOfMonth);
+
         $rows = (new Query())
-            ->select('COUNT(*) as count, DAY(date) as day')
+            ->select('id, date')
             ->from('{{%post}}')
-            ->where("DATE_FORMAT( DATE, '%Y-%m' ) = :month", [':month' => $this->date])
-            ->groupBy("DAY( `date` )")
+            ->where(['between', 'date', $startOfMonth, $endOfMonth])
             ->all();
-        $rows = ArrayHelper::index($rows, 'day');
+
+        $result = [];
+        foreach ($rows as $post){
+            $day = (int)date('j', $post['date']);
+            $result[$day]['day'] = $day;
+            $result[$day]['count'] = isset($result[$day]['count']) ? ++$result[$day]['count'] : 1;
+        }
+
+        $rows = $result;
+        unset($result);
+
         return $this->renderFile('@app/views/site/calendar.php', ['posts' => $rows,'date' => $this->date, 'noControls' => $this->noControls]);
     }
 }

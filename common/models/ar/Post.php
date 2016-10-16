@@ -2,82 +2,16 @@
 
 namespace common\models\ar;
 
-use yii\db\ActiveRecord;
+use common\models\Post as BasePost;
+use yii\db\ActiveQuery;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
-use common\models\ar\Comment;
-use common\models\ar\Category;
 use common\components\helpers\GlobalHelper;
 
-/**
- * This is the model class for table "post".
- *
- * @property string $id
- * @property string $author_id
- * @property string $date
- * @property integer $category_id
- * @property string $short
- * @property string $full
- * @property string $title
- * @property string $meta_title
- * @property string $meta_descr
- * @property string $meta_keywords
- * @property string $url
- * @property string $related
- * @property string $prev_page
- * @property string $next_page
- * @property string $views
- * @property string $edit_date
- * @property string $edit_user
- * @property string $edit_reason
- * @property integer $allow_comm
- * @property integer $allow_main
- * @property integer $allow_catlink
- * @property integer $allow_similar
- * @property integer $allow_rate
- * @property integer $allow_ad
- * @property integer $approve
- * @property integer $fixed
- * @property integer $category_art
- * @property integer $inm
- * @property integer $not_in_related
- * @property integer $skin
- *
- * @property Comment[] $comments
- * @property FavoritePosts[] $favoritePosts
- * @property User $author
- * @property PostsRating[] $postsRatings
- */
-class Post extends ActiveRecord
+class Post extends BasePost
 {
     const APPROVED = 1;
     const NOT_APPROVED = 0;
-
-    /*public $allow_comm = 1;
-    public $allow_main = 1;
-    public $allow_catlink = 1;
-    public $allow_similar = 1;
-    public $allow_rate = 1;
-    public $allow_ad = 1;
-    public $approve = 1;
-    public $fixed = 0;
-    public $category_art = 0;
-    public $not_in_related = 0;*/
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['author_id', 'category_id', 'short', 'full', 'title', 'url'], 'required'],
-            [['author_id', 'category_id', 'views', 'edit_user', 'allow_comm', 'allow_main', 'allow_catlink', 'allow_similar', 'allow_rate', 'allow_ad', 'approve', 'fixed', 'category_art', 'inm', 'not_in_related', 'skin'], 'integer'],
-            [['edit_date', 'date', 'commentsCount', 'prev_page', 'next_page'], 'safe'],
-            [['short', 'full', 'related'], 'string'],
-            [['title', 'meta_title', 'meta_descr', 'meta_keywords', 'edit_reason'], 'string', 'max' => 255],
-            [['url'], 'string', 'max' => 100]
-        ];
-    }
 
     /**
      * @inheritdoc
@@ -140,13 +74,6 @@ class Post extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCategory(){
-        return $this->hasOne(Category::className(), ['id' => 'category_id']);
-    }
-
-    /**
      * Возвращает название категории, в которой размещена статья
      *
      * @return mixed
@@ -191,31 +118,18 @@ class Post extends ActiveRecord
      * Для минимизации кол-ва запросов к базе используется "жадная загрузка" посредством метода with() со
      * связью user.
      *
-     * @return $this
+     * @return ActiveQuery
      */
     public function getComments(){
-        $comments = $this->hasMany(Comment::className(), ['post_id' => 'id'])->with('user')->asArray();
-        return $comments;
+        return $this->hasMany(Comment::className(), ['post_id' => 'id'])->with('user')->asArray();
     }
 
+    /**
+     * Возвращает количество комментариев для данной статьи
+     * @return int
+     */
     public function getCommentsCount(){
         return count($this->comments);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getFavoritePosts()
-    {
-        return $this->hasMany(FavoritePosts::className(), ['post_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAuthor()
-    {
-        return $this->hasOne(User::className(), ['id' => 'author_id']);
     }
 
     /**
@@ -236,6 +150,10 @@ class Post extends ActiveRecord
         return Url::to(['post/full', 'cat' => $cat, 'id' => $this->id, 'alt' => $this->url]);
     }
 
+    /**
+     * Ссылка на статью (для бэкэнда)
+     * @return string
+     */
     public function getFrontendLink(){
         $cat = GlobalHelper::getCategoryUrlById($this->category_id);
         return substr(\Yii::$app->params['frontendBaseUrl'], 0, -1).\Yii::$app->urlManagerFrontend->createUrl(['post/full', 'cat' => $cat, 'id' => $this->id, 'alt' => $this->url]);
@@ -249,10 +167,4 @@ class Post extends ActiveRecord
         return \Yii::$app->params['frontendBaseUrl'].substr($this->link, 1);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public static function tableName(){
-        return '{{%post}}';
-    }
 }
