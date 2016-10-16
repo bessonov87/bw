@@ -76,7 +76,7 @@ $this->registerLinkTag(['rel' => 'canonical', 'href' => $post->absoluteLink]);
         </div>
         <div class="clear"></div>
         <div id="content-item-footer">
-            <div style="color:#333; font-size:14px"><strong>Статья добавлена:</strong> <?=$post->date?> | <strong>Комментарии</strong> (<a href="#all-comments"><?= count($post->comments) ?></a>) | <strong>Просмотров:</strong> <?=$post->views?></div>
+            <div style="color:#333; font-size:14px"><strong>Статья добавлена:</strong> <?=date('d.m.Y H:i', $post->date)?> | <strong>Комментарии</strong> (<a href="#all-comments"><?= count($post->comments) ?></a>) | <strong>Просмотров:</strong> <?=$post->views?></div>
         </div>
     </div>
 </div>

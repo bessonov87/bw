@@ -91,14 +91,58 @@ class Post extends BasePost
         // Если для данной статьи похожие запрещены, возвращаем null
         if(!$this->allow_similar)
             return null;
-        $similarPosts = Post::find()
-            ->where("MATCH(short, full, title, meta_title) AGAINST('$this->title')")
-            ->andWhere(['approve' => static::APPROVED])
+
+        // TODO NORMAL SIMILAR POSTS SEARCH
+        $text = mb_ereg_replace('/[^a-zA-Zа-яА-Я-]/siU', '', $this->title);
+        if(mb_strlen($text) > 50){
+            $text = mb_substr($text, 0, 50);
+        }
+        $words = explode(" ", $text);
+        $wordsList = [];
+        if(is_array($words)) {
+            if(count($words) > 1) {
+                foreach ($words as $word) {
+                    if (mb_strlen($word) > 3) {
+                        $wordsList[] = $word;
+                    }
+                }
+            } else {
+                $wordsList = $words;
+            }
+        } else {
+            $wordsList[] = $words;
+        }
+
+        $query = Post::find()->andWhere(['approve' => static::APPROVED])
             ->andWhere( 'id != '.$this->id )
             ->andWhere(['not_in_related' => 0])
-            ->andWhere(['category_art' => 0])
+            ->andWhere(['category_art' => 0]);
+        $likeCondition = '';
+        $likeCondition2 = '';
+        foreach ($wordsList as $word){
+            $likeCondition .= "OR \"title\" ILIKE '%$word%' ";
+            $likeCondition2 .= $likeCondition . "OR \"full\" ILIKE '%$word%' ";
+        }
+        if($likeCondition){
+            $likeCondition = mb_substr($likeCondition, 3);
+            $query->andWhere($likeCondition);
+        }
+        if($likeCondition2){
+            $likeCondition2 = mb_substr($likeCondition2, 3);
+            $query2 = clone $query;
+            $query2->andWhere($likeCondition2);
+        }
+
+        $similarPosts = $query
             ->limit(5)
             ->all();
+
+        if($likeCondition2 && (!$similarPosts || count($similarPosts) < 4)){
+            $similarPosts = $query2
+                ->limit(5)
+                ->all();
+        }
+
         return $similarPosts;
     }
 

@@ -99,16 +99,24 @@ class PostController extends Controller{
             Yii::$app->params['date'] = $y . ($m ? '/'.$m : '') . ($d ? '/'.$d : '');
             $date = $y;
             $dateFormat = '%Y';
+            $dateEndStr = '+1 year';
             // Если задан месяц
             if($m){
                 $dateFormat .= '-%m';
                 $date .= '-'.$m;
+                $dateEndStr = '+1 month';
                 if($d){
                     $dateFormat .= '-%d';
                     $date .= '-'.$d;
+                    $dateEndStr = '+1 day';
                 }
+            } else {
+                $date = $y.'-01-01';
             }
-            $query->andWhere("DATE_FORMAT( DATE, '$dateFormat' ) = :date", [':date' => $date]);
+            $dateStart = strtotime($date);
+            $dateEnd = strtotime($dateEndStr, $dateStart);
+            //$query->andWhere("DATE_FORMAT( DATE, '$dateFormat' ) = :date", [':date' => $date]);
+            $query->andWhere(['between', 'date', $dateStart, $dateEnd]);
         }
         // Если главная страница и просто страницы
         if(!$type || $type == 'index') {

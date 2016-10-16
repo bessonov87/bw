@@ -215,7 +215,7 @@ class JobController extends Controller
             $pgModel->reply_to = intval($row['reply_to']);
             $pgModel->post_id = intval($row['post_id']);
             $pgModel->user_id = intval($row['user_id']);
-            $pgModel->date = intval($row['date']);
+            $pgModel->date = intval(strtotime($row['date']));
             $pgModel->text_raw = $row['text_raw'];
             $pgModel->text = $row['text'];
             $pgModel->ip = $row['ip'];

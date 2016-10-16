@@ -22,7 +22,7 @@ use yii\helpers\Html;
     <div class="clear"></div>
     <div class="comment-info">
         <div class="comment-id">#<?= $comment['id'] ?> (<a href="#comment-<?= $comment['id'] ?>" class="comment-link" title="Ссылка на комментарий">Ссылка</a>)</div>
-        <div class="comment-date"><strong>Добавлен:</strong> <?= $comment['date'] ?></div>
+        <div class="comment-date"><strong>Добавлен:</strong> <?= date('d.m.Y H:i', $comment['date']) ?></div>
         <div class="clear"></div>
     </div>
 </div>
