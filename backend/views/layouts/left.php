@@ -26,6 +26,7 @@
                     ['label' => 'Категории', 'icon' => 'fa fa-file-text-o', 'url' => ['category/index']],
                     ['label' => 'Комментарии', 'icon' => 'fa fa-comment-o', 'url' => ['comment/index']],
                     ['label' => 'Пользователи', 'icon' => 'fa fa-users', 'url' => ['user/index']],
+                    ['label' => 'Реклама', 'icon' => 'fa fa-check-square', 'url' => ['advert/index']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [
                         'label' => 'Логи',

@@ -1342,3 +1342,7 @@ ol.popular li:hover:after {
     float: right;
     cursor: pointer;
 }
+
+.hide-x-overflow {
+    overflow-x: scroll;
+}

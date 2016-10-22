@@ -28,11 +28,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'block_number',
-            'code:ntext',
+            [
+                'attribute' => 'code',
+                'format' => 'raw',
+                'value' => function($model){
+                    return '<button class="btn btn-xs btn-info" data-toggle="collapse" data-target="#advert-code-'.$model->id.'">Show/Hide</button>
+                    <div id="advert-code-'.$model->id.'" class="collapse">
+                    '.Html::encode($model->code).'
+                    </div>';
+                }
+            ],
             'location',
-            // 'replacement_tag',
-            // 'category',
-            // 'approve',
+            'replacement_tag',
+            'category',
+            'approve:boolean',
             // 'on_request',
 
             ['class' => 'yii\grid\ActionColumn'],
