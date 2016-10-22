@@ -384,7 +384,7 @@ class SiteController extends Controller
      * @return mixed|string
      */
     public function getRss() {
-        $rss = Yii::$app->cache->get('rss_xml');
+        $rss = Yii::$app->cache->get('rss_xml');;
         if(!$rss) {
             $rss = $this->generateRss();
             Yii::$app->cache->set('rss_xml', $rss, 43200);
@@ -415,7 +415,7 @@ class SiteController extends Controller
         $posts = Post::find()
             ->where(['approve' => Post::APPROVED])
             ->andWhere(['allow_main' => 1])
-            ->andWhere(['<=', 'date', date("Y-m-d H:i:s")])
+            ->andWhere(['<=', 'date', time()])
             ->orderBy(['date' => SORT_DESC])
             ->limit(10)
             ->all();
@@ -435,7 +435,7 @@ class SiteController extends Controller
             $data.="<guid>".$absoluteLink."</guid>";
             //$data.="<dc:creator>admin</dc:creator>";
             //$data.="<dc:date>" . date("D, j M Y G:i:s", strtotime($post->date)) . " GMT</dc:date>";
-            $data.="<pubDate>".date("D, j M Y G:i:s", strtotime($post->date)-10800)." GMT</pubDate>\n</item>";
+            $data.="<pubDate>".date("D, j M Y G:i:s", ($post->date - 10800))." GMT</pubDate>\n</item>";
         }
 
         $rss .= $data . '</channel></rss>';
@@ -513,7 +513,7 @@ class SiteController extends Controller
         // Статьи
         $posts = Post::find()
             ->where(['approve' => '1'])
-            ->andWhere(['<=', 'date', date('Y-m-d')])
+            ->andWhere(['<=', 'date', time()])
             ->andWhere(['!=', 'category_art', 1])
             ->orderBy('date')
             ->all();
@@ -523,7 +523,7 @@ class SiteController extends Controller
             $xml_map .= "
 		<url>
 			<loc>" . $post->absoluteLink . "</loc>
-			<lastmod>" . date("Y-m-d", strtotime($post->date)) . "</lastmod>
+			<lastmod>" . date("Y-m-d", $post->date) . "</lastmod>
 			<changefreq>weekly</changefreq>
 			<priority>0.6</priority>
 		</url>";
