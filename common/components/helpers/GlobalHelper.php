@@ -9,6 +9,7 @@ use common\models\ar\User;
 use Yii;
 use common\models\ar\Category;
 use yii\helpers\ArrayHelper;
+use yii\web\NotFoundHttpException;
 
 /**
  * GlobalHelper содержит дополнительные часто применяемые функции
@@ -133,7 +134,7 @@ class GlobalHelper
         }
         // Переиндексируем массив категорий по значению url
         $categories = ArrayHelper::index($categories, 'url');
-        if(is_null($categories[$cat])){
+        if(!isset($categories[$cat]) || is_null($categories[$cat])){
             throw new NotFoundHttpException('Такого раздела на сайте не существует. Проверьте правильно ли вы скопировали или ввели адрес в адресную строку. Если вы перешли на эту страницу по ссылке с данного сайта, сообщите пожалуйста о неработающей ссылке нам с помощью обратной связи.');
         }
         //var_dump($categories[$cat]);
