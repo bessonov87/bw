@@ -1,2 +1,3 @@
 User-agent: *
-Disallow:
+Disallow: /cgi-bin
+Host: www.site.ru
