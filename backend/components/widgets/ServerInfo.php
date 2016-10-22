@@ -38,20 +38,22 @@ class ServerInfo extends Widget
      * @return mixed
      */
     public function getServerInfo(){
-        $dbInfo = Yii::$app->db->createCommand( "SHOW TABLE STATUS" )->queryAll();
+        /*$dbInfo = Yii::$app->db->createCommand( "SHOW TABLE STATUS" )->queryAll();
         $dbsize = 0;
         foreach($dbInfo as $row){
             $dbsize += $row[ "Data_length" ] + $row[ "Index_length" ];
-        }
-        $dbInfo = Yii::$app->db->createCommand("SELECT VERSION()")->queryOne(\PDO::FETCH_NUM);
+        }*/
+        $dbInfo = Yii::$app->db->createCommand( "SELECT pg_size_pretty(pg_database_size('beauty'))" )->queryAll();
+        $dbVersion = Yii::$app->db->createCommand("SELECT VERSION()")->queryOne(\PDO::FETCH_NUM);
+        preg_match('/(.*) on (.*)/si', $dbVersion[0], $matches);
         // Ip сервера
         $serverInfo['server_ip'] = $_SERVER['SERVER_ADDR'];
         // Версия MySQL
-        $serverInfo['mysql_version'] = $dbInfo[0];
+        $serverInfo['mysql_version'] = isset($matches[1]) ? $matches[1] : 'N/A';
         // Имя базы данных
         $serverInfo['mysql_db'] = $this->getDsnAttribute('dbname', Yii::$app->getDb()->dsn);;
         // Размер базы данных
-        $serverInfo['mysql_size'] = Yii::$app->formatter->asShortSize($dbsize);
+        $serverInfo['mysql_size'] = $dbInfo[0]['pg_size_pretty'];
         // Версия PHP
         $serverInfo['php_version'] = phpversion();
         // PHP Memory Limit
