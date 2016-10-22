@@ -27,6 +27,23 @@ use common\models\ar\Post;
 class JobController extends Controller
 {
 
+    public function actionTestMail()
+    {
+        $mailbody = '<h3>Отзыв с сайта</h3>
+                            <p><b>Имя:</b> </p>
+                            <p><b>e-mail:</b> </p>
+                            <p><b>Тема:</b> </p>
+                            <p><b>Текст:</b></p>
+                            <p>фвыасвфыас</p>
+                            ';
+        return \Yii::$app->mailer->compose()
+            ->setFrom('bot@beauty-women.ru')
+            ->setTo('bessonov87@gmail.com')
+            ->setSubject('Тест письма')
+            ->setTextBody($mailbody)
+            ->send();
+    }
+
     public function actionTransfer()
     {
         $this->actionTransferCategory();
