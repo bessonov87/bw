@@ -17,15 +17,23 @@ if(is_array($messages)):
     foreach($messages as $message):
     ?>
     <div class="message">
-        <div class="message_header">
-            <div class="message_time"><?= date('d.m.Y H:i:s', round($message->log_time)) ?></div>
-            <div class="message_title"><?= $message->category ?></div>
+        <div class="row message_header">
+            <div class="col-md-3 message_time"><?= date('d.m.Y H:i:s', round($message->log_time)) ?></div>
+            <div class="col-md-4 message_title"><?= $message->category ?></div>
+            <div class="col-md-5 message_prefix"><?= $message->prefix ?></div>
         </div>
-        <div class="message_subheader">
-            <div class="message_page"><?= $message->page ?></div>
-            <div class="message_prefix"><?= $message->prefix ?></div>
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse-<?=$message->id?>"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <?= $message->page ?></a>
+                    </h4>
+                </div>
+                <div id="collapse-<?=$message->id?>" class="panel-collapse collapse">
+                    <div class="panel-body"><?= nl2br($message->message) ?></div>
+                </div>
+            </div>
         </div>
-        <div class="message_text"><?= nl2br($message->message) ?></div>
     </div>
     <?php
     endforeach;
