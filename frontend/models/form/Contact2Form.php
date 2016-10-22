@@ -32,7 +32,7 @@ class Contact2Form extends Model
     {
         $this->ip = Yii::$app->request->userIP;
         return \Yii::$app->mailer->compose(['html' => 'feedback-html', 'text' => 'feedback-text'], ['data' => $this])
-                    ->setFrom($this->email)
+                    ->setFrom([\Yii::$app->params['botEmail'] => \Yii::$app->name . ' robot'])
                     ->setTo(\Yii::$app->params['feedbackEmail'])
                     ->setSubject('Письмо администрации - ' . \Yii::$app->params['site']['shortTitle'])
                     ->send();

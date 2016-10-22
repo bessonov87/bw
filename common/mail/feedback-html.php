@@ -7,3 +7,4 @@ use yii\helpers\Html;
 <p><?= Html::encode($data->message) ?></p>
 <p>==================================================</p>
 <p>IP адрес отправителя: <?= $data->ip ?></p>
+<p>Email адрес отправителя: <?= $data->email ?></p>
