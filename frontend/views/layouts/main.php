@@ -39,7 +39,7 @@ IeAsset::register($this);
     <link rel="alternate" type="application/rss+xml" title="RSS" href="http://beauty-women.ru/rss.xml" />
     <?php $this->head() ?>
 </head>
-<body>
+<body style="overflow-x: hidden;">
 
 <!-- Google Tag Manager -->
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5V68JR"
