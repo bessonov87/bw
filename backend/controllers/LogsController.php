@@ -26,7 +26,7 @@ class LogsController extends Controller
      */
     public function actionDb()
     {
-        $query = Log::find()->orderBy(['log_time' => SORT_DESC]);
+        $query = Log::find();
         // Если задан интервал
         if($interval = Yii::$app->request->get('interval')){
             switch($interval){
@@ -38,6 +38,7 @@ class LogsController extends Controller
         $countPosts = clone $query;
         $pages = new Pagination(['totalCount' => $countPosts->count(), 'route' => 'logs/db']);
         $messages = $query->offset($pages->offset)
+            ->orderBy(['log_time' => SORT_DESC])
             ->limit($pages->limit)
             ->all();
         return $this->render('db', ['messages' => $messages, 'pages' => $pages]);
