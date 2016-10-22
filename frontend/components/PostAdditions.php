@@ -145,15 +145,15 @@ class PostAdditions
             $currentMonthDays = date('t');
             $currentDay = date('j');
             $monthYear = date('Y-m');
-            $moonQuery->where("date_format(date, '%Y-%m') = '$monthYear'");
+            $moonQuery->where("to_char(date, 'YYYY-mm') = '$monthYear'");
             $nextMonthYear = date('Y-m', strtotime($monthYear) + 2764800);
             // Если сейчас последний день месяца
             if($currentDay == $currentMonthDays){
-                $moonQuery->orWhere("date_format(date, '%Y-%m') = '$nextMonthYear'");
+                $moonQuery->orWhere("to_char(date, 'YYYY-mm') = '$nextMonthYear'");
             }
             $moonCalDays = $moonQuery->orderBy('date')->asArray()->all();
 
-            //var_dump($moonCalDays);
+            //var_dump($moonCalDays); die;
 
             $phase_image_num = 0;
             $w = 0;
