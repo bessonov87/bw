@@ -117,6 +117,7 @@ class JobController extends Controller
         $rows = $oldDb->createCommand('SELECT * FROM bw_user')->queryAll();
         foreach ($rows as $row){
             $pgModel = new User();
+            $pgModel->detachBehavior('timestamp');
             $pgModel->id = intval($row['id']);
             $pgModel->username = $row['username'];
             $pgModel->auth_key = $row['auth_key'];

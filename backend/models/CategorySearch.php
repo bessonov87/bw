@@ -49,8 +49,8 @@ class CategorySearch extends Category
         $subQuery = Post::find()
             ->select('category_id, count(id) as post_count')
             ->groupBy('category_id');
-        $query->leftJoin(['postsNum' => $subQuery], 'postsNum.category_id = id');
-        $query->select('{{%category}}.*, postsNum.post_count');
+        $query->leftJoin(['posts_num' => $subQuery], 'posts_num.category_id = id');
+        $query->select('{{%category}}.*, "posts_num".post_count');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

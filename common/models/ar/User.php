@@ -24,7 +24,9 @@ class User extends BaseUser implements IdentityInterface
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+            ],
         ];
     }
 
