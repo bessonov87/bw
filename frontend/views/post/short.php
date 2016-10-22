@@ -1,6 +1,10 @@
 <?php
 
-/** @var \yii\data\Pagination $pages */
+/**
+ * @var \yii\web\View $this
+ * @var \yii\data\Pagination $pages
+ * @var string $subCategories
+ */
 
 use app\components\MyLinkPager;
 use common\components\helpers\GlobalHelper;
@@ -10,17 +14,28 @@ if($pages->page >0 || array_key_exists('category', Yii::$app->params)){
 }else{
     $this->title = Yii::$app->params['site']['title'];
 }
+$description = Yii::$app->params['site']['shortDescription'];
 // Если не первая страница, добавляем в начало <title>
-if($pages->page > 0) $this->title = 'Страница '. ($pages->page + 1) . '. ' . $this->title;
+if($pages->page > 0) {
+    $this->title = 'Страница '. ($pages->page + 1) . '. ' . $this->title;
+    $description = 'Страница '. ($pages->page + 1) . '. ' . $description;
+}
 // Если задана категория, добавляем в начало <title> имя категории
 if(array_key_exists('category', Yii::$app->params)){
     $catName = GlobalHelper::getCategories()[Yii::$app->params['category'][0]]['name'];
     $this->title = $catName . ' - ' . $this->title;
+    $description = $catName . ' - ' . $description;
 }
 // Если задана дата
 if(array_key_exists('date', Yii::$app->params)){
     $this->title = 'Статьи за ' . Yii::$app->params['date'] . ' - ' . $this->title;
+    $description = 'Статьи за ' . Yii::$app->params['date'] . ' - ' . $description;
 }
+
+$this->registerMetaTag([
+    'name' => 'description',
+    'content' => $description
+]);
 ?>
 
 

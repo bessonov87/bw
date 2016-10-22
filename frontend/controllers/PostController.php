@@ -133,7 +133,12 @@ class PostController extends Controller{
             ->limit($pages->limit)
             ->all();
         // Рендеринг контента
-        return $this->render('short', ['posts' => $posts, 'pages' => $pages, 'categories' => $categories, 'subCategories' => $subCategories]);
+        return $this->render('short', [
+            'posts' => $posts,
+            'pages' => $pages,
+            'categories' => $categories,
+            'subCategories' => $subCategories
+        ]);
     }
 
     /**
