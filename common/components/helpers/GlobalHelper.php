@@ -461,10 +461,10 @@ class GlobalHelper
     }
 
     public static function getSiteSummary() {
-        $today_begin = date("Y-m-d")." 00:00:00";
-        $today_end = date("Y-m-d")." 23:59:59";
-        $yesterday_begin = date("Y-m-d 00:00:00", time()-86400);
-        $yesterday_end = date("Y-m-d 23:59:59", time()-86400);
+        $today_begin = strtotime(date("Y-m-d")." 00:00:00");
+        $today_end = strtotime("+1 day", $today_begin);
+        $yesterday_begin = $today_begin - 86400;
+        $yesterday_end = $today_end - 86400;
         // Статьи
         $summary['postsCount'] = Post::find()->count();
         $summary['postsToday'] = Post::find()->where(['between', 'date', $today_begin, $today_end])->count();
