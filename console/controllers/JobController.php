@@ -112,7 +112,9 @@ class JobController extends Controller
         /** @var Connection $oldDb */
         $oldDb = \Yii::$app->oldDb;
 
+        echo "Go to 'user'\n";
         User::deleteAll();
+        echo "all data deleted ...\n";
 
         $rows = $oldDb->createCommand('SELECT * FROM bw_user')->queryAll();
         foreach ($rows as $row){
@@ -130,10 +132,12 @@ class JobController extends Controller
             $pgModel->created_at = intval($row['created_at']);
             $pgModel->updated_at = intval($row['updated_at']);
             $pgModel->last_login_at = intval($row['last_login_at']);
+            echo "{$row['created_at']}\n";
             if(!$pgModel->save()){
                 echo "Can not save User {$row['id']}. Error: ".json_encode($pgModel->getErrors());
             }
         }
+        echo "done!\n\n";
     }
 
     public function actionTransferAuth()
