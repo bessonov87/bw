@@ -256,7 +256,7 @@ class User extends BaseUser implements IdentityInterface
             $this->generateEmailConfirmToken();
         }
         return \Yii::$app->mailer->compose(['html' => 'emailConfirmToken-html', 'text' => 'emailConfirmToken-text'], ['user' => $this])
-            ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name])
+            ->setFrom([\Yii::$app->params['botEmail'] => \Yii::$app->name])
             ->setTo($this->email)
             ->setSubject('Код подтверждения email адреса для сайта ' . \Yii::$app->name)
             ->send();
