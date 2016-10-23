@@ -341,8 +341,10 @@ class SiteController extends Controller
         //$date = date('Y-m-d H:i:s');
         $searchModel = new SearchForm();
         if ($searchModel->load(Yii::$app->request->post()) && $searchModel->validate()) {
+            $log_info = "Raw query: {$searchModel->story}\n";
             $q = strip_tags($searchModel->story);
             $q = mb_ereg_replace('/[^A-Za-zА-Яа-я\.\s-]/siU', '', $q);
+            $log_info .= "Clean query: $q\n";
 
             $query = PostElastic::find()->query([
                 "multi_match" => [
@@ -370,6 +372,9 @@ class SiteController extends Controller
                     }
                 }
             }
+
+            $log = "================================= \n".date('d.m.Y H:i:s')."\n".$log_info;
+            file_put_contents(\Yii::getAlias('@frontend/runtime/logs/search.log'), $log, FILE_APPEND);
         }
 
         return $this->render('@app/views/post/search', [
