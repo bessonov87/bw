@@ -14,6 +14,7 @@ use common\models\ar\PostCategory;
 use common\models\ar\PostsRating;
 use common\models\ar\User;
 use common\models\ar\UserProfile;
+use common\models\elastic\PostElastic;
 use common\models\MoonDni;
 use common\models\MoonFazy;
 use common\models\MoonHair;
@@ -27,21 +28,58 @@ use common\models\ar\Post;
 class JobController extends Controller
 {
 
-    public function actionTestMail()
+    public function actionCreateIndex()
     {
-        $mailbody = '<h3>Отзыв с сайта</h3>
-                            <p><b>Имя:</b> </p>
-                            <p><b>e-mail:</b> </p>
-                            <p><b>Тема:</b> </p>
-                            <p><b>Текст:</b></p>
-                            <p>фвыасвфыас</p>
-                            ';
-        return \Yii::$app->mailer->compose()
-            ->setFrom('bot@beauty-women.ru')
-            ->setTo('bessonov87@gmail.com')
-            ->setSubject('Тест письма')
-            ->setTextBody($mailbody)
-            ->send();
+        $posts = Post::find()->where(['approve' => 1]);
+
+        $x = 0;
+        $y = 0;
+        $time = time();
+        foreach ($posts->each() as $post){
+            /** @var Post $post */
+            $elasticPost = PostElastic::findOne(['post_id' => $post->id]);
+            if(!$elasticPost) {
+                $elasticPost = new PostElastic();
+            }
+            $elasticPost->post_id = $post->id;
+            $elasticPost->category_id = $post->category_id;
+            $elasticPost->title = $post->title;
+            $elasticPost->short = strip_tags($post->short);
+            $elasticPost->full = strip_tags($post->full);
+            $elasticPost->date = $post->date;
+            $elasticPost->views = $post->views;
+
+            if(!$elasticPost->save()){
+                echo "CAN NOT SAVE POST {$post->id}\n";
+                $y++;
+            } else {
+                $x++;
+            }
+        }
+        $time = time() - $time;
+        echo "Total: $x posts saved, $y posts not saved. Time spent: $time seconds\n";
+    }
+
+    public function actionTestIndex()
+    {
+        $post = Post::find()->limit(1)->one();
+
+        $elasticPost = PostElastic::findOne(['post_id' => 4]);
+        if(!$elasticPost) {
+            $elasticPost = new PostElastic();
+        }
+        $elasticPost->post_id = $post->id;
+        $elasticPost->category_id = $post->category_id;
+        $elasticPost->title = $post->title;
+        $elasticPost->short = strip_tags($post->short);
+        $elasticPost->full = strip_tags($post->full);
+        $elasticPost->date = $post->date;
+        $elasticPost->views = $post->views;
+
+        if($elasticPost->save()){
+            echo "SAVED\n";
+        }
+
     }
 
     public function actionTransfer()
