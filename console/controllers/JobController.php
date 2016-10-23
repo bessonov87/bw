@@ -38,6 +38,10 @@ class JobController extends Controller
         foreach ($posts->each() as $post){
             /** @var Post $post */
             $elasticPost = PostElastic::findOne(['post_id' => $post->id]);
+            if($elasticPost && $post->category_art == 1){
+                $elasticPost->delete();
+                continue;
+            }
             if(!$elasticPost) {
                 $elasticPost = new PostElastic();
             }
@@ -57,7 +61,9 @@ class JobController extends Controller
             }
         }
         $time = time() - $time;
-        echo "Total: $x posts saved, $y posts not saved. Time spent: $time seconds\n";
+        $log = date('d.m.Y H:i:s') . " - Total: $x posts saved, $y posts not saved. Time spent: $time seconds\n";
+        echo $log;
+        file_put_contents(\Yii::getAlias('@console/runtime/logs/create_index.log'), $log, FILE_APPEND);
     }
 
     public function actionTestIndex()
@@ -65,7 +71,24 @@ class JobController extends Controller
         $post = Post::find()->limit(1)->one();
 
         $elasticPost = PostElastic::findOne(['post_id' => 4]);
-        if(!$elasticPost) {
+
+        $q = "свадебные прически";
+
+        $query = PostElastic::find()->query([
+            "multi_match" => [
+                'query' => $q,
+                'fields' => ['title^10', 'short', 'full'],
+                'operator' => 'and',
+            ]
+        ])->limit(100);
+
+        foreach ($query->all() as $post){
+            echo $post->title."\n";
+        }
+
+        //var_dump();
+
+        /*if(!$elasticPost) {
             $elasticPost = new PostElastic();
         }
         $elasticPost->post_id = $post->id;
@@ -78,7 +101,7 @@ class JobController extends Controller
 
         if($elasticPost->save()){
             echo "SAVED\n";
-        }
+        }*/
 
     }
 
