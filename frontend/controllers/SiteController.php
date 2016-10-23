@@ -343,7 +343,7 @@ class SiteController extends Controller
         if ($searchModel->load(Yii::$app->request->post()) && $searchModel->validate()) {
             $log_info = "Raw query: {$searchModel->story}\n";
             $q = strip_tags($searchModel->story);
-            $q = mb_ereg_replace('/[^A-Za-zА-Яа-я\.\s-]/siU', '', $q);
+            $q = trim(mb_ereg_replace('[^A-Za-zА-Яа-я\.\-\s]', '', $q, 'siU'));
             $log_info .= "Clean query: $q\n";
 
             $query = PostElastic::find()->query([
