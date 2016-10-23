@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use common\models\ar\UserProfile;
+use common\models\elastic\PostElastic;
 use frontend\components\behaviors\UrlBehavior;
 use Yii;
 use yii\base\InvalidParamException;
@@ -335,21 +336,47 @@ class SiteController extends Controller
      * @return string
      */
     public function actionSearch() {
+        $searchLimit = 50;
         $posts = [];
-        $date = date('Y-m-d H:i:s');
+        //$date = date('Y-m-d H:i:s');
         $searchModel = new SearchForm();
         if ($searchModel->load(Yii::$app->request->post()) && $searchModel->validate()) {
-            $posts = Post::find()
-                ->select("*, MATCH(short, full, title, meta_title) AGAINST('$searchModel->story') as rel")
-                ->where("MATCH(short, full, title, meta_title) AGAINST('$searchModel->story')")
-                ->andWhere(['approve' => Post::APPROVED])
-                ->andWhere(['category_art' => 0])
-                ->orderBy(['rel' => SORT_DESC])
-                ->limit(20)
-                ->all();
+            $q = strip_tags($searchModel->story);
+            $q = mb_ereg_replace('/[^A-Za-zА-Яа-я\.\s-]/siU', '', $q);
+
+            $query = PostElastic::find()->query([
+                "multi_match" => [
+                    'query' => $q,
+                    'fields' => ['title^10', 'short', 'full'],
+                    'operator' => 'and',
+                ]
+            ])->limit($searchLimit);
+            $elasticPosts = $query->all();
+
+            $posts = [];
+            if($elasticPosts){
+                $elasticPosts = ArrayHelper::getColumn($elasticPosts, 'post_id');
+                $postsResult = Post::find()
+                    ->where(['in', 'id', $elasticPosts])
+                    ->andWhere(['approve' => Post::APPROVED])
+                    ->limit($searchLimit)
+                    ->all();
+                $postsResult = ArrayHelper::index($postsResult, 'id');
+
+                $posts = [];
+                foreach ($elasticPosts as $post_id){
+                    if(isset($postsResult[$post_id])) {
+                        $posts[] = $postsResult[$post_id];
+                    }
+                }
+            }
         }
 
-        return $this->render('@app/views/post/search', ['searchModel' => $searchModel, 'posts' => $posts]);
+        return $this->render('@app/views/post/search', [
+            'searchModel' => $searchModel,
+            'posts' => $posts,
+            'q' => $q
+        ]);
     }
 
     /**
