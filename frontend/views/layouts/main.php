@@ -36,7 +36,7 @@ IeAsset::register($this);
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="alternate" type="application/rss+xml" title="RSS" href="http://beauty-women.ru/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="//beauty-women.ru/rss.xml" />
     <?php $this->head() ?>
 </head>
 <body style="overflow-x: hidden;">
@@ -74,7 +74,7 @@ IeAsset::register($this);
             ?>
             <li><a href="/site/feedback">Обратная связь</a></li>
             <li><a href="#cats" title="Разделы">Разделы</a></li>
-            <li><a href="http://beauty-women.ru/" title="Женский журнал" class="main-page">Главная</a></li>
+            <li><a href="//beauty-women.ru/" title="Женский журнал" class="main-page">Главная</a></li>
         </ul>
     </div>
     <div id="container-wrap">
@@ -133,7 +133,7 @@ IeAsset::register($this);
                         //-->
                         </script>
                         <script type="text/javascript"
-                                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                                src="//pagead2.googlesyndication.com/pagead/show_ads.js">
                         </script>
                     </div>
                 </div>
@@ -239,7 +239,7 @@ IeAsset::register($this);
                     <div class="sidebar-stats">
                         <!--LiveInternet counter--><script type="text/javascript"><!--
                     document.write("<a href='http://www.liveinternet.ru/click' "+
-                            "target=_blank><img src='http://counter.yadro.ru/hit?t19.5;r"+
+                            "target=_blank><img src='//counter.yadro.ru/hit?t19.5;r"+
                             escape(document.referrer)+((typeof(screen)=="undefined")?"":
                             ";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
                                     screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
@@ -250,7 +250,7 @@ IeAsset::register($this);
                         <br>
                         <br>
                         <!-- begin of Top100 logo -->
-                        <a href="http://top100.rambler.ru/home?id=1630331"><img src="http://top100-images.rambler.ru/top100/banner-88x31-rambler-black2.gif" alt="Rambler's Top100" width="88" height="31" border="0" /></a>
+                        <a href="http://top100.rambler.ru/home?id=1630331"><img src="//top100-images.rambler.ru/top100/banner-88x31-rambler-black2.gif" alt="Rambler's Top100" width="88" height="31" border="0" /></a>
                         <!-- end of Top100 logo -->
                         <br>
                         <br>
@@ -271,7 +271,7 @@ IeAsset::register($this);
     </div>
     <div id="footer">
         <div id="copyright" align="center" style="color:#FFFFFF; font-weight:bold; font-size:12px">Копирайт &copy; 2008-2015 Beaty-Women.Ru<br />
-            <a href="http://beauty-women.ru/" class="white">Все о красоте и здоровье современной женщины - Женский журнал</a><br>
+            <a href="//beauty-women.ru/" class="white">Все о красоте и здоровье современной женщины - Женский журнал</a><br>
             Все права защищены</div>
     </div>
 </div>
@@ -318,7 +318,7 @@ IeAsset::register($this);
     <!-- /Yandex.Metrika counter -->
 	<!-- Google Analytics counter --><!-- /Google Analytics counter -->
 <!-- begin of Top100 code -->
-<script async id="top100Counter" type="text/javascript" src="http://counter.rambler.ru/top100.jcn?1630331"></script><noscript><img src="http://counter.rambler.ru/top100.cnt?1630331" alt="" width="1" height="1" border="0"></noscript>
+<script async id="top100Counter" type="text/javascript" src="//counter.rambler.ru/top100.jcn?1630331"></script><noscript><img src="//counter.rambler.ru/top100.cnt?1630331" alt="" width="1" height="1" border="0"></noscript>
 <!-- end of Top100 code -->
 <?php $this->endBody() ?>
 </body>

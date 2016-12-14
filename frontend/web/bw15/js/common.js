@@ -139,7 +139,7 @@ $(document).ready(function() {
 		}
 		// Отправка запроса
 		$.ajax({
-			url: 'http://bw.dev/ajax/rating',
+			url: '/ajax/rating',
 			type: 'GET',
 			data: {
 				'post_id' : postId,
@@ -156,7 +156,7 @@ $(document).ready(function() {
 		var postId = $('#post-id').text();
 		// Отправка запроса
 		$.ajax({
-			url: 'http://bw.dev/ajax/favorite',
+			url: '/ajax/favorite',
 			type: 'GET',
 			data: {
 				'post_id' : postId,

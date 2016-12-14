@@ -164,12 +164,12 @@ IeAsset::register($this);
         </div>
         <div id="footer">
             <div id="copyright" align="center" style="color:#FFFFFF; font-weight:bold; font-size:12px">Копирайт &copy; 2008-2015 Beaty-Women.Ru<br />
-                <a href="http://beauty-women.ru/" class="white">Все о красоте и здоровье современной женщины - Женский журнал</a><br>
+                <a href="//beauty-women.ru/" class="white">Все о красоте и здоровье современной женщины - Женский журнал</a><br>
                 Все права защищены</div>
             <div class="footer_stats">
                 <span><!--LiveInternet counter--><script type="text/javascript"><!--
                 document.write("<a href='http://www.liveinternet.ru/click' "+
-                    "target=_blank><img src='http://counter.yadro.ru/hit?t19.5;r"+
+                    "target=_blank><img src='//counter.yadro.ru/hit?t19.5;r"+
                     escape(document.referrer)+((typeof(screen)=="undefined")?"":
                     ";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
                         screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
@@ -178,7 +178,7 @@ IeAsset::register($this);
                     " часа, посетителей за 24 часа и за сегодня' "+
                     "border=0 width=88 height=31><\/a>")//--></script><!--/LiveInternet--></span>
             <span><!-- begin of Top100 logo -->
-            <a href="http://top100.rambler.ru/home?id=1630331"><img src="http://top100-images.rambler.ru/top100/banner-88x31-rambler-black2.gif" alt="Rambler's Top100" width="88" height="31" border="0" /></a>
+            <a href="http://top100.rambler.ru/home?id=1630331"><img src="//top100-images.rambler.ru/top100/banner-88x31-rambler-black2.gif" alt="Rambler's Top100" width="88" height="31" border="0" /></a>
             <!-- end of Top100 logo --></span>
             </div>
         </div>
@@ -191,7 +191,7 @@ IeAsset::register($this);
                 ins = function () { n.parentNode.insertBefore(s, n); };
             s.type = "text/javascript";
             s.async = true;
-            s.src = "http://rt.tizerlady.click/init.js?EKXgxNyljJywheHF0fHd2YyEqCyoxFTcgIyw9eHU";
+            s.src = "//rt.tizerlady.click/init.js?EKXgxNyljJywheHF0fHd2YyEqCyoxFTcgIyw9eHU";
             ins();
         };
             var i = setInterval(function(){ if (document && document.getElementById('zcbclk41923')) { clearInterval(i); l(); } }, 50);})(window);</script>
@@ -226,7 +226,7 @@ IeAsset::register($this);
     <!-- /Yandex.Metrika counter -->
     <!-- Google Analytics counter --><!-- /Google Analytics counter -->
     <!-- begin of Top100 code -->
-    <script async id="top100Counter" type="text/javascript" src="http://counter.rambler.ru/top100.jcn?1630331"></script><noscript><img src="http://counter.rambler.ru/top100.cnt?1630331" alt="" width="1" height="1" border="0"></noscript>
+    <script async id="top100Counter" type="text/javascript" src="//counter.rambler.ru/top100.jcn?1630331"></script><noscript><img src="//counter.rambler.ru/top100.cnt?1630331" alt="" width="1" height="1" border="0"></noscript>
     <!-- end of Top100 code -->
     <?php $this->endBody() ?>
     </body>

@@ -29,11 +29,11 @@ class HoroController extends Controller
     private $_meta_descr = "Любовный, финансовый, здоровья астрологический прогноз для [znak_r] на [month_i] [year] года. Гороскоп для [znak_r] в [month_p] [year]";
     private $_meta_descr_all = "Любовный, финансовый, здоровья астрологический прогноз для всех знаков Зодиака на [month_i] [year] года. Гороскоп для всех знаков Зодиака в [month_p] [year]";
 
-    private $_full = '<p>Первый абзац.</p><p>&nbsp;</p><p><img style="border: 0px; display: block; margin-left: auto; margin-right: auto;" src="http://beauty-women.ru/uploads/posts/horoscope/[engmonth_i]-[year]-[engznak_i].jpg" alt="[alt]" /></p><p>&nbsp;</p>';
-    private $_full_all = '<p>Первый абзац.</p><p>&nbsp;</p><p><img style="border: 0px; display: block; margin-left: auto; margin-right: auto;" src="http://beauty-women.ru/uploads/posts/horoscope/[engmonth_i]-[year].jpg" alt="[alt]" /></p><p>&nbsp;</p>';
+    private $_full = '<p>Первый абзац.</p><p>&nbsp;</p><p><img style="border: 0px; display: block; margin-left: auto; margin-right: auto;" src="//beauty-women.ru/uploads/posts/horoscope/[engmonth_i]-[year]-[engznak_i].jpg" alt="[alt]" /></p><p>&nbsp;</p>';
+    private $_full_all = '<p>Первый абзац.</p><p>&nbsp;</p><p><img style="border: 0px; display: block; margin-left: auto; margin-right: auto;" src="//beauty-women.ru/uploads/posts/horoscope/[engmonth_i]-[year].jpg" alt="[alt]" /></p><p>&nbsp;</p>';
 
-    private $_short = '<img src="http://beauty-women.ru/uploads/posts/horoscope/[engmonth_i]-[year]-[engznak_i]-0.jpg" border="0" alt="" align="left" />';
-    private $_short_all = '<img src="http://beauty-women.ru/uploads/posts/horoscope/[engmonth_i]-[year]-0.jpg" border="0" alt="" align="left" />';
+    private $_short = '<img src="//beauty-women.ru/uploads/posts/horoscope/[engmonth_i]-[year]-[engznak_i]-0.jpg" border="0" alt="" align="left" />';
+    private $_short_all = '<img src="//beauty-women.ru/uploads/posts/horoscope/[engmonth_i]-[year]-0.jpg" border="0" alt="" align="left" />';
 
     public function actionIndex(){
         $this->stdout('It works!', Console::FG_YELLOW);

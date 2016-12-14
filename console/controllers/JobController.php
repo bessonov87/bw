@@ -28,6 +28,47 @@ use common\models\ar\Post;
 class JobController extends Controller
 {
 
+    public function actionHttps($action = 0)
+    {
+        $posts = Post::find()->where(['approve' => 1]);
+
+        $x = 0;
+        $y = 0;
+        foreach ($posts->each() as $post){
+            $f = false;
+            /** @var Post $post */
+            $imgPattern = '/src="http:\/\/beauty-women.ru\//iu';
+            $imgReplace = 'src="/';
+            $linkPattern = '/href="http:\/\/beauty-women.ru\//iu';
+            $linkReplace = 'href="/';
+            if(preg_match($imgPattern, $post->short) || preg_match($linkPattern, $post->short)){
+                $post->short = preg_replace($imgPattern, $imgReplace, $post->short);
+                $post->short = preg_replace($linkPattern, $linkReplace, $post->short);
+                $f = true;
+            }
+            if(preg_match($imgPattern, $post->full) || preg_match($linkPattern, $post->full)){
+                $post->full = preg_replace($imgPattern, $imgReplace, $post->full);
+                $post->full = preg_replace($linkPattern, $linkReplace, $post->full);
+                echo $post->full;
+                $f = true;
+            }
+
+            if($f){
+                $x++;
+            }
+
+            if($action){
+                if(!$post->save()){
+                    var_dump($post->getErrors()); die;
+                } else {
+                    $y++;
+                }
+            }
+        }
+
+        echo "\n======== Finished. $x posts found. $y posts updated ======== \n\n";
+    }
+
     public function actionCreateIndex()
     {
         $posts = Post::find()->where(['approve' => 1]);
@@ -652,7 +693,7 @@ class JobController extends Controller
 <p><a href="skraby-iz-ovsjanki.html">Рецепты очищающих скрабов для лица из овсянки</a></p>
 <p>&nbsp;</p>
 <h2>Пилинг лица</h2>
-<p><img class="si150" style="float: left; border: 0px;" title="Пилинг лица" src="http://beauty-women.ru/uploads/posts/2014-05/piling1_1400854077.jpg" alt="Пилинг лица" /></p>
+<p><img class="si150" style="float: left; border: 0px;" title="Пилинг лица" src="//beauty-women.ru/uploads/posts/2014-05/piling1_1400854077.jpg" alt="Пилинг лица" /></p>
 <p>Как я уже описала выше, для [link=253]глубокого очищения[/link] кожи используются скрабы. А сама процедура использования скрабов называется <strong>пилингом лица</strong>. Сейчас я постараюсь как можно проще описать все действия, которые нужно выполнять для проведения правильного пилинга в домашних условиях.</p>
 <p>&nbsp;</p>
 <p>Для начала лицо нужно хорошо умыть. Для этого можно применить [link=327]соответствующий вашей коже[/link] тоник или лосьон. Далее нужно на влажную кожу лица нанести состав для пилинга (тот самый скраб) и аккуратно и нежно помассировать кожу лица кончиками пальцев. Самое важное в этой процедуре, не применять силы. Никакого фанатизма! Только нежные и максимально легкие движения. Это именно тот случай, когда лучше именно недоделать, чем переделать. Мы же не хотим остаться без лица.</p>
