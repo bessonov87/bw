@@ -36,6 +36,8 @@ class PostAdditions
     public static function fullMoonHair($post){
         // Если это не статья с ID 1266 (статья-категория)
         if($post->id != 1266){
+            $nextMonthHairLink = '';
+            $currentMonthMoon = '';
             $showCurrent = true;
             $showNext = true;
             $currentMonth = date('n');
