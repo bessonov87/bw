@@ -120,7 +120,7 @@ class PostAdditions
             // Список ссылок на месяцы
             $moonCal = '<h2 align="center">Лунный календарь стрижек на ' . $currentYear . ' год по месяцам</h2>';
 
-            $year = ($currentMonth == 12) ? ++$currentYear : $currentYear;
+            $year = ($currentMonth == 12) ? $currentYear+1 : $currentYear;
             $allMonths = '';
             for($d=1;$d<=12;$d++) {
                 $currentFlag = '';
