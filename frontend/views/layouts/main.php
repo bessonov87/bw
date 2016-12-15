@@ -249,11 +249,6 @@ IeAsset::register($this);
                             "border=0 width=88 height=31><\/a>")//--></script><!--/LiveInternet-->
                         <br>
                         <br>
-                        <!-- begin of Top100 logo -->
-                        <a href="http://top100.rambler.ru/home?id=1630331"><img src="//top100-images.rambler.ru/top100/banner-88x31-rambler-black2.gif" alt="Rambler's Top100" width="88" height="31" border="0" /></a>
-                        <!-- end of Top100 logo -->
-                        <br>
-                        <br>
 
                     </div>
                 </div>
@@ -317,9 +312,35 @@ IeAsset::register($this);
     <noscript><div><img src="https://mc.yandex.ru/watch/31758281" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 	<!-- Google Analytics counter --><!-- /Google Analytics counter -->
-<!-- begin of Top100 code -->
-<script async id="top100Counter" type="text/javascript" src="//counter.rambler.ru/top100.jcn?1630331"></script><noscript><img src="//counter.rambler.ru/top100.cnt?1630331" alt="" width="1" height="1" border="0"></noscript>
-<!-- end of Top100 code -->
+
+<!-- Top100 (Kraken) Counter -->
+<script>
+    (function (w, d, c) {
+        (w[c] = w[c] || []).push(function() {
+            var options = {
+                project: 1630331
+            };
+            try {
+                w.top100Counter = new top100(options);
+            } catch(e) { }
+        });
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src =
+            (d.location.protocol == "https:" ? "https:" : "http:") +
+            "//st.top100.ru/top100/top100.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(window, document, "_top100q");
+</script>
+<noscript><img src="//counter.rambler.ru/top100.cnt?pid=1630331"></noscript>
+<!-- END Top100 (Kraken) Counter -->
+
 <?php $this->endBody() ?>
 </body>
 </html>
