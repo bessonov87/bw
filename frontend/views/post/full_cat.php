@@ -40,7 +40,7 @@ if($post->meta_title){
                     //-->
                 </script>
                 <script type="text/javascript"
-                        src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                        src="//pagead2.googlesyndication.com/pagead/show_ads.js">
                 </script>
             </div>
             <div id="content-full-instruments">
