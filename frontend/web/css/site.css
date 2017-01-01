@@ -93,3 +93,7 @@ a.desc:after {
 .hide-x-overflow {
     overflow-x: scroll;
 }
+
+.moon-month-table td {
+    padding: 8px;
+}

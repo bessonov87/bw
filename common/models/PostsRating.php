@@ -11,6 +11,7 @@ use Yii;
  * @property integer $post_id
  * @property integer $user_id
  * @property integer $score
+ * @property string $page_hash
  *
  * @property Post $post
  * @property User $user
@@ -33,6 +34,7 @@ class PostsRating extends \yii\db\ActiveRecord
         return [
             [['post_id', 'user_id'], 'required'],
             [['post_id', 'user_id', 'score'], 'integer'],
+            [['page_hash'], 'string', 'max' => 32],
             [['post_id'], 'exist', 'skipOnError' => true, 'targetClass' => Post::className(), 'targetAttribute' => ['post_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -48,6 +50,7 @@ class PostsRating extends \yii\db\ActiveRecord
             'post_id' => 'Post ID',
             'user_id' => 'User ID',
             'score' => 'Score',
+            'page_hash' => 'Page Hash',
         ];
     }
 

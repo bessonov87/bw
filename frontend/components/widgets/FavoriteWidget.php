@@ -18,6 +18,10 @@ class FavoriteWidget extends Widget
      */
     public $post_id;
     /**
+     * @var string page адрес статьи
+     */
+    public $page;
+    /**
      * @var string сообщение о результате добавления статьи в избранное
      */
     public $message;
@@ -40,10 +44,16 @@ class FavoriteWidget extends Widget
      * @inheritdoc
      */
     public function run(){
-        if(!$this->post_id) return '';
+        if(!$this->post_id && !$this->page) return '';
+        if($this->post_id) {
+            $condition = ['post_id' => $this->post_id];
+        } else {
+            $condition = ['page_hash' => $this->page];
+        }
+
         /* TODO: Посчитать количество добавлений в избранное и есть ли в избранном у текущего пользователя */
         $favorites = FavoritePosts::find()
-            ->where(['post_id' => $this->post_id])
+            ->where($condition)
             ->asArray()
             ->all();
         // количество добавлений статьи в избранное

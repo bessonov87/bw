@@ -251,3 +251,34 @@ a.desc:after {
     border-bottom: none;
 }
 
+.moon-success {
+    color: #00aa00;
+}
+
+.moon-success:hover {
+    color: #009500;
+}
+
+.moon-danger {
+    color: #cc0000;
+}
+
+.moon-danger:hover {
+    color: #b00000;
+}
+
+.moon-link {
+    display: block;
+    padding: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.months-list {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.months-list li {
+    padding: 8px;
+}

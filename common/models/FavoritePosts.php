@@ -14,6 +14,7 @@ use Yii;
  * @property string $title
  * @property integer $date
  * @property integer $external
+ * @property string $page_hash
  *
  * @property Post $post
  * @property User $user
@@ -37,6 +38,7 @@ class FavoritePosts extends \yii\db\ActiveRecord
             [['user_id', 'post_id', 'date'], 'required'],
             [['user_id', 'post_id', 'date', 'external'], 'integer'],
             [['link', 'title'], 'string', 'max' => 255],
+            [['page_hash'], 'string', 'max' => 32],
             [['post_id'], 'exist', 'skipOnError' => true, 'targetClass' => Post::className(), 'targetAttribute' => ['post_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -55,6 +57,7 @@ class FavoritePosts extends \yii\db\ActiveRecord
             'title' => 'Title',
             'date' => 'Date',
             'external' => 'External',
+            'page_hash' => 'Page Hash',
         ];
     }
 

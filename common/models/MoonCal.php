@@ -21,6 +21,8 @@ use Yii;
  * @property string $phase_from
  * @property double $moon_percent
  * @property integer $blago
+ * @property string $hair_text
+ * @property integer $blago_level
  */
 class MoonCal extends \yii\db\ActiveRecord
 {
@@ -40,8 +42,9 @@ class MoonCal extends \yii\db\ActiveRecord
         return [
             [['date', 'moon_day', 'moon_day_from', 'moon_day_sunset', 'moon_day2_from', 'moon_day2_sunset', 'zodiak', 'zodiak_from_ut', 'phase', 'phase_from', 'moon_percent', 'blago'], 'required'],
             [['date', 'moon_day_from', 'moon_day_sunset', 'moon_day2_from', 'moon_day2_sunset', 'zodiak_from_ut', 'phase_from'], 'safe'],
-            [['moon_day', 'moon_day2', 'zodiak', 'phase', 'blago'], 'integer'],
+            [['moon_day', 'moon_day2', 'zodiak', 'phase', 'blago', 'blago_level'], 'integer'],
             [['moon_percent'], 'number'],
+            [['hair_text'], 'string', 'max' => 255],
         ];
     }
 
@@ -65,6 +68,8 @@ class MoonCal extends \yii\db\ActiveRecord
             'phase_from' => 'Phase From',
             'moon_percent' => 'Moon Percent',
             'blago' => 'Blago',
+            'hair_text' => 'Hair Text',
+            'blago_level' => 'Blago Level',
         ];
     }
 }

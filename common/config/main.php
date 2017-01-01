@@ -15,7 +15,7 @@ return [
             'class' => 'yii\authclient\Collection',
             'clients' => [
                 'google' => [
-                    'class' => 'yii\authclient\clients\GoogleOAuth',
+                    'class' => 'yii\authclient\clients\Google',
                     'clientId' => '616365204145-8n22kcvmq7lvi9ldsahdsq1vh65g8l0b.apps.googleusercontent.com',
                     'clientSecret' => 'amtIr4rLG0gDkOEGp3eHEJkJ',
                 ],
@@ -38,7 +38,7 @@ return [
                     'scope' => 'email',
                 ],*/
                 'yandex' => [
-                    'class' => 'yii\authclient\clients\YandexOAuth',
+                    'class' => 'yii\authclient\clients\Yandex',
                     'clientId' => '2de9eb2993f341eea212f95b71b11429',
                     'clientSecret' => 'd23cc79f700a49bc891c1c621bee1f5c',
                 ],

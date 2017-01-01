@@ -29,6 +29,15 @@
                     ['label' => 'Реклама', 'icon' => 'fa fa-check-square', 'url' => ['advert/index']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [
+                        'label' => 'Луна',
+                        'icon' => 'fa fa-list',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'Дни', 'icon' => 'fa fa-file-text-o', 'url' => ['moon/dni'],],
+                            ['label' => 'MySQL', 'icon' => 'fa fa-database', 'url' => ['logs/db'],],
+                        ],
+                    ],
+                    [
                         'label' => 'Логи',
                         'icon' => 'fa fa-list',
                         'url' => '#',

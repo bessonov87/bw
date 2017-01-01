@@ -21,6 +21,8 @@ use app\components\widgets\FlashWidget;
 
 AppAsset::register($this);
 IeAsset::register($this);
+
+$calendarsYear = date('m') == 12 && date('j') > 15 ? date('Y') + 1 : date('Y');
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -101,23 +103,14 @@ IeAsset::register($this);
                 'tag' => 'div',
             ]) ?>
 
-
-
-
-
             <?= AdvertWidget::widget(
                 ['block_number' => 4]
             ) ?>
-
-
-
-
 
             <!-- Таблица контент-->
             <?= Alert::widget() ?>
             <?= $content ?>
             <!-- Таблица контент-->
-
 
             <!-- Блок Реклама Низ -->
             <div id="content-item">
@@ -194,9 +187,9 @@ IeAsset::register($this);
                             ['label' => 'Карьера и деньги', 'url' => '/career/'],
                             ['label' => 'Свадьба', 'url' => '/wedding/'],
                             ['label' => 'Гороскоп', 'url' => '/horoscope/'],
-                            ['label' => 'Лунный календарь на 2016 год', 'url' => '/horoscope/lunnyj-kalendar-na-god/'],
-                            ['label' => 'Лунный календарь стрижек 2016', 'url' => '/horoscope/lunnyj-kalendar-strizhek/', 'allowedOn' => '19,47,51,53,21'],
-                            ['label' => 'Лунный календарь огородника 2016', 'url' => '/horoscope/lunnyj-kalendar-ogorodnika-sadovoda/', 'allowedOn' => '19,47,51,53,21'],
+                            ['label' => 'Лунный календарь на '.$calendarsYear.' год', 'url' => '/horoscope/lunnyj-kalendar-na-god/'],
+                            ['label' => 'Лунный календарь стрижек '.$calendarsYear, 'url' => '/horoscope/lunnyj-kalendar-strizhek/', 'allowedOn' => '19,47,51,53,21'],
+                            ['label' => 'Лунный календарь огородника '.$calendarsYear, 'url' => '/horoscope/lunnyj-kalendar-ogorodnika-sadovoda/', 'allowedOn' => '19,47,51,53,21'],
                             ['label' => 'Разное', 'url' => '/raznoe/'],
                         ],
                         'cssClass' => 'blockmenu',

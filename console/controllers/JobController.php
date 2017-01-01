@@ -2,6 +2,7 @@
 
 namespace console\controllers;
 
+use common\components\helpers\GlobalHelper;
 use common\models\ar\Advert;
 use common\models\ar\Auth;
 use common\models\ar\Category;
@@ -20,13 +21,216 @@ use common\models\MoonFazy;
 use common\models\MoonHair;
 use common\models\MoonOgorod;
 use common\models\MoonZnaki;
+use yii\base\ErrorException;
 use yii\console\Controller;
 use yii\db\Connection;
-use yii\helpers\Console;
+use common\components\AppData;
 use common\models\ar\Post;
 
 class JobController extends Controller
 {
+    public function actionParser($year = 2017, $month = 1, $oneDay = 0)
+    {
+        $phases = [
+            'Новолуние' => 1,
+            'Первая четверть' => 2,
+            'Полнолуние' => 3,
+            'Последняя четверть' => 4
+        ];
+
+        $calendars[2017] = [
+            1 => 'http://www.nrastro.ru/lunny-kalendar/22-mesyatsy/3311-01-2017.html', 2 => 'http://www.nrastro.ru/lunny-kalendar/22-mesyatsy/3312-02-2017.html',
+            3 => 'http://www.nrastro.ru/lunny-kalendar/22-mesyatsy/3313-03-2017.html', 4 => 'http://www.nrastro.ru/lunny-kalendar/22-mesyatsy/3314-04-2017.html',
+            5 => 'http://www.nrastro.ru/lunny-kalendar/22-mesyatsy/3336-05-2017.html', 6 => 'http://www.nrastro.ru/lunny-kalendar/22-mesyatsy/3337-06-2017.html',
+            7 => 'http://www.nrastro.ru/lunny-kalendar/22-mesyatsy/3338-07-2017.html', 8 => 'http://www.nrastro.ru/lunny-kalendar/22-mesyatsy/3339-08-2017.html',
+            /*9 => '', 10 => '',
+            11 => '', 12 => '',*/
+        ];
+
+        $base = 'http://mirkosmosa.ru/lunar-calendar/phase-moon/'.$year.'/';
+        $months = [
+            1 => 'january', 2 => 'february', 3 => 'march', 4 => 'april', 5 => 'may', 6 => 'june',
+            7 => 'july', 8 => 'august', 9 => 'september', 10 => 'october', 11 => 'november', 12 => 'december'
+        ];
+        $base .= $months[$month] . '/';
+
+        $blagos = [];
+        $no_blagos = [];
+
+        $monthLink = $calendars[$year][$month];
+        $html = file_get_contents($monthLink);
+
+        // Обработка календаря на месяц
+        $document = \phpQuery::newDocument($html);
+        $link = trim($document->find('#page table:first tr')->each(function ($x) use($year, $month, $phases, $base, $blagos, $no_blagos){
+            if(is_null($x->previousSibling)){
+                return;
+            }
+            $tds = $x->getElementsByTagName('td');
+            $day = 0;
+            $moonCal = null;
+            for($i=0;$i<$tds->length;$i++){
+                $tdText = trim($tds->item($i)->textContent);
+                switch ($i){
+                    case 0:
+                        $arr = explode(' ', $tdText);
+                        $day = sprintf('%02d', $arr[0]);
+                        $date = $year.'-'.sprintf('%02d', $month).'-'.sprintf('%02d', $arr[0]);
+                        if(!$moonCal = MoonCal::findOne(['date' => $date])) {
+                            $moonCal = new MoonCal();
+                            $moonCal->date = $date;
+                        }
+                        break;
+                    case 1:
+                        $re = '/([0-9]{1,2})-[^\d]{1}/i';
+                        $re2 = '/([0-9]{1,2})-.*([0-9]{1,2})-.*/i';
+                        if(preg_match($re2, $tdText, $matches)){
+                            $moonCal->moon_day = intval($matches[1]);
+                            $moonCal->moon_day2 = intval($matches[2]);
+                        } else {
+                            $moonCal->moon_day = intval(substr($tdText, 0, strlen($tdText)-3));
+                        }
+                        $moonCal->moon_day2_from = '00:00';
+                        $moonCal->moon_day2_sunset = '00:00';
+                        break;
+                    case 2:
+                        if(!$tdText) $moonCal->moon_day_from = '00:00';
+                        else $moonCal->moon_day_from = $this->changedTime($tdText);
+                        break;
+                    case 3:
+                        if(!$tdText) $moonCal->moon_day_sunset = '00:00';
+                        else $moonCal->moon_day_sunset = $this->changedTime($tdText);
+                        break;
+                    case 4:
+                        $moonCal->zodiak = GlobalHelper::rusZodiac($tdText, 'i', true);
+                        break;
+                    case 5:
+                        if($tdText){
+                            $moonCal->zodiak_from_ut = $this->changedTime($tdText);
+                        } else {
+                            $moonCal->zodiak_from_ut = '00:00';
+                        }
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        $re = '/(.*)\s([0-9]{1,2}:[0-9]{1,2})/i';
+                        if(preg_match_all($re, $tdText, $matches)) {
+                            //var_dump($matches); die;
+                            $phase = trim($matches[1][0]);
+                            $words = explode(' ', $phase);
+                            $words = array_map(function ($element){
+                                return trim($element);
+                            }, $words);
+                            if(mb_strpos(' ', $phase) !== false){
+                                $words = explode(' ', $phase);
+                            }
+                            $phase = mb_ereg_replace('/[^А-Яа-я\s]/', '', $phase);
+                            $phase = mb_ereg_replace('/\t+/', ' ', $phase);
+                            $phase = mb_ereg_replace('/\s+/', ' ', $phase);
+                            $phase = str_replace('  ', ' ', $phase);
+
+                            if(isset($phases[$phase])){
+                                $phaseId = $phases[$phase];
+                            } else {
+                                if(mb_stripos($phase, 'первая') !== false){
+                                    $phaseId = 2;
+                                } elseif(mb_stripos($phase, 'последняя') !== false) {
+                                    $phaseId = 4;
+                                } elseif(mb_stripos($phase, 'полнолуние') !== false) {
+                                    $phaseId = 3;
+                                } elseif(mb_stripos($phase, 'новолуние') !== false) {
+                                    $phaseId = 1;
+                                } else {
+                                    throw new ErrorException('Parse phase Error: '.$tdText);
+                                }
+                            }
+                            $moonCal->phase = $phaseId;
+                            $moonCal->phase_from = $this->changedTime($matches[2][0]);
+                        } else {
+                            $moonCal->phase = 0;
+                            $moonCal->phase_from = '00:00';
+                        }
+                        break;
+                }
+            }
+            // Парсинг ежедневного календаря для определения процента видимости
+            if($day) {
+                $html2 = file_get_contents($base . intval($day));
+                $document2 = \phpQuery::newDocument($html2);
+                $illum = trim($document2->find('.illum')->text());
+                $re = '/.*:\s([0-9]{1,3})\%/i';
+                if(preg_match($re, $illum, $matches)) {
+                    //var_dump($matches); die;
+                    $percent = intval($matches[1]);
+                    if($percent == 0){
+                        $percent += round(mt_rand(1,4)/10, 1);
+                    } elseif($percent == 100){
+                        $percent -= round(mt_rand(1,4)/10, 1);
+                    } else {
+                        $percent += round(mt_rand(-4,4)/10, 1);
+                    }
+                    $moonCal->moon_percent = $percent;
+                }
+            }
+            // Определение благоприятности (чистый рандом + немного астрологии)
+            if($moonCal->phase == 1 || $moonCal->phase == 3){
+                $moonCal->blago = 2;
+            } else {
+                $moonCal->blago = mt_rand(1,2);
+            }
+            $moonCal->blago_level = $moonCal->blago == 1 ? mt_rand(1, 3) : mt_rand(-3, -1);
+
+            $descriptions = $moonCal->blago == 1 ? AppData::$descriptions_pos : AppData::$descriptions_neg;
+            $array = $moonCal->blago == 1 ? 'blagos' : 'no_blagos';
+            $elements = count($descriptions);
+            $stop = false;
+            while ($stop == false){
+                $elem = mt_rand(0, $elements-1);
+                $arr = $$array;
+                if(!isset($arr[$elem])){
+                    if($moonCal->blago == 1) {
+                        $blagos[$elem] = $elem;
+                    } else {
+                        $no_blagos[$elem] = $elem;
+                    }
+                    $stop = true;
+                }
+            }
+            $moonCal->hair_text = $descriptions[$elem];
+
+            var_dump($moonCal->attributes);
+            if(!$moonCal->save()){
+                echo "*** NOT SAVED *** \n";
+                echo json_encode($moonCal->getErrors())."\n";
+            } else {
+                echo "=== SAVED === \n";
+            }
+            sleep(10);
+        }));
+        \phpQuery::unloadDocuments($document->getDocumentID());
+        $document = null;
+
+
+
+
+
+        //var_dump($html); die;
+    }
+
+    protected function changedTime($time)
+    {
+        list($h, $m) = explode(':', $time);
+        $m = (int)$m;
+        if($m > 56){
+            $m = $m - mt_rand(1, 3);
+        } else if($m < 4){
+            $m = $m + mt_rand(1, 3);
+        } else {
+            $m = $m + mt_rand(-3, 3);
+        }
+        return $h.':'.sprintf('%02d', $m);
+    }
 
     public function actionHttps($action = 0)
     {

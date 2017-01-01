@@ -600,7 +600,7 @@ class SiteController extends Controller
             $userInfo['sex'] = ($attributes['sex'] == 2) ? 'm' : 'f';
         }
         // YANDEX
-        if($client instanceof \yii\authclient\clients\YandexOAuth){
+        if($client instanceof \yii\authclient\clients\Yandex){
             $userInfo['source_id'] = $attributes['id'];
             $userInfo['username'] = ($attributes['login']) ? $attributes['login'] : GlobalHelper::usernameFromEmail($attributes['emails'][0]);
             $userInfo['email'] = $attributes['emails'][0];
@@ -621,7 +621,7 @@ class SiteController extends Controller
             $userInfo['sex'] = '';
         }
         // GOOGLE
-        if($client instanceof \yii\authclient\clients\GoogleOAuth) {
+        if($client instanceof \yii\authclient\clients\Google) {
             //var_dump($attributes); die();
             $userInfo['source_id'] = $attributes['id'];
             $userInfo['username'] = GlobalHelper::usernameFromEmail($attributes['emails'][0]["value"]);

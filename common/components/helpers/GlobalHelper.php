@@ -295,6 +295,19 @@ class GlobalHelper
     }
 
     /**
+     * Возвращает список знаков Зодиака в виде массива (1 => 'Овен', ...)
+     * @return mixed
+     */
+    public static function getZodiakList()
+    {
+        $array[0] = 'Выбрать ...';
+        for($i=1;$i<=12;$i++){
+            $array[$i] = self::rusZodiac($i);
+        }
+        return $array;
+    }
+
+    /**
      * Преобразование номера знака Зодиака в название
      *
      * Аналогично методу rusMonth(), описанному выше

@@ -1346,3 +1346,8 @@ ol.popular li:hover:after {
 .hide-x-overflow {
     overflow-x: hidden;
 }
+
+.moon-month-table td,
+.moon-month-table th {
+    padding: 8px;
+}

@@ -25,9 +25,13 @@ use yii\base\Widget;
 class SimilarPostsWidget extends Widget {
 
     /**
+     * @var array список ссылок
+     */
+    public $links = null;
+    /**
      * @var array список статей
      */
-    public $posts;
+    public $posts = null;
     /**
      * @var bool "ручная" установка ссылок на статьи
      */
@@ -60,10 +64,50 @@ class SimilarPostsWidget extends Widget {
      * @inheritdoc
      */
     public function run(){
-        if(!is_array($this->posts)){
+        if(!is_array($this->posts) && !is_array($this->links)){
             return '';
         }
 
+        $list = $this->posts ? $this->postsSimilar() : $this->linksSimilar();
+
+        $similar = Html::tag('div', $list, ['class' => $this->class]);
+
+        return $similar;
+    }
+
+    /**
+     * Похожие по списку ссылок
+     * @return array|string
+     */
+    protected function linksSimilar()
+    {
+        if($this->list === true){
+            $list = [];
+            foreach($this->links as $link){
+                $list[] = Html::a($this->cutTitle($link['title']), $link['url']);
+            }
+            $listType = ($this->listType == 'ul') ? 'ul' : 'ol';
+            if($list) {
+                $list = Html::$listType($list, ['encode' => false]);
+            } else {
+                $list = '';
+            }
+        } else {
+            $list = '';
+            foreach($this->links as $link){
+                $list .= Html::tag('div', Html::a($this->cutTitle($link['title']), $link['url']));
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Похожие статьи
+     * @return array|string
+     */
+    protected function postsSimilar()
+    {
         if($this->list === true){
             $list = [];
             foreach($this->posts as $post){
@@ -83,9 +127,7 @@ class SimilarPostsWidget extends Widget {
             }
         }
 
-        $similar = Html::tag('div', $list, ['class' => $this->class]);
-
-        return $similar;
+        return $list;
     }
 
     /**

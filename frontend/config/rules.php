@@ -1,6 +1,26 @@
 <?php
 return [
     [
+        'pattern' => 'horoscope/lunnyj-kalendar-na-god',
+        'suffix' => '/',
+        'route' => 'horoscope/moon-calendar',
+    ],
+    [
+        'pattern' => 'horoscope/lunnyj-kalendar-na-god/<year:[0-9]+>/<month:[a-z]+>/<day:[0-9]+>',
+        'suffix' => '/',
+        'route' => 'horoscope/moon-day-calendar',
+    ],
+    [
+        'pattern' => 'horoscope/lunnyj-kalendar-na-god/<year:[0-9]+>/<month:[a-z]+>',
+        'suffix' => '/',
+        'route' => 'horoscope/moon-month-calendar',
+    ],
+    [
+        'pattern' => 'horoscope/lunnyj-kalendar-na-god/<year:[0-9]+>',
+        'suffix' => '/',
+        'route' => 'horoscope/moon-year-calendar',
+    ],
+    [
         'pattern' => 'page/<page:\d+>',
         'route' => 'post/short',
         'suffix' => '/',

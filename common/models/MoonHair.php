@@ -17,6 +17,7 @@ use Yii;
  * @property string $full
  * @property integer $approve
  * @property integer $views
+ * @property string $days
  */
 class MoonHair extends \yii\db\ActiveRecord
 {
@@ -36,7 +37,7 @@ class MoonHair extends \yii\db\ActiveRecord
         return [
             [['title', 'date', 'month', 'year', 'short', 'full'], 'required'],
             [['post_id', 'month', 'year', 'approve', 'views'], 'integer'],
-            [['short', 'full'], 'string'],
+            [['short', 'full', 'days'], 'string'],
             [['title'], 'string', 'max' => 255],
             [['date'], 'string', 'max' => 20],
         ];
@@ -58,6 +59,7 @@ class MoonHair extends \yii\db\ActiveRecord
             'full' => 'Full',
             'approve' => 'Approve',
             'views' => 'Views',
+            'days' => 'Days',
         ];
     }
 }

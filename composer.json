@@ -12,7 +12,7 @@
         "irc": "irc://irc.freenode.net/yii",
         "source": "https://github.com/yiisoft/yii2"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": ">=2.0.6",
@@ -23,7 +23,8 @@
 		"dmstr/yii2-adminlte-asset": "2.*",
         "yiisoft/yii2-elasticsearch": "~2.0.0",
 		"yiidoc/yii2-redactor": "*",
-        "yiisoft/yii2-imagine": "~2.0.0"
+        "yiisoft/yii2-imagine": "~2.0.0",
+        "electrolinux/phpquery": "^0.9.6"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
