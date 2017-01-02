@@ -1,11 +1,13 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\ar\MoonCal;
 use common\models\ar\UserProfile;
 use common\models\elastic\PostElastic;
 use frontend\components\behaviors\UrlBehavior;
 use Yii;
 use yii\base\InvalidParamException;
+use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -504,6 +506,7 @@ class SiteController extends Controller
      */
     public function getSitemap(){
         $xml_map = Yii::$app->cache->get('sitemap_xml');
+        //$xml_map = null;
         if(!$xml_map) {
             $xml_map = $this->generateSitemap();
             Yii::$app->cache->set('sitemap_xml', $xml_map, 43200);
@@ -541,6 +544,71 @@ class SiteController extends Controller
 			<changefreq>daily</changefreq>
 			<priority>0.8</priority>
 		</url>";
+        }
+        // Календари (лунные и стрижек)
+        $start_date = '2017-01-01';
+        $end_date = date('Y').'-12-31';
+        $days = MoonCal::find()->where(['between', 'date', $start_date, $end_date])->asArray()->all();
+        $months = [];
+        foreach ($days as $day){
+            list($year, $month, $day) = explode('-', $day['date']);
+            $months[$year][intval($month)] = true;
+        }
+        $baseUrl = Yii::$app->params['frontendBaseUrl'];
+        $baseUrl = substr($baseUrl, -1) === '/' ? substr($baseUrl, 0, strlen($baseUrl) - 1) : $baseUrl;
+        foreach($months as $year => $yearCals)		// Добаление категорий
+        {
+            if($year == date('Y')){
+                $xml_map .= "<url>
+                    <loc>" . $baseUrl . Url::to(['horoscope/hair-calendar']) . "</loc>
+                    <lastmod>" . date("Y-m-d") . "</lastmod>
+                    <changefreq>daily</changefreq>
+                    <priority>0.8</priority>
+                </url>";
+                $xml_map .= "<url>
+                    <loc>" . $baseUrl . Url::to(['horoscope/moon-calendar']) . "</loc>
+                    <lastmod>" . date("Y-m-d") . "</lastmod>
+                    <changefreq>daily</changefreq>
+                    <priority>0.8</priority>
+                </url>";
+            } else {
+                $xml_map .= "<url>
+                    <loc>" . $baseUrl . Url::to(['horoscope/hair-year-calendar', 'year' => $year]) . "</loc>
+                    <lastmod>" . date("Y-m-d") . "</lastmod>
+                    <changefreq>daily</changefreq>
+                    <priority>0.8</priority>
+                </url>";
+                $xml_map .= "<url>
+                    <loc>" . $baseUrl . Url::to(['horoscope/moon-year-calendar', 'year' => $year]) . "</loc>
+                    <lastmod>" . date("Y-m-d") . "</lastmod>
+                    <changefreq>daily</changefreq>
+                    <priority>0.8</priority>
+                </url>";
+            }
+            foreach ($yearCals as $month => $monthCal){
+                $monthEng = GlobalHelper::engMonth($month);
+                $xml_map .= "<url>
+                    <loc>" . $baseUrl . Url::to(['horoscope/moon-month-calendar', 'year' => $year, 'month' => $monthEng]) . "</loc>
+                    <lastmod>" . date("Y-m-d") . "</lastmod>
+                    <changefreq>daily</changefreq>
+                    <priority>0.7</priority>
+                </url>";
+                $xml_map .= "<url>
+                    <loc>" . $baseUrl . Url::to(['horoscope/hair-month-calendar', 'year' => $year, 'month' => $monthEng]) . "</loc>
+                    <lastmod>" . date("Y-m-d") . "</lastmod>
+                    <changefreq>daily</changefreq>
+                    <priority>0.7</priority>
+                </url>";
+                $daysInMonth = date('t', strtotime($year.'-'.$month.'-01'));
+                for($i=1;$i<=$daysInMonth;$i++){
+                    $xml_map .= "<url>
+                    <loc>" . $baseUrl . Url::to(['horoscope/moon-day-calendar', 'year' => $year, 'month' => $monthEng, 'day' => $i]) . "</loc>
+                    <lastmod>" . date("Y-m-d") . "</lastmod>
+                    <changefreq>daily</changefreq>
+                    <priority>0.6</priority>
+                </url>";
+                }
+            }
         }
         // Статьи
         $posts = Post::find()

@@ -1,6 +1,21 @@
 <?php
 return [
     [
+        'pattern' => 'horoscope/lunnyj-kalendar-strizhek',
+        'suffix' => '/',
+        'route' => 'horoscope/hair-calendar',
+    ],
+    [
+        'pattern' => 'horoscope/lunnyj-kalendar-strizhek/<year:[0-9]+>/<month:[a-z]+>',
+        'suffix' => '/',
+        'route' => 'horoscope/hair-month-calendar',
+    ],
+    [
+        'pattern' => 'horoscope/lunnyj-kalendar-strizhek/<year:[0-9]+>',
+        'suffix' => '/',
+        'route' => 'horoscope/hair-year-calendar',
+    ],
+    [
         'pattern' => 'horoscope/lunnyj-kalendar-na-god',
         'suffix' => '/',
         'route' => 'horoscope/moon-calendar',

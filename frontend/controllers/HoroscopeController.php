@@ -25,6 +25,17 @@ class HoroscopeController extends Controller
         ]);
     }
 
+    public function actionHairCalendar()
+    {
+        $y = date('Y');
+
+        $months = $this->getExistsMonthsList($y);
+
+        return $this->render('hair-calendar', [
+            'months' => $months
+        ]);
+    }
+
     public function actionMoonYearCalendar()
     {
         $year = \Yii::$app->request->get('year');
@@ -71,6 +82,33 @@ class HoroscopeController extends Controller
             'month' => $monthNum,
             'monthEng' => $month,
             'monthData' => $this->getMonthData($year, $monthNum),
+        ]);
+    }
+
+    public function actionHairMonthCalendar()
+    {
+        $year = \Yii::$app->request->get('year');
+        $month = \Yii::$app->request->get('month');
+        $monthNum = GlobalHelper::engMonth($month, 'i', true);
+
+        if(!$year || !$month || !$monthNum){
+            throw new NotFoundHttpException('Страница не найдена');
+        }
+
+        $oldCalendars = AppData::$moonHairMonthLinks;
+        if(isset($oldCalendars[$year]) && isset($oldCalendars[$year][$monthNum])){
+            return $this->redirect(AppData::$moonHairLinksBase.$oldCalendars[$year][$monthNum], 301);
+        }
+
+        if(!MoonCal::find()->where(['date' => $year.'-'.sprintf('%02d', $monthNum).'-01'])->one()){
+            throw new NotFoundHttpException('Страница не найдена');
+        }
+
+        return $this->render('hair-month-calendar', [
+            'year' => $year,
+            'month' => $monthNum,
+            'monthEng' => $month,
+            'monthData' => $this->getMonthData($year, $monthNum, true),
         ]);
     }
 
@@ -159,9 +197,10 @@ class HoroscopeController extends Controller
      * Массив данных для генерации лунного календаря на месяц
      * @param $year
      * @param $month
+     * @param $withHair
      * @return array
      */
-    protected function getMonthData($year, $month)
+    protected function getMonthData($year, $month, $withHair = false)
     {
         $date = $year.'-'.sprintf('%02d', $month);
         $days = MoonCal::find()->where('to_char("date", \'YYYY-MM\') = \''.$date.'\'')->asArray()->all();
@@ -220,7 +259,11 @@ class HoroscopeController extends Controller
             $month_array[$w]['moon_zodiak_from_ut'] = $moon_zodiak_from_ut;
             $month_array[$w]['moon_phase'] = $moon_phase;
             $month_array[$w]['moon_phase_from'] = $moon_phase_from;
-            $month_array[$w]['moon_percent'] = $moon_percent;
+            if($withHair) {
+                $month_array[$w]['blago'] = $rows['blago'];
+                $month_array[$w]['blago_level'] = $rows['blago_level'];
+                $month_array[$w]['hair_text'] = $rows['hair_text'];
+            }
 
             $w++;
         }

@@ -188,7 +188,7 @@ $calendarsYear = date('m') == 12 && date('j') > 15 ? date('Y') + 1 : date('Y');
                             ['label' => 'Свадьба', 'url' => '/wedding/'],
                             ['label' => 'Гороскоп', 'url' => '/horoscope/'],
                             ['label' => 'Лунный календарь на '.$calendarsYear.' год', 'url' => '/horoscope/lunnyj-kalendar-na-god/'],
-                            ['label' => 'Лунный календарь стрижек '.$calendarsYear, 'url' => '/horoscope/lunnyj-kalendar-strizhek/', 'allowedOn' => '19,47,51,53,21'],
+                            ['label' => 'Лунный календарь стрижек '.$calendarsYear, 'url' => '/horoscope/lunnyj-kalendar-strizhek/'],
                             ['label' => 'Лунный календарь огородника '.$calendarsYear, 'url' => '/horoscope/lunnyj-kalendar-ogorodnika-sadovoda/', 'allowedOn' => '19,47,51,53,21'],
                             ['label' => 'Разное', 'url' => '/raznoe/'],
                         ],
