@@ -1194,12 +1194,16 @@ ol.popular li:hover:after {
     color: #fff;
 }
 
+.moon_month_table {
+    margin: 0 auto;
+}
+
 .moon_month_table td
 {
-    font-size:0.7em;
+    font-size:0.8em;
     vertical-align: top;
     background-color:#eee;
-    padding: 5px;
+    padding: 7px;
 }
 
 .advert-2

@@ -46,16 +46,15 @@ use app\components\widgets\FavoriteWidget;
             </div>
             <div align="justify" style="color:#000000; font-size:14px; line-height: 1.5;" id="art_full">
                 <?=$options['content']?>
-
+                <?php if(isset($options['similar']) && is_array($options['similar'])): ?>
+                    <div class="related_posts">
+                        <strong>Другие публикации по теме:</strong><br/><?=SimilarPostsWidget::widget(['links' => $options['similar'], 'list' => true, 'listType' => 'ol'])?>
+                    </div>
+                <?php endif; ?>
                 <?= \app\components\widgets\SocialButtonsWidget::widget() ?>
                 <?= isset($options['advert']) && $options['advert'] == false ? '' : \app\components\widgets\AdvertWidget::widget(['block_number' => 7]) ?>
 
             </div>
-            <?php if(isset($options['similar']) && is_array($options['similar'])): ?>
-            <div class="related_posts">
-                <strong>Другие публикации по теме:</strong><br/><?=SimilarPostsWidget::widget(['links' => $options['similar'], 'list' => true, 'listType' => 'ol'])?>
-            </div>
-            <?php endif; ?>
         </div>
         <div class="clear"></div>
         <div id="content-item-rating">

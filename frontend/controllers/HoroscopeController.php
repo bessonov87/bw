@@ -259,6 +259,7 @@ class HoroscopeController extends Controller
             $month_array[$w]['moon_zodiak_from_ut'] = $moon_zodiak_from_ut;
             $month_array[$w]['moon_phase'] = $moon_phase;
             $month_array[$w]['moon_phase_from'] = $moon_phase_from;
+            $month_array[$w]['moon_percent'] = $moon_percent;
             if($withHair) {
                 $month_array[$w]['blago'] = $rows['blago'];
                 $month_array[$w]['blago_level'] = $rows['blago_level'];

@@ -142,16 +142,7 @@ foreach($good_days as $good_interval)
 
 $options['content'] .= "<br /><p>Любые новые дела можно и даже нужно начинать в периоды растущей Луны. Это наиболее благоприятное время для абсолютно всех позитивных начинаний, будь то начала здорового и активного образа жизни, борьба с вредными привычками, диеты, новый бизнес, переход на новое место работы и т.д. Дела, начатые в этот период, обязательно принесут удачу. Результаты от таких начинаний будут только положительными. Однако стоит отметить, что все зависит не только от Луны, но и от вас самих. Луна может вам дать импульс и направление, но не даст вам все на \"блюдечке с голубой каёмочкой\".</p><br /><br />";
 
-$options['similar'] = [];
-if($month != date('m')){
-    $m = date('m');
-    $options['similar'][0]['url'] = Url::to(['horoscope/moon-month-calendar', 'year' => $year, 'month' => GlobalHelper::engMonth($m, 'i')]);
-    $options['similar'][0]['title'] = 'Лунный календарь на '.GlobalHelper::rusMonth($m).' '.$year.' года';
-    $options['similar'][1]['url'] = Url::to(['horoscope/hair-month-calendar', 'year' => $year, 'month' => GlobalHelper::engMonth($m, 'i')]);
-    $options['similar'][1]['title'] = 'Лунный календарь стрижек на '.GlobalHelper::rusMonth($m).' '.$year.' года';
-}
-$options['similar'][2]['url'] = Url::to(['horoscope/hair-month-calendar', 'year' => $year, 'month' => GlobalHelper::engMonth($month, 'i')]);
-$options['similar'][2]['title'] = 'Лунный календарь стрижек на '.GlobalHelper::rusMonth($month).' '.$year.' года';
+$options['similar'] = GlobalHelper::getRelatedCalendars($year, $month);
 
 echo $this->render('@frontend/views/post/post-layout', ['options' => $options]);
 

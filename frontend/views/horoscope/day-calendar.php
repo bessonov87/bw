@@ -12,6 +12,7 @@
 use common\components\helpers\GlobalHelper;
 use yii\helpers\Html;
 use app\components\widgets\AdvertWidget;
+use yii\helpers\Url;
 
 $this->params['breadcrumbs'][] = ['label' => Html::a('Гороскоп', '/horoscope/'), 'encode' => false];
 $this->params['breadcrumbs'][] = ['label' => Html::a('Лунный календарь ' . $year, '/horoscope/lunnyj-kalendar-na-god/'), 'encode' => false];
@@ -95,7 +96,7 @@ $options['content'] .= "<p style=\"color:#777;\"><strong>Важно:</strong> Д
 $options['content'] .= "<p>&nbsp;</p><p>".AdvertWidget::widget(['block_number' => 1])."</p><p>&nbsp;</p>";
 $options['content'] .= "<h3>Весь календарь с фазами Луны на " . $month_rus_big . " " . $year . " года</h3>";
 $options['content'] .= "<p>Выбирайте интересующий вас день, и вы всегда будет в курсе того, что вам готовит Луна. Обладая этой информацией, вы сможете заранее спланировать свой день и определить, что нужно делать, а что нельзя. Также вы будете точно знать чего стоит опасаться и чего остерегаться. Если вы будете стоить свои планы по лунному календарю, то сможете избежать множества потенциальных проблем.</p><p>&nbsp;</p>";
-$options['content'] .= "<table width=\"644\" class=\"moon_month_table\">";
+$options['content'] .= "<table width=\"847\" class=\"moon_month_table\">";
 
     // Определяем день недели первого дня месяца
     $first_day = $year . "-" . $month_num_02d . "-01";
@@ -131,18 +132,18 @@ $options['content'] .= "<table width=\"644\" class=\"moon_month_table\">";
             else if($x != $first_day_weekday && $day_out)
             {
                 $date_out = $year.'-'.sprintf('%02d', $month).'-'.sprintf('%02d', $day_out);
-                $options['content'] .= "<td width=\"92\"><img src=\"/bw15/images/moon/" . $month_array[$date_out]['phase_image'] . ".png\" width=\"30\"><br />
+                $options['content'] .= "<td width=\"121\"><img src=\"/bw15/images/moon/" . $month_array[$date_out]['phase_image'] . ".png\" width=\"30\"><br />
 				<a href=\"" . $calLink . "\">" . $day_out . " " . $month_rus_rod . "</a><br />
 				" . $phases_array[$month_array[$date_out]['phase_image']] . "<br />" . $month_array[$date_out]['moon_day'] . " лунный день</td>";
             }
             else if($x != $first_day_weekday && !$day_out)
             {
-                $options['content'] .= "<td width=\"92\">&nbsp;</td>";
+                $options['content'] .= "<td width=\"121\">&nbsp;</td>";
             }
         }
         else
         {
-            $options['content'] .= "<td width=\"92\">&nbsp;</td>";
+            $options['content'] .= "<td width=\"121\">&nbsp;</td>";
         }
 
         if($day_out) $day_out++;
@@ -152,8 +153,6 @@ $options['content'] .= "<table width=\"644\" class=\"moon_month_table\">";
 
     $options['content'] .= "</table><p>&nbsp;</p>";
 
-    /*echo 'h2: ' . $art_h2 . '<br>';
-    echo 'Metatitle: ' . $art_metatitle . '<br>';
-    echo 'Full: ' . $options['content'] . '<br>';*/
+$options['similar'] = GlobalHelper::getRelatedCalendars($year, $month);
 
 echo $this->render('@frontend/views/post/post-layout', ['options' => $options]);

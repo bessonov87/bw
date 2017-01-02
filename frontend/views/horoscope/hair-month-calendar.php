@@ -116,16 +116,7 @@ $options['content'] .= '<li>Самым неблагоприятным днем �
 $options['content'] .= '<p>&nbsp;</p>';
 $options['content'] .= $table;
 
-$options['similar'] = [];
-if($month != date('m')){
-    $m = date('m');
-    $options['similar'][0]['url'] = Url::to(['horoscope/moon-month-calendar', 'year' => $year, 'month' => GlobalHelper::engMonth($m, 'i')]);
-    $options['similar'][0]['title'] = 'Лунный календарь на '.GlobalHelper::rusMonth($m).' '.$year.' года';
-    $options['similar'][1]['url'] = Url::to(['horoscope/hair-month-calendar', 'year' => $year, 'month' => GlobalHelper::engMonth($m, 'i')]);
-    $options['similar'][1]['title'] = 'Лунный календарь стрижек на '.GlobalHelper::rusMonth($m).' '.$year.' года';
-}
-$options['similar'][2]['url'] = Url::to(['horoscope/moon-month-calendar', 'year' => $year, 'month' => GlobalHelper::engMonth($month, 'i')]);
-$options['similar'][2]['title'] = 'Лунный календарь на '.GlobalHelper::rusMonth($month).' '.$year.' года';
+$options['similar'] = GlobalHelper::getRelatedCalendars($year, $month, true);
 
 echo $this->render('@frontend/views/post/post-layout', ['options' => $options]);
 

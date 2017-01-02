@@ -157,7 +157,7 @@ $calendarsYear = date('m') == 12 && date('j') > 15 ? date('Y') + 1 : date('Y');
                 <div id="sidebar-item-content">
                     <?= SidebarMenuWidget::widget([
                         'items' => [
-                            ['label' => 'Онлайн тесты', 'url' => ['tests/index']],
+                            //['label' => 'Онлайн тесты', 'url' => ['tests/index']],
                             ['label' => 'Секреты красоты', 'url' => '/beautysecrets/'],
                             ['label' => 'Секреты макияжа', 'url' => '/makeupsecrets/'],
                             ['label' => 'Мода и стиль', 'url' => '/fashion/'],

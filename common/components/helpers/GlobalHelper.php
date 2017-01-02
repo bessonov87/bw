@@ -9,6 +9,7 @@ use common\models\ar\User;
 use Yii;
 use common\models\ar\Category;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -497,6 +498,50 @@ class GlobalHelper
         $summary['errorsYesterday'] = Log::find()->where(['between', 'log_time', $yesterday_begin, $yesterday_end])->count();
 
         return $summary;
+    }
+
+    public static function getRelatedCalendars($year, $month, $hair = false)
+    {
+        $similar = [];
+        $currentMonth = date('m');
+        $currentYear = date('Y');
+        $nextMonth = $currentMonth < 12 ? $currentMonth + 1 : 1;
+        $nextYear = $currentMonth < 12 ? $currentYear : $currentYear + 1;
+
+        if($year == $currentYear && $month == $currentMonth) {
+            if($hair){
+                $similar[] = [
+                    'url' => Url::to(['horoscope/moon-month-calendar', 'year' => $currentYear, 'month' => GlobalHelper::engMonth($currentMonth, 'i')]),
+                    'title' => 'Лунный календарь на ' . GlobalHelper::rusMonth($currentMonth) . ' ' . $currentYear . ' года'
+                ];
+            } else {
+                $similar[] = [
+                    'url' => Url::to(['horoscope/hair-month-calendar', 'year' => $currentYear, 'month' => GlobalHelper::engMonth($currentMonth, 'i')]),
+                    'title' => 'Лунный календарь стрижек на ' . GlobalHelper::rusMonth($currentMonth) . ' ' . $currentYear . ' года',
+                ];
+            }
+        } else {
+            // Current Month
+            $similar[] = [
+                'url' => Url::to(['horoscope/moon-month-calendar', 'year' => $currentYear, 'month' => GlobalHelper::engMonth($currentMonth, 'i')]),
+                'title' => 'Лунный календарь на ' . GlobalHelper::rusMonth($currentMonth) . ' ' . $currentYear . ' года'
+            ];
+            $similar[] = [
+                'url' => Url::to(['horoscope/hair-month-calendar', 'year' => $currentYear, 'month' => GlobalHelper::engMonth($currentMonth, 'i')]),
+                'title' => 'Лунный календарь стрижек на ' . GlobalHelper::rusMonth($currentMonth) . ' ' . $currentYear . ' года',
+            ];
+        }
+        // Next Month
+        $similar[] = [
+            'url' => Url::to(['horoscope/moon-month-calendar', 'year' => $nextYear, 'month' => GlobalHelper::engMonth($nextMonth, 'i')]),
+            'title' => 'Лунный календарь на '.GlobalHelper::rusMonth($nextMonth).' '.$nextYear.' года',
+        ];
+        $similar[] = [
+            'url' => Url::to(['horoscope/hair-month-calendar', 'year' => $nextYear, 'month' => GlobalHelper::engMonth($nextMonth, 'i')]),
+            'title' => 'Лунный календарь стрижек на '.GlobalHelper::rusMonth($nextMonth).' '.$nextYear.' года',
+        ];
+
+        return $similar;
     }
 
 }
