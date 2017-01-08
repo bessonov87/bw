@@ -21,6 +21,27 @@ use yii\web\NotFoundHttpException;
 class GlobalHelper
 {
     /**
+     * Возвращает укороченную версию текста.
+     * Примерно первые $symbols символов. В конце троеточие ...
+     * @param $text
+     * @param int $symbols
+     * @return string
+     */
+    public static function getShortText($text, $symbols = 100)
+    {
+        $text = strip_tags($text);
+        $words = explode(' ', $text);
+        $substr = '';
+        foreach ($words as $word){
+            if(mb_strlen($substr) >= $symbols){
+                break;
+            }
+            $substr .= $word.' ';
+        }
+
+        return $substr.'...';
+    }
+    /**
      * Преобразует тэги <br> в перевод строки и возврат каретки
      *
      * @param $string string Строка для конвертирования
@@ -347,6 +368,17 @@ class GlobalHelper
         }
     }
 
+    public static function engZodiak($zodiac, $invert = false)
+    {
+        $znaki = [1 => 'oven', 2 => 'telec', 3 => 'bliznecy', 4 => 'rak', 5 => 'lev', 6 => 'deva', 7 => 'vesy', 8 => 'skorpion', 9 => 'strelec', 10 => 'kozerog', 11 => 'vodoley', 12 => 'ryby'];
+
+        if(!$invert && !isset($znaki[$zodiac])){
+            return null;
+        }
+
+        return !$invert ? $znaki[$zodiac] : array_search($zodiac, $znaki);
+    }
+
     /**
      * Преобразование первой буквы UTF-8 строки в верхний регистр
      *
@@ -542,6 +574,28 @@ class GlobalHelper
         ];
 
         return $similar;
+    }
+
+    /**
+     * Возвращает дату понедельника заданной недели заданного года
+     * @param $week
+     * @param string $year
+     * @return int
+     */
+    public static function getMonday($week, $year=""){
+        $year = $year ?: date('Y');
+        $dto = new \DateTime();
+        return $dto->setISODate((int)$year, (int)$week)->getTimestamp();
+    }
+
+    /**
+     * Аналог self::getMonday(), но возвращает дату воскресенья
+     * @param $week
+     * @param string $year
+     * @return mixed
+     */
+    public static function getSunday($week, $year=""){
+        return static::getMonday($week, $year) + 6 * 86400;
     }
 
 }

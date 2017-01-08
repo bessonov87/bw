@@ -29,6 +29,17 @@
                     ['label' => 'Реклама', 'icon' => 'fa fa-check-square', 'url' => ['advert/index']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [
+                        'label' => 'Гороскоп',
+                        'icon' => 'fa fa-list',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'На день', 'icon' => 'fa fa-file-text-o', 'url' => ['goroskop/index?period=day'],],
+                            ['label' => 'На неделю', 'icon' => 'fa fa-file-text-o', 'url' => ['goroskop/index?period=week'],],
+                            ['label' => 'На месяц', 'icon' => 'fa fa-file-text-o', 'url' => ['goroskop/index?period=month'],],
+                            ['label' => 'На год', 'icon' => 'fa fa-file-text-o', 'url' => ['goroskop/index?period=year'],],
+                        ],
+                    ],
+                    [
                         'label' => 'Луна',
                         'icon' => 'fa fa-list',
                         'url' => '#',

@@ -14,6 +14,27 @@ use yii\web\NotFoundHttpException;
 
 class HoroscopeController extends Controller
 {
+    public function actions()
+    {
+        return [
+            'index' => [
+                'class' => \frontend\components\actions\HoroscopeAction::className(),
+            ],
+            'day' => [
+                'class' => \frontend\components\actions\HoroscopeDayAction::className(),
+            ],
+            'week' => [
+                'class' => \frontend\components\actions\HoroscopeWeekAction::className(),
+            ],
+            'month' => [
+                'class' => \frontend\components\actions\HoroscopeMonthAction::className(),
+            ],
+            'year' => [
+                'class' => \frontend\components\actions\HoroscopeYearAction::className(),
+            ],
+        ];
+    }
+
     public function actionMoonCalendar()
     {
         $y = date('Y');

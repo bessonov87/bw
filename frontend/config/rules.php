@@ -1,5 +1,104 @@
 <?php
 return [
+    // НА ДЕНЬ
+    [
+        'pattern' => 'horoscope/na-zavtra/<znak:[a-z]+>',
+        'suffix' => '/',
+        'route' => 'horoscope/day',
+        'defaults' => ['den' => 'zavtra']
+    ],
+    [
+        'pattern' => 'horoscope/na-zavtra',
+        'suffix' => '/',
+        'route' => 'horoscope/day',
+        'defaults' => ['den' => 'zavtra', 'znak' => null]
+    ],
+    [
+        'pattern' => 'horoscope/na-segodnja/<znak:[a-z]+>',
+        'suffix' => '/',
+        'route' => 'horoscope/day',
+        'defaults' => ['den' => 'segodnja']
+    ],
+    [
+        'pattern' => 'horoscope/na-segodnja',
+        'suffix' => '/',
+        'route' => 'horoscope/day',
+        'defaults' => ['den' => 'segodnja', 'znak' => null]
+    ],
+    // НА НЕДЕЛЮ
+    [
+        'pattern' => 'horoscope/na-sledujushhuju-nedelju/<znak:[a-z]+>',
+        'suffix' => '/',
+        'route' => 'horoscope/week',
+        'defaults' => ['week' => 'next']
+    ],
+    [
+        'pattern' => 'horoscope/na-sledujushhuju-nedelju',
+        'suffix' => '/',
+        'route' => 'horoscope/week',
+        'defaults' => ['week' => 'next', 'znak' => null]
+    ],
+    [
+        'pattern' => 'horoscope/na-nedelju/<znak:[a-z]+>',
+        'suffix' => '/',
+        'route' => 'horoscope/week',
+        'defaults' => ['week' => 'this']
+    ],
+    [
+        'pattern' => 'horoscope/na-nedelju',
+        'suffix' => '/',
+        'route' => 'horoscope/week',
+        'defaults' => ['week' => 'this', 'znak' => null]
+    ],
+    // НА МЕСЯЦ
+    [
+        'pattern' => 'horoscope/na-mesjac/<year:[0-9]+>/<month:[0-9]+>/<znak:[a-z]+>',
+        'suffix' => '/',
+        'route' => 'horoscope/month',
+    ],
+    [
+        'pattern' => 'horoscope/na-mesjac/<year:[0-9]+>/<month:[0-9]+>',
+        'suffix' => '/',
+        'route' => 'horoscope/month',
+        'defaults' => ['znak' => null]
+    ],
+    [
+        'pattern' => 'horoscope/na-mesjac/<year:[0-9]+>',
+        'suffix' => '/',
+        'route' => 'horoscope/month',
+        'defaults' => ['month' => null, 'znak' => null]
+    ],
+    [
+        'pattern' => 'horoscope/na-mesjac',
+        'suffix' => '/',
+        'route' => 'horoscope/month',
+        'defaults' => ['year' => null, 'month' => null, 'znak' => null]
+    ],
+    // НА ГОД
+    [
+        'pattern' => 'horoscope/na-god/<year:[0-9]+>/<znak:[a-z]+>',
+        'suffix' => '/',
+        'route' => 'horoscope/year',
+    ],
+    [
+        'pattern' => 'horoscope/na-god/<year:[0-9]+>',
+        'suffix' => '/',
+        'route' => 'horoscope/year',
+        'defaults' => ['znak' => null]
+    ],
+    [
+        'pattern' => 'horoscope/na-god',
+        'suffix' => '/',
+        'route' => 'horoscope/year',
+        'defaults' => ['year' => null, 'znak' => null]
+    ],
+    [
+        'pattern' => 'horoscope',
+        'suffix' => '/',
+        'route' => 'horoscope/index',
+        'defaults' => ['type' => 'common', 'period' => 'index']
+    ],
+    // ЛУННЫЙ КАЛЕНДАРЬ СТРИЖЕК
     [
         'pattern' => 'horoscope/lunnyj-kalendar-strizhek',
         'suffix' => '/',
@@ -15,6 +114,7 @@ return [
         'suffix' => '/',
         'route' => 'horoscope/hair-year-calendar',
     ],
+    // ЛУННЫЙ КАЛЕНДАРЬ
     [
         'pattern' => 'horoscope/lunnyj-kalendar-na-god',
         'suffix' => '/',

@@ -16,6 +16,7 @@ use common\models\ar\PostsRating;
 use common\models\ar\User;
 use common\models\ar\UserProfile;
 use common\models\elastic\PostElastic;
+use common\models\ar\Goroskop;
 use common\models\MoonDni;
 use common\models\MoonFazy;
 use common\models\MoonHair;
@@ -29,6 +30,59 @@ use common\models\ar\Post;
 
 class JobController extends Controller
 {
+    public function actionMoveGoroskop()
+    {
+        Goroskop::deleteAll();
+
+        $znaki = ['all' => 0, 'aries' => 1, 'taurus' => 2, 'gemini' => 3, 'cancer' => 4, 'leo' => 5, 'virgo' => 6, 'libra' => 7, 'scorpio' => 8, 'sagitarius' => 9, 'capricorn' => 10, 'aquarius' => 11, 'pisces' => 12];
+        /** @var Connection $db */
+        $db = \Yii::$app->astroDb;
+
+        $goroskops = $db->createCommand('SELECT * FROM sln_goroskop')->queryAll();
+
+        $diff = 18403200;
+        foreach ($goroskops as $goroskop){
+            //var_dump(implode(', ', array_keys($goroskop))); die;
+            $goroskopModel = new Goroskop();
+            $goroskopModel->created_at = time();
+            $goroskopModel->zodiak = $znaki[$goroskop['znak']];
+            $goroskopModel->text = $goroskop['text'];
+            switch($goroskop['period']) {
+                case Goroskop::PERIOD_DAY:
+                    $goroskopModel->date = date('Y-m-d', strtotime($goroskop['date'])+$diff);
+                    $goroskopModel->week = $goroskop['week'];
+                    $goroskopModel->month = $goroskop['month'];
+                    $goroskopModel->year = 2017;
+                    break;
+                case Goroskop::PERIOD_WEEK:
+                    $goroskopModel->date = null;
+                    $goroskopModel->week = intval($goroskop['week']) - 36;
+                    $goroskopModel->month = $goroskop['month'];
+                    $goroskopModel->year = 2017;
+                    break;
+                case Goroskop::PERIOD_MONTH:
+                case Goroskop::PERIOD_YEAR:
+                    $goroskopModel->date = null;
+                    $goroskopModel->week = $goroskop['week'];
+                    $goroskopModel->month = $goroskop['month'];
+                    $goroskopModel->year = $goroskop['year'];
+                    break;
+                default:
+                    die('Unknown period');
+            }
+
+            $goroskopModel->period = $goroskop['period'];
+            $goroskopModel->type = Goroskop::TYPE_COMMON;
+            $goroskopModel->approve = $goroskop['approve'];
+            $goroskopModel->views = $goroskop['views'];
+
+            if(!$goroskopModel->save()){
+                var_dump($goroskopModel->getErrors()); die;
+            }
+        }
+
+    }
+
     public function actionParser($year = 2017, $month = 1, $oneDay = 0)
     {
         $phases = [

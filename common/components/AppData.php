@@ -1,5 +1,6 @@
 <?php
 namespace common\components;
+use common\models\ar\Goroskop;
 use common\models\MoonHair;
 
 /**
@@ -10,6 +11,25 @@ use common\models\MoonHair;
  */
 class AppData
 {
+    public static $engZnakiTranslit = [1 => 'oven', 2 => 'telec', 3 => 'bliznecy', 4 => 'rak', 5 => 'lev', 6 => 'deva', 7 => 'vesy', 8 => 'skorpion', 9 => 'strelec', 10 => 'kozerog', 11 => 'vodoley', 12 => 'ryby'];
+    public static $engZnaki = [1 => 'aries', 2 => 'taurus', 3 => 'gemini', 4 => 'cancer', 5 => 'leo', 6 => 'virgo', 7 => 'libra', 8 => 'scorpio', 9 => 'sagitarius', 10 => 'capricorn', 11 => 'aquarius', 12 => 'pisces'];
+    public static $rusZnaki = [1 => 'Овен', 2 => 'Телец', 3 => 'Близнецы', 4 => 'Рак', 5 => 'Лев', 6 => 'Дева', 7 => 'Весы', 8 => 'Скорпион', 9 => 'Стрелец', 10 => 'Козерог', 11 => 'Водолей', 12 => 'Рыбы'];
+
+    public static $rusMonths = [0 => 'Нет', 1 => 'Январь', 2 => 'Февраль', 3 => 'Март', 4 => 'Апрель', 5 => 'Май', 6 => 'Июнь', 7 => 'Июль', 8 => 'Август', 9 => 'Сентябрь', 10 => 'Октябрь', 11 => 'Ноябрь', 12 => 'Декабрь'];
+
+    public static $znakiDates = [
+        1 => '21.03 - 19.04', 2 => '20.04 - 20.05', 3 => '21.05 - 20.06', 4 => '21.06 - 22.07',
+        5 => '23.07 - 22.08', 6 => '23.08 - 22.09', 7 => '23.09 - 22.10', 8 => '23.10 - 21.11',
+        9 => '22.11 - 21.12', 10 => '22.12 - 19.01', 11 => '20.01 - 18.02', 12 => '19.02 - 20.03'
+    ];
+
+    public static $periodsList = [
+        Goroskop::PERIOD_DAY => 'На день',
+        Goroskop::PERIOD_WEEK => 'На неделю',
+        Goroskop::PERIOD_MONTH => 'На месяц',
+        Goroskop::PERIOD_YEAR => 'На год',
+    ];
+
     /**
      * @var string базовый путь для URL со ссылками на лунные календари стрижек
      */

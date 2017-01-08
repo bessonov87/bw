@@ -18,6 +18,7 @@ use app\components\widgets\CalendarWidget;
 use app\components\widgets\PopularWidget;
 use app\components\widgets\SearchWidget;
 use app\components\widgets\FlashWidget;
+use app\components\widgets\ActualHoroscopesWidget;
 
 AppAsset::register($this);
 IeAsset::register($this);
@@ -140,11 +141,9 @@ $calendarsYear = date('m') == 12 && date('j') > 15 ? date('Y') + 1 : date('Y');
             <!-- Блок Гороскопы на месяц -->
             <div id="sidebar-item">
                 <div id="sidebar-item-top" class="sidebar-item-pink">Актуальные гороскопы</div>
-                <div id="sidebar-item-content">
-                    <div class="blockmenu">
-                        <a href="/horoscope/na-mesjac/2857-goroskop-na-aprel-2016.html">Гороскоп на апрель</a>
-                        <a href="/horoscope/na-mesjac/3233-goroskop-na-maj-2016-goda.html">Гороскоп на май 2016</a>
-                        <a href="/horoscope/na-mesjac/3235-goroskop-na-ijun-2016.html">Гороскоп на июнь 2016</a>
+                <div id="sidebar-item-content" style="padding: 0;">
+                    <div class="actual-horoscopes">
+                        <?= ActualHoroscopesWidget::widget() ?>
                     </div>
                 </div>
             </div>
