@@ -27,6 +27,8 @@
                     ['label' => 'Комментарии', 'icon' => 'fa fa-comment-o', 'url' => ['comment/index']],
                     ['label' => 'Пользователи', 'icon' => 'fa fa-users', 'url' => ['user/index']],
                     ['label' => 'Реклама', 'icon' => 'fa fa-check-square', 'url' => ['advert/index']],
+                    ['label' => 'Знаки Зодиака', 'icon' => 'fa fa-check-square', 'url' => ['znaki-zodiaka/index']],
+                    ['label' => 'Совместимость', 'icon' => 'fa fa-check-square', 'url' => ['sovmestimost/index']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [
                         'label' => 'Гороскоп',
