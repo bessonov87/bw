@@ -32,7 +32,7 @@ class ZnakiZodiakaController extends Controller
             throw new NotFoundHttpException('Страница не найдена');
         }
 
-        $text = !$znakModel->$type || $znakModel->$type == '*' ? 'Ожидается скоро ...' : '';
+        $text = !$znakModel->$type || $znakModel->$type == '*' ? 'Ожидается скоро ...' : $znakModel->$type;
 
         return $this->render('znak', [
             'znak' => $znak,
