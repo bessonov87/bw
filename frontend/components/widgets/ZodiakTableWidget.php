@@ -39,7 +39,7 @@ class ZodiakTableWidget extends Widget
             case Goroskop::PERIOD_DAY:
                 $period = $this->den == 'zavtra' ? 'завтра' : 'сегодня'; break;
             default:
-                $period = '';
+                $period = $this->period;
         }
 
         return $this->render('zodiak-table', [

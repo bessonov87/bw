@@ -1541,3 +1541,62 @@ a.pisces, b.pisces {background-image:url(/bw15/images/horoscope/znaki/pisces.png
     content: "";
     display: block;
 }
+
+.short-info-left p{
+    padding: 5px;
+}
+
+.zodiak-link {
+    display: block;
+    font-size: 16px;
+    color: #cc0099;
+}
+
+.zodiak-period {
+    float: right;
+    padding-right: 0;
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.znaki-zodiaka-table {
+    border: none;
+    border-collapse: collapse;
+}
+
+.znaki-zodiaka-table td {
+    padding: 10px 0;
+    vertical-align: middle;
+    border-bottom: 1px #CC0099 solid;
+    border-top: 1px #CC0099 solid;
+    border-left: none;
+    border-right: none;
+}
+
+.sovm-link {
+    display: block;
+    font-size: 16px;
+    font-weight:bold;
+    color: #333333!important;
+}
+
+.sovm-link:hover {
+    color: #cc0099!important;
+}
+
+.sovm-znaki {
+    float: right;
+    padding-right: 15px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.sovm-text {
+    font-size: 12px;
+    text-align: justify;
+}
+
+.sovm-next-link {
+    float: right;
+}

@@ -1,5 +1,52 @@
 <?php
 return [
+    // СОВМЕСТИМОСТЬ
+    [
+        'pattern' => 'znaki-zodiaka/sovmestimost/<znakWoman:[a-z]+>-woman/<znakMan:[a-z]+>-man',
+        'suffix' => '/',
+        'route' => 'znaki-zodiaka/sovmestimost',
+    ],
+    [
+        'pattern' => 'znaki-zodiaka/sovmestimost/<znakWoman:[a-z]+>-woman',
+        'suffix' => '/',
+        'route' => 'znaki-zodiaka/sovmestimost-index',
+        'defaults' => ['znak' => null, 'znakMan' => null]
+    ],
+    [
+        'pattern' => 'znaki-zodiaka/sovmestimost/<znakMan:[a-z]+>-man',
+        'suffix' => '/',
+        'route' => 'znaki-zodiaka/sovmestimost-index',
+        'defaults' => ['znak' => null, 'znakWoman' => null]
+    ],
+    [
+        'pattern' => 'znaki-zodiaka/sovmestimost',
+        'suffix' => '/',
+        'route' => 'znaki-zodiaka/sovmestimost-index',
+        'defaults' => ['znak' => null, 'znakMan' => null, 'znakWoman' => null]
+    ],
+    // ЗНАКИ ЗОДИАКА
+    [
+        'pattern' => 'znaki-zodiaka/<znak:[a-z]+>/sovmestimost',
+        'suffix' => '/',
+        'route' => 'znaki-zodiaka/sovmestimost-index',
+        'defaults' => ['znakMan' => null, 'znakWoman' => null]
+    ],
+    [
+        'pattern' => 'znaki-zodiaka/<znak:[a-z]+>/<type:[a-z]+>',
+        'suffix' => '/',
+        'route' => 'znaki-zodiaka/znak'
+    ],
+    [
+        'pattern' => 'znaki-zodiaka/<znak:[a-z]+>',
+        'suffix' => '/',
+        'route' => 'znaki-zodiaka/znak',
+        'defaults' => ['type' => 'common']
+    ],
+    [
+        'pattern' => 'znaki-zodiaka',
+        'suffix' => '/',
+        'route' => 'znaki-zodiaka/index',
+    ],
     // НА ДЕНЬ
     [
         'pattern' => 'horoscope/na-zavtra/<znak:[a-z]+>',

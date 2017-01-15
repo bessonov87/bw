@@ -21,6 +21,7 @@ use Yii;
  * @property string $child
  * @property string $career
  * @property string $health
+ * @property string $sex
  * @property integer $created_at
  * @property integer $updated_at
  *
@@ -45,9 +46,9 @@ class ZnakiZodiaka extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['znak_id', 'element', 'planet', 'opposite', 'stone', 'color', 'compatibility', 'common', 'man', 'woman', 'child', 'career', 'health'], 'required'],
+            [['znak_id', 'element', 'planet', 'opposite', 'stone', 'color', 'compatibility', 'common', 'man', 'woman', 'child', 'career', 'health', 'sex'], 'required'],
             [['znak_id', 'created_at', 'updated_at'], 'integer'],
-            [['common', 'man', 'woman', 'child', 'career', 'health'], 'string'],
+            [['common', 'man', 'woman', 'child', 'career', 'health', 'sex'], 'string'],
             [['element', 'planet', 'opposite', 'stone', 'color', 'compatibility'], 'string', 'max' => 255],
             [['znak_id'], 'unique'],
         ];
@@ -73,6 +74,7 @@ class ZnakiZodiaka extends \yii\db\ActiveRecord
             'child' => 'Child',
             'career' => 'Career',
             'health' => 'Health',
+            'sex' => 'Sex',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

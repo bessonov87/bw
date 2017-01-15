@@ -24,6 +24,7 @@ class m170110_195306_add_znaki_zodiaka extends Migration
             'child' => $this->text()->notNull(),
             'career' => $this->text()->notNull(),
             'health' => $this->text()->notNull(),
+            'sex' => $this->text()->notNull(),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
         ]);

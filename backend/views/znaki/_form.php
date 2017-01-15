@@ -88,6 +88,15 @@ if($model->getErrors()){
         ]
     ])->label('Здоровье') ?>
 
+    <?= $form->field($model, 'sex')->widget(
+        TinyMCE::className(), [
+        'clientOptions' => [
+            'plugin_upload_post_id' => ($model->id) ? $model->id : 0,
+            'plugin_upload_r_id' => ($model->id) ? null : $r_id,
+            'plugin_upload_area' => ($model->id) ? 'editpost' : 'addpost',
+        ]
+    ])->label('Сексуальность') ?>
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
