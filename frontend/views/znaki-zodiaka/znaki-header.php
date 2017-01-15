@@ -13,6 +13,29 @@ $znakCode = '&#98'.sprintf('%02d', $znakModel->znak_id-1).';';
 $znakRus = GlobalHelper::rusZodiac($znakModel->znak_id);
 $znakRod = GlobalHelper::rusZodiac($znakModel->znak_id, 'r');
 $year = date('Y');
+
+$items = [];
+$items[] = '<a title="Характер '.$znakRod.'" href="/znaki-zodiaka/'.$engZnakTranslit.'/">Характер '.$znakRod.'</a>';
+if($znakModel->man && $znakModel->man != '*'){
+    $items[] = '<a title="Мужчина-'.$znakRus.'" href="/znaki-zodiaka/'.$engZnakTranslit.'/man/">'.$znakRus.'-мужчина</a>';
+}
+if($znakModel->woman && $znakModel->woman != '*'){
+    $items[] = '<a title="Женщина-'.$znakRus.'" href="/znaki-zodiaka/'.$engZnakTranslit.'/woman/">'.$znakRus.'-женщина</a>';
+}
+if($znakModel->child && $znakModel->child != '*'){
+    $items[] = '<a title="Ребенок-'.$znakRus.'" href="/znaki-zodiaka/'.$engZnakTranslit.'/child/">'.$znakRus.'-ребенок</a>';
+}
+if($znakModel->career && $znakModel->career != '*'){
+    $items[] = '<a href="/znaki-zodiaka/'.$engZnakTranslit.'/career/">Деньги и карьера '.$znakRod.'</a>';
+}
+if($znakModel->sex && $znakModel->sex != '*'){
+    $items[] = '<a href="/znaki-zodiaka/'.$engZnakTranslit.'/sex/">Сексуальность '.$znakRod.'</a>';
+}
+if($znakModel->health && $znakModel->health != '*'){
+    $items[] = '<a href="/znaki-zodiaka/'.$engZnakTranslit.'/health/">Здоровье '.$znakRod.'</a>';
+}
+$items[] = '<a title="Совместимость '.$znakRod.'" href="/znaki-zodiaka/'.$engZnakTranslit.'/sovmestimost/">Совместимость '.$znakRod.'</a>';
+
 ?>
 
 <div class="row goroskop_vse">
@@ -43,16 +66,7 @@ $year = date('Y');
     </div>
     <div class="col-md-4">
         <div class="art-cats" style="float: right; width: 265px; padding-left: 10px;">
-            <ul>
-                <li><a title="Характер <?=$znakRod?>" href="/znaki-zodiaka/<?=$engZnakTranslit?>/">Характер <?=$znakRod?></a></li>
-                <li><a title="Мужчина-<?=$znakRus?>" href="/znaki-zodiaka/<?=$engZnakTranslit?>/man/"><?=$znakRus?>-мужчина</a></li>
-                <li><a title="Женщина-<?=$znakRus?>" href="/znaki-zodiaka/<?=$engZnakTranslit?>/woman/"><?=$znakRus?>-женщина</a></li>
-                <li><a title="Женщина-<?=$znakRus?>" href="/znaki-zodiaka/<?=$engZnakTranslit?>/child/"><?=$znakRus?>-ребенок</a></li>
-                <li><a title="Совместимость <?=$znakRod?>" href="/znaki-zodiaka/<?=$engZnakTranslit?>/sovmestimost/">Совместимость <?=$znakRod?></a></li>
-                <li><a href="/znaki-zodiaka/<?=$engZnakTranslit?>/career/">Деньги и карьера <?=$znakRod?></a></li>
-                <li><a href="/znaki-zodiaka/<?=$engZnakTranslit?>/sex/">Сексуальность <?=$znakRod?></a></li>
-                <li><a href="/znaki-zodiaka/<?=$engZnakTranslit?>/health/">Здоровье <?=$znakRod?></a></li>
-            </ul>
+            <?=\yii\helpers\Html::ul($items, ['encode' => false])?>
         </div>
         <div class="clear"></div>
     </div>

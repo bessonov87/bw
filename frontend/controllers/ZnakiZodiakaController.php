@@ -12,7 +12,7 @@ use yii\web\NotFoundHttpException;
 
 class ZnakiZodiakaController extends Controller
 {
-    protected $types = ['common', 'man', 'woman', 'child', 'career', 'health'];
+    protected $types = ['common', 'man', 'woman', 'child', 'career', 'health', 'sex'];
 
     public function actionIndex()
     {
@@ -32,11 +32,13 @@ class ZnakiZodiakaController extends Controller
             throw new NotFoundHttpException('Страница не найдена');
         }
 
+        $text = !$znakModel->$type || $znakModel->$type == '*' ? 'Ожидается скоро ...' : '';
+
         return $this->render('znak', [
             'znak' => $znak,
             'type' => $type,
             'znakModel' => $znakModel,
-            'text' => $znakModel->$type,
+            'text' => $text,
         ]);
     }
 
