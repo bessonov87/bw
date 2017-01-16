@@ -11,6 +11,11 @@ class GoroskopVseZnakiForm extends Goroskop
 
     protected $models;
 
+    public function rules()
+    {
+        return ArrayHelper::merge(parent::rules(), [['znakiText', 'safe']]);
+    }
+
     public function afterFind()
     {
         //var_dump($this); die;
@@ -49,9 +54,10 @@ class GoroskopVseZnakiForm extends Goroskop
                     'created_at' => time()
                 ]);
             }
+            $model->text = $text ?: 'Ожидается скоро ...';
             $model->date = $this->date;
-            $model->week = $this->week;
-            $model->month = $this->month;
+            $model->week = $this->week?:0;
+            $model->month = $this->month?:0;
             $model->year = $this->year;
             $model->period = $this->period;
             $model->type = $this->type;
