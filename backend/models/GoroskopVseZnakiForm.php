@@ -53,6 +53,7 @@ class GoroskopVseZnakiForm extends Goroskop
                 $model = new Goroskop([
                     'created_at' => time()
                 ]);
+                $model->zodiak = $znak;
             }
             $model->text = $text ?: 'Ожидается скоро ...';
             $model->date = $this->date;
