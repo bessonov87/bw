@@ -999,7 +999,7 @@ class JobController extends Controller
     {
         $goroskops = Goroskop::find()
             ->where(['period' => Goroskop::PERIOD_DAY])
-            ->orWhere(['period' => Goroskop::PERIOD_DAY])
+            ->orWhere(['period' => Goroskop::PERIOD_WEEK])
             ->asArray()
             ->all();
 
