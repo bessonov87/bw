@@ -27,6 +27,7 @@ use yii\console\Controller;
 use yii\db\Connection;
 use common\components\AppData;
 use common\models\ar\Post;
+use yii\helpers\Json;
 
 class JobController extends Controller
 {
@@ -992,5 +993,38 @@ class JobController extends Controller
 
         echo "$matches_count \n\n";
         echo $text;
+    }
+
+    public function actionGoro()
+    {
+        $goroskops = Goroskop::find()
+            ->where(['period' => Goroskop::PERIOD_DAY])
+            ->orWhere(['period' => Goroskop::PERIOD_DAY])
+            ->asArray()
+            ->all();
+
+        $res = Json::encode($goroskops);
+
+        file_put_contents(\Yii::getAlias('@console/.data/goro.json'), $res);
+    }
+
+    public function actionGoroRestore()
+    {
+        $goro = file_get_contents(\Yii::getAlias('@console/.data/goro.json'));
+        $goroskops = Json::decode($goro);
+
+        $ids = [];
+        foreach ($goroskops as $goroskop){
+            unset($goroskop['id']);
+            $goroskopModel = new Goroskop($goroskop);
+            if(!$goroskopModel->save()){
+                var_dump($goroskopModel->getErrors());
+                continue;
+            }
+
+            $ids[] = $goroskopModel->getPrimaryKey();
+        }
+
+        //var_dump(Goroskop::deleteAll(['in', 'id', $ids]));
     }
 }
