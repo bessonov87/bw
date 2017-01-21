@@ -20,7 +20,7 @@ class ActualHoroscopesWidget extends Widget
         $links[] = Html::a("Гороскоп на ".GlobalHelper::rusMonth($month)." $year года", "/horoscope/na-mesjac/$year/$month/");
         if($month < 12){
             $nextMonth = $month + 1;
-            $links[] = Html::a("Гороскоп на ".GlobalHelper::rusMonth($nextMonth)." $year года", "/horoscope/na-god/$year/".sprintf('%02d', $nextMonth)."/");
+            $links[] = Html::a("Гороскоп на ".GlobalHelper::rusMonth($nextMonth)." $year года", "/horoscope/na-mesjac/$year/".sprintf('%02d', $nextMonth)."/");
         }
         $links[] = Html::a("Гороскоп на неделю", "/horoscope/na-nedelju/");
         $links[] = Html::a("Гороскоп на сегодня", "/horoscope/na-segodnja/");

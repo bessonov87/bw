@@ -34,13 +34,12 @@ $options = [
 ];
 
 $horoscopes = [
-    ['img' => 'horoscopes/yearly-horoscope-all.png', 'title' => 'Гороскопы на год', 'url' => '/horoscope/year/'],
-    ['img' => 'horoscopes/monthly-horoscope-all.png', 'title' => 'Гороскопы на месяц', 'url' => '/horoscope/month/'],
-    ['img' => 'horoscopes/weekly-horoscope-all.png', 'title' => 'Гороскопы на неделю', 'url' => '/horoscope/week/'],
-    ['img' => 'horoscopes/daily-horoscope-all.png', 'title' => 'Ежедневный гороскоп', 'url' => '/horoscope/day/'],
-    ['img' => 'horoscopes/daily-horoscope-all.png', 'title' => 'Восточный гороскоп', 'url' => '/horoscope/vostok/'],
+    ['img' => 'horoscopes/yearly-horoscope-all.png', 'title' => 'Гороскопы на год', 'url' => '/horoscope/na-god/'],
+    ['img' => 'horoscopes/monthly-horoscope-all.png', 'title' => 'Гороскопы на месяц', 'url' => '/horoscope/na-mesjac/'],
+    ['img' => 'horoscopes/weekly-horoscope-all.png', 'title' => 'Гороскопы на неделю', 'url' => '/horoscope/na-nedelju/'],
+    ['img' => 'horoscopes/daily-horoscope-all.png', 'title' => 'Ежедневный гороскоп', 'url' => '/horoscope/na-segodnja/'],
+    //['img' => 'horoscopes/daily-horoscope-all.png', 'title' => 'Восточный гороскоп', 'url' => '/horoscope/vostok/'],
     ['img' => 'sovmestimost.png', 'title' => 'Гороскоп совместимости', 'url' => '/znaki-zodiaka/sovmestimost/'],
-
     ['img' => 'sovmestimost.png', 'title' => 'Лунный календарь '.date('Y'), 'url' => '/horoscope/lunnyj-kalendar-na-god/'],
     ['img' => 'sovmestimost.png', 'title' => 'Лунный календарь стрижек '.date('Y'), 'url' => '/horoscope/lunnyj-kalendar-strizhek/'],
     ['img' => 'sovmestimost.png', 'title' => 'Луна в знаках Зодиака', 'url' => '/horoscope/luna-v-znakah/'],
