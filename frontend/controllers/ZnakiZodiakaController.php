@@ -90,4 +90,9 @@ class ZnakiZodiakaController extends Controller
             'sovmestimost' => $sovmestimost,
         ]);
     }
+
+    public function actionTablitsaSovmestimosti()
+    {
+        return $this->render('tablitsa');
+    }
 }

@@ -19,6 +19,12 @@ return [
         'defaults' => ['znak' => null, 'znakWoman' => null]
     ],
     [
+        'pattern' => 'znaki-zodiaka/sovmestimost/tablitsa',
+        'suffix' => '/',
+        'route' => 'znaki-zodiaka/tablitsa-sovmestimosti',
+        'defaults' => ['znak' => null, 'znakMan' => null, 'znakWoman' => null]
+    ],
+    [
         'pattern' => 'znaki-zodiaka/sovmestimost',
         'suffix' => '/',
         'route' => 'znaki-zodiaka/sovmestimost-index',

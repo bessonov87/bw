@@ -1600,3 +1600,41 @@ a.pisces, b.pisces {background-image:url(/bw15/images/horoscope/znaki/pisces.png
 .sovm-next-link {
     float: right;
 }
+
+.table-sovm {
+    margin: 0 auto;
+}
+
+.table-sovm td, th {
+    background-color:#fff;
+    text-align:center;
+    padding:3px 4px;
+    border:1px solid #444;
+    vertical-align:middle;
+}
+.table-sovm th {
+    background-color:#b7e7ff;
+    color:#ffffff;
+}
+
+.table-sovm td.hover, .table-sovm td.betterhover, .table-sovm td:hover {
+    background-color:#c0e2ff;
+    box-shadow:0 0 1px #006fcd;
+}
+
+.table-sovm tr:hover td
+{
+    background-color:#ffbbdd;
+}
+
+.table-sovm tfoot td {
+    background-color:#b7e7ff;
+    color:#222;
+    font-weight:bold;
+}
+
+.table-sovm a {
+    margin:0 auto;
+    font-size:12px;
+    text-decoration:none;
+}
