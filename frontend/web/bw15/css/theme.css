@@ -1638,3 +1638,11 @@ a.pisces, b.pisces {background-image:url(/bw15/images/horoscope/znaki/pisces.png
     font-size:12px;
     text-decoration:none;
 }
+
+.table-calories th {
+    background-color: #ec027b;
+}
+
+.table-calories th a {
+    color: #ffffff!important;
+}

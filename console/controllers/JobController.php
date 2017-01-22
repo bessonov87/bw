@@ -22,6 +22,7 @@ use common\models\MoonFazy;
 use common\models\MoonHair;
 use common\models\MoonOgorod;
 use common\models\MoonZnaki;
+use common\models\Product;
 use yii\base\ErrorException;
 use yii\console\Controller;
 use yii\db\Connection;
@@ -31,6 +32,54 @@ use yii\helpers\Json;
 
 class JobController extends Controller
 {
+    public function actionCalor()
+    {
+        /*$query1 = "SELECT id, name, alt_name FROM sln_products_category";
+        $cat = \Yii::$app->calorificDb->createCommand($query1)->queryAll();
+        var_dump($cat);*/
+        $categories = [
+            ["id" => 1, "name" => "Молочные продукты", "url" => "dairy-produce"],
+            ["id" => 2, "name" => "Яйца и яйцепродукты", "url" => "egg-products"],
+            ["id" => 3, "name" => "Мясо и мясные продукты", "url" => "meat-products"],
+            ["id" => 4, "name" => "Рыба и рыбные продукты", "url" => "fish-products"],
+            ["id" => 5, "name" => "Жировые продукты", "url" => "fat-products"],
+            ["id" => 6, "name" => "Зерно и зернопродукты (хлеб)", "url" => "cereal-products"],
+            ["id" => 7, "name" => "Бобовые и орехи", "url" => "beans-nuts"],
+            ["id" => 8, "name" => "Овощи, зелень и грибы", "url" => "vegetables"],
+            ["id" => 9, "name" => "Фрукты и ягоды", "url" => "fruits"],
+            ["id" => 10, "name" => "Кондитерские изделия", "url" => "confection"],
+            ["id" => 11, "name" => "Напитки", "url" => "drinks"],
+            ["id" => 12, "name" => "Соусы и специи", "url" => "product-additions"],
+        ];
+
+        file_put_contents(\Yii::getAlias('@console/.data/product_categories.json'), Json::encode($categories));
+
+        $query2 = "SELECT * FROM sln_products";
+        $products = \Yii::$app->calorificDb->createCommand($query2)->queryAll();
+
+        $product = new Product();
+        $attributes = $product->attributes();
+        $jProducts = [];
+        foreach ($products as $product){
+            $jProduct = [];
+            foreach ($product as $field => $value){
+                if(!in_array($field, $attributes)){
+                    continue;
+                }
+                if($field == 'short_text'){
+                    $value = '';
+                }
+                if($field == 'category' && $value == 0){
+                    $value = null;
+                }
+                $jProduct[$field] = $value;
+            }
+            $jProducts[] = $jProduct;
+        }
+
+        file_put_contents(\Yii::getAlias('@console/.data/products.json'), Json::encode($jProducts));
+    }
+
     public function actionMoveGoroskop()
     {
         Goroskop::deleteAll();

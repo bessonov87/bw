@@ -4,8 +4,6 @@
  */
 
 use yii\helpers\Html;
-use yii\helpers\Url;
-use common\components\helpers\GlobalHelper;
 
 $this->params['breadcrumbs'][] = ['label' => Html::a('Гороскоп', '/horoscope/'), 'encode' => false];
 
@@ -23,7 +21,7 @@ $this->registerMetaTag([
 ]);
 
 // Добавляем canonical
-$this->registerLinkTag(['rel' => 'canonical', 'href' => Url::to(['horoscope/index', 'type' => 'common', 'period' => 'index'])]);
+//$this->registerLinkTag(['rel' => 'canonical', 'href' => Url::to(['horoscope/index', 'type' => 'common', 'period' => 'index'])]);
 
 $options = [
     'title' => "Онлайн гороскопы по знакам Зодиака",

@@ -1,5 +1,26 @@
 <?php
 return [
+    //
+    [
+        'pattern' => 'tablica-kalorijnosti/<category>/<product>',
+        'suffix' => '/',
+        'route' => 'calory/view',
+    ],
+    [
+        'pattern' => 'tablica-kalorijnosti/<category>/page/<page>',
+        'suffix' => '/',
+        'route' => 'calory/category',
+    ],
+    [
+        'pattern' => 'tablica-kalorijnosti/<category>',
+        'suffix' => '/',
+        'route' => 'calory/category',
+    ],
+    [
+        'pattern' => 'tablica-kalorijnosti',
+        'suffix' => '/',
+        'route' => 'calory/index',
+    ],
     // СОВМЕСТИМОСТЬ
     [
         'pattern' => 'znaki-zodiaka/sovmestimost/<znakWoman:[a-z]+>-woman/<znakMan:[a-z]+>-man',
