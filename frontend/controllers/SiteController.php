@@ -627,17 +627,17 @@ class SiteController extends Controller
                     <changefreq>daily</changefreq>
                     <priority>0.8</priority>
                 </url>";
-            for ($i = 1; $i <= 12; $i++) {
-                $znakTranslit = AppData::$engZnakiTranslit[$i];
-                foreach ($horoscopesList as $item) {
-                    $link = $item . '/' . $znakTranslit;
-                    $xml_map .= "
+            foreach ($horoscopesList as $item) {
+                $xml_map .= "
                     <url>
                         <loc>" . $baseUrl . $item . "/</loc>
                         <lastmod>" . $xml_date . "</lastmod>
                         <changefreq>daily</changefreq>
                         <priority>0.8</priority>
                     </url>";
+                for ($i = 1; $i <= 12; $i++) {
+                    $znakTranslit = AppData::$engZnakiTranslit[$i];
+                    $link = $item . '/' . $znakTranslit;
                     $xml_map .= "
                     <url>
                         <loc>" . $baseUrl . $link . "/</loc>
