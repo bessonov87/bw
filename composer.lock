@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b97be3439a5d55f38c5c199e6d56d06c",
-    "content-hash": "7c2e97c80baeec9e724402b82c667fc8",
+    "hash": "895454adea4f75fa4263d60eeeb07c6b",
+    "content-hash": "9baffb37ae2f004abbb64fa3e2e48564",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -95,6 +95,29 @@
                 "responsive",
                 "web"
             ]
+        },
+        {
+            "name": "bower-asset/chartjs",
+            "version": "v2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chartjs/Chart.js.git",
+                "reference": "18291ea3c5c0620f9f1951a0f04b1484940a7492"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chartjs/Chart.js/zipball/18291ea3c5c0620f9f1951a0f04b1484940a7492",
+                "reference": "18291ea3c5c0620f9f1951a0f04b1484940a7492",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "./dist/Chart.js"
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Simple HTML5 charts using the canvas element."
         },
         {
             "name": "bower-asset/jquery",

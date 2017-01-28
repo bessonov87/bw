@@ -36,7 +36,10 @@ $options['content'] = '<div class="prod-cats-table"><div class="row">';
 foreach ($categories as $category){
     /** @var \common\models\ProductsCategory $category */
     $link = Html::a($category->name, ['calory/category', 'category' => $category->url]);
-    $options['content'] .= '<div class="col-md-6">'.$link.'</div>';
+    $image = '<img src="/bw15/images/calories/'.$category->url.'.png">';
+    $options['content'] .= '<div class="col-md-6">
+        <div class="prod-cat-image">'.$image.'<span class="prod-cat-link">'.$link.'</span></div>
+    </div>';
 }
 $options['content'] .= '</div></div>';
 

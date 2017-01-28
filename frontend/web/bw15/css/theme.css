@@ -1646,3 +1646,252 @@ a.pisces, b.pisces {background-image:url(/bw15/images/horoscope/znaki/pisces.png
 .table-calories th a {
     color: #ffffff!important;
 }
+
+
+
+
+.nutrition_facts {
+    width: 275px;
+    border: 1px #333333 solid;
+    padding: 7px;
+    font-family: Helvetica, Tahoma, Arial, Helvetica;
+    font-size: 11px;
+    font-weight: bold;
+    color: #000000;
+    margin-right: 10px;
+}
+
+h2.nutrition_title {
+    font-size: 22px;
+    font-weight: 700;
+    padding-bottom: 8px;
+    margin: 0;
+}
+
+.serving_value {
+    float: left;
+    padding-right: 6px;
+}
+
+.energy {
+    font-size: 14px;
+}
+
+.nutri_value {
+    border-top: 1px #333 solid;
+}
+
+.facts_nutri_name {
+    float: left;
+    width: 160px;
+    padding: 8px 0 8px 0;
+}
+
+.micro_name {
+    float: left;
+    width: 140px;
+    padding: 8px 0 8px 0;
+}
+
+.micro_value {
+    float: left;
+    border-left: 1px #333 solid;
+    border-right: 1px #333 solid;
+    padding: 8px 6px 8px 6px;
+    width: 64px;
+}
+
+.facts_value {
+    float: left;
+    border-left: 1px #333 solid;
+    border-right: 1px #333 solid;
+    padding: 8px 6px 8px 6px;
+    width: 44px;
+}
+
+.nutri_procent {
+    float: right;
+    padding: 8px 0 8px 0;
+}
+
+.sub_nutri_value {
+    border-top: 1px #333 solid;
+    margin-left: 7px;
+}
+
+.facts_sub_nutri_name {
+    float: left;
+    width: 153px;
+    padding: 8px 0 8px 0;
+}
+
+.annotation {
+    font-size: 9px;
+}
+
+.mikro {
+    margin-top: 25px;
+    width: 275px;
+    border: 1px #333333 solid;
+    padding: 7px;
+    font-family: Helvetica, Tahoma, Arial, Helvetica;
+    font-size: 11px;
+    font-weight: bold;
+    color: #000000;
+    margin-right: 10px;
+}
+
+.diagramm-box {
+    border: 1px #333 solid;
+    padding: 7px;
+    margin-right: 10px;
+}
+
+.diagramm {
+    text-align: center;
+}
+
+.diagramm h2 {
+    font-size: 22px;
+    font-weight: 700;
+    padding-bottom: 8px;
+    margin: 0;
+}
+
+.diagram-canvas {
+    width: 400px;
+    height: 250px;
+    margin: 0 auto;
+}
+
+.diagram_nutri {
+    border-top: 1px #333 solid;
+    padding: 5px 0 5px 0;
+}
+
+.diagram_name {
+    float: left;
+    width: 260px;
+}
+
+.diagram_value {
+    float: left;
+}
+
+.diagram_procent {
+    float: right;
+}
+
+.diagram_sub_nutri {
+    border-top: 1px #333 solid;
+    padding: 5px 0 5px 0;
+    margin-left: 7px;
+}
+
+.diagram_sub_name {
+    float: left;
+    width: 253px;
+    padding: 5px 0 5px 0;
+}
+
+.diagram_sub_value {
+    padding: 5px 0;
+    float: left;
+}
+
+.diagram_sub_procent {
+    float: right;
+    padding: 5px 0 5px 0;
+}
+
+.vita_name,
+.makro_name {
+    float: left;
+    width: 320px;
+    padding: 5px 0 5px 0;
+}
+
+.vita_value,
+.makro_value {
+    float: left;
+    border-left: 1px #333 solid;
+    border-right: 1px #333 solid;
+    padding: 5px 6px 5px 6px;
+    width: 84px;
+}
+
+.vita_procent,
+.makro_procent {
+    float: right;
+    padding: 5px 0 5px 0;
+}
+
+.makro {
+    margin-top: 32px;
+    border: 1px #333333 solid;
+    padding: 7px;
+    font-family: Helvetica, Tahoma, Arial, Helvetica;
+    font-size: 11px;
+    font-weight: bold;
+    color: #000000;
+    margin-right: 10px;
+}
+
+.macro-canvas {
+    width: 400px;
+    height: 250px;
+    margin: 0 auto;
+}
+
+.product-info {
+    height: 150px;
+    margin-left: 10px;
+}
+
+.product-info:after {
+    clear: both;
+    content: "";
+    display: block;
+}
+
+.product-info-image {
+    width: 180px;
+    text-align: center;
+    border: 1px #666 solid;
+    float: left;
+    padding: 3px 0;
+}
+
+.product-info-cal {
+    width: 280px;
+    border: 1px #666 solid;
+    border-left: none;
+    float: left;
+    height: 100%;
+    padding-left: 8px;
+}
+
+.product-info-cal div {
+    padding: 8px 0;
+}
+
+.prod-cat-image {
+    padding: 5px;
+    float: left;
+}
+
+.prod-cat-image img {
+    width: 65px;
+    height: 65px;
+}
+
+.clear-after:after{
+    clear: both;
+    content: "";
+    display: block;
+}
+
+.prod-cats-table {
+    width: 600px;
+    margin: 0 auto;
+}
