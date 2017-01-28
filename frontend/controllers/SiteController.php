@@ -1,9 +1,13 @@
 <?php
 namespace frontend\controllers;
 
+use common\components\AppData;
+use common\models\ar\Goroskop;
 use common\models\ar\MoonCal;
 use common\models\ar\UserProfile;
 use common\models\elastic\PostElastic;
+use common\models\Product;
+use common\models\ProductsCategory;
 use frontend\components\behaviors\UrlBehavior;
 use Yii;
 use yii\base\InvalidParamException;
@@ -520,119 +524,254 @@ class SiteController extends Controller
      * @return string
      */
     public function generateSitemap() {
-        $xml_map = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+        try {
+            $xml_map = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">";
-        // Главная страница
-        $xml_map .= "
+            // Главная страница
+            $xml_map .= "
 		<url>
 			<loc>" . Yii::$app->params['frontendBaseUrl'] . "</loc>
 			<lastmod>" . date("Y-m-d") . "</lastmod>
 			<changefreq>daily</changefreq>
 			<priority>1.0</priority>
 		</url>";
-        // Категории
-        $categories = GlobalHelper::getCategories();
-        foreach($categories as $mass)		// Добаление категорий
-        {
-            $id = $mass['id'];
-            $xml_name = GlobalHelper::getCategoryUrlById($id);
-            $xml_date = date("Y-m-d");
-            $xml_map .= "
-		<url>
-			<loc>" . Yii::$app->params['frontendBaseUrl'] . $xml_name . "/</loc>
-			<lastmod>" . $xml_date . "</lastmod>
-			<changefreq>daily</changefreq>
-			<priority>0.8</priority>
-		</url>";
-        }
-        // Календари (лунные и стрижек)
-        $start_date = '2017-01-01';
-        $end_date = date('Y').'-12-31';
-        $days = MoonCal::find()->where(['between', 'date', $start_date, $end_date])->asArray()->all();
-        $months = [];
-        foreach ($days as $day){
-            list($year, $month, $day) = explode('-', $day['date']);
-            $months[$year][intval($month)] = true;
-        }
-        $baseUrl = Yii::$app->params['frontendBaseUrl'];
-        $baseUrl = substr($baseUrl, -1) === '/' ? substr($baseUrl, 0, strlen($baseUrl) - 1) : $baseUrl;
-        foreach($months as $year => $yearCals)		// Добаление категорий
-        {
-            if($year == date('Y')){
-                $xml_map .= "<url>
+            // Категории
+            $categories = GlobalHelper::getCategories();
+            foreach ($categories as $mass)        // Добаление категорий
+            {
+                $id = $mass['id'];
+                $xml_name = GlobalHelper::getCategoryUrlById($id);
+                $xml_date = date("Y-m-d");
+                $xml_map .= "
+                <url>
+                    <loc>" . Yii::$app->params['frontendBaseUrl'] . $xml_name . "/</loc>
+                    <lastmod>" . $xml_date . "</lastmod>
+                    <changefreq>daily</changefreq>
+                    <priority>0.8</priority>
+                </url>";
+            }
+            // Календари (лунные и стрижек)
+            $start_date = '2017-01-01';
+            $end_date = date('Y') . '-12-31';
+            $days = MoonCal::find()->where(['between', 'date', $start_date, $end_date])->asArray()->all();
+            $months = [];
+            foreach ($days as $day) {
+                list($year, $month, $day) = explode('-', $day['date']);
+                $months[$year][intval($month)] = true;
+            }
+            $baseUrl = Yii::$app->params['frontendBaseUrl'];
+            $baseUrl = substr($baseUrl, -1) === '/' ? substr($baseUrl, 0, strlen($baseUrl) - 1) : $baseUrl;
+            foreach ($months as $year => $yearCals)        // Добаление категорий
+            {
+                if ($year == date('Y')) {
+                    $xml_map .= "<url>
                     <loc>" . $baseUrl . Url::to(['horoscope/hair-calendar']) . "</loc>
                     <lastmod>" . date("Y-m-d") . "</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.8</priority>
                 </url>";
-                $xml_map .= "<url>
+                    $xml_map .= "<url>
                     <loc>" . $baseUrl . Url::to(['horoscope/moon-calendar']) . "</loc>
                     <lastmod>" . date("Y-m-d") . "</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.8</priority>
                 </url>";
-            } else {
-                $xml_map .= "<url>
+                } else {
+                    $xml_map .= "<url>
                     <loc>" . $baseUrl . Url::to(['horoscope/hair-year-calendar', 'year' => $year]) . "</loc>
                     <lastmod>" . date("Y-m-d") . "</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.8</priority>
                 </url>";
-                $xml_map .= "<url>
+                    $xml_map .= "<url>
                     <loc>" . $baseUrl . Url::to(['horoscope/moon-year-calendar', 'year' => $year]) . "</loc>
                     <lastmod>" . date("Y-m-d") . "</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.8</priority>
                 </url>";
-            }
-            foreach ($yearCals as $month => $monthCal){
-                $monthEng = GlobalHelper::engMonth($month);
-                $xml_map .= "<url>
+                }
+                foreach ($yearCals as $month => $monthCal) {
+                    $monthEng = GlobalHelper::engMonth($month);
+                    $xml_map .= "<url>
                     <loc>" . $baseUrl . Url::to(['horoscope/moon-month-calendar', 'year' => $year, 'month' => $monthEng]) . "</loc>
                     <lastmod>" . date("Y-m-d") . "</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.7</priority>
                 </url>";
-                $xml_map .= "<url>
+                    $xml_map .= "<url>
                     <loc>" . $baseUrl . Url::to(['horoscope/hair-month-calendar', 'year' => $year, 'month' => $monthEng]) . "</loc>
                     <lastmod>" . date("Y-m-d") . "</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.7</priority>
                 </url>";
-                $daysInMonth = date('t', strtotime($year.'-'.$month.'-01'));
-                for($i=1;$i<=$daysInMonth;$i++){
-                    $xml_map .= "<url>
+                    $daysInMonth = date('t', strtotime($year . '-' . $month . '-01'));
+                    for ($i = 1; $i <= $daysInMonth; $i++) {
+                        $xml_map .= "<url>
                     <loc>" . $baseUrl . Url::to(['horoscope/moon-day-calendar', 'year' => $year, 'month' => $monthEng, 'day' => $i]) . "</loc>
                     <lastmod>" . date("Y-m-d") . "</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.6</priority>
                 </url>";
+                    }
                 }
             }
-        }
-        // Статьи
-        $posts = Post::find()
-            ->where(['approve' => '1'])
-            ->andWhere(['<=', 'date', time()])
-            ->andWhere(['!=', 'category_art', 1])
-            ->orderBy('date')
-            ->all();
 
-        //var_dump($posts);
-        foreach($posts as $post) {
+            /* =================== ГОРОСКОП =================== */
+            $horoscopesList = [
+                '/horoscope/na-nedelju', '/horoscope/na-segodnja', '/horoscope/na-zavtra'
+            ];
             $xml_map .= "
+                <url>
+                    <loc>" . $baseUrl . "/horoscope/na-god/</loc>
+                    <lastmod>" . $xml_date . "</lastmod>
+                    <changefreq>daily</changefreq>
+                    <priority>0.8</priority>
+                </url>";
+            for ($i = 1; $i <= 12; $i++) {
+                $znakTranslit = AppData::$engZnakiTranslit[$i];
+                foreach ($horoscopesList as $item) {
+                    $link = $item . '/' . $znakTranslit;
+                    $xml_map .= "
+                    <url>
+                        <loc>" . $baseUrl . $item . "/</loc>
+                        <lastmod>" . $xml_date . "</lastmod>
+                        <changefreq>daily</changefreq>
+                        <priority>0.8</priority>
+                    </url>";
+                    $xml_map .= "
+                    <url>
+                        <loc>" . $baseUrl . $link . "/</loc>
+                        <lastmod>" . $xml_date . "</lastmod>
+                        <changefreq>daily</changefreq>
+                        <priority>0.7</priority>
+                    </url>";
+                }
+            }
+            // Гороскопы на год
+            $years = Goroskop::find()
+                ->select('year')
+                ->where(['period' => Goroskop::PERIOD_YEAR])
+                ->groupBy('year')
+                ->asArray()
+                ->all();
+            $years = ArrayHelper::getColumn($years, 'year');
+            foreach ($years as $year) {
+                $link = '/horoscope/na-god/';
+                $xml_map .= "
+                <url>
+                    <loc>" . $baseUrl . $link . $year . "/</loc>
+                    <lastmod>" . $xml_date . "</lastmod>
+                    <changefreq>daily</changefreq>
+                    <priority>0.8</priority>
+                </url>";
+                for ($i = 1; $i <= 12; $i++) {
+                    $znakTranslit = AppData::$engZnakiTranslit[$i];
+                    $xml_map .= "
+                    <url>
+                        <loc>" . $baseUrl . $link . $year . "/" . $znakTranslit . "/</loc>
+                        <lastmod>" . $xml_date . "</lastmod>
+                        <changefreq>daily</changefreq>
+                        <priority>0.7</priority>
+                    </url>";
+                }
+            }
+            // Гороскопы на месяца
+            $monthsList = [];
+            $months = Goroskop::find()
+                ->where(['period' => Goroskop::PERIOD_MONTH])
+                ->asArray()
+                ->all();
+            foreach ($months as $month) {
+                $monthsList[$month['year']][$month['month']] = true;
+            }
+            unset($months);
+
+            foreach ($monthsList as $year => $monthList2) {
+                $monthBase = '/horoscope/na-mesjac/' . $year . '/';
+                foreach ($monthList2 as $month => $value) {
+                    $link = $monthBase . sprintf('%02d', $month);
+                    $xml_map .= "
+                    <url>
+                        <loc>" . $link . "/</loc>
+                        <lastmod>" . $xml_date . "</lastmod>
+                        <changefreq>daily</changefreq>
+                        <priority>0.8</priority>
+                    </url>";
+                    for ($i = 1; $i <= 12; $i++) {
+                        $znakTranslit = AppData::$engZnakiTranslit[$i];
+                        $link2 = $link . '/' . $znakTranslit;
+                        $xml_map .= "
+                        <url>
+                            <loc>" . $link2 . "/</loc>
+                            <lastmod>" . $xml_date . "</lastmod>
+                            <changefreq>daily</changefreq>
+                            <priority>0.6</priority>
+                        </url>";
+                    }
+                }
+            }
+            /* =================== КАЛОРИЙНОСТЬ =================== */
+            $xml_map .= "
+            <url>
+                <loc>" . $baseUrl . "/tablica-kalorijnosti/</loc>
+                <lastmod>" . $xml_date . "</lastmod>
+                <changefreq>daily</changefreq>
+                <priority>0.8</priority>
+            </url>";
+            $calCategories = ProductsCategory::find()->all();
+            foreach ($calCategories as $category){
+                $link = Url::to(['calory/category', 'category' => $category->url]);
+                $xml_map .= "
+                <url>
+                    <loc>" . $baseUrl . $link . "</loc>
+                    <lastmod>" . $xml_date . "</lastmod>
+                    <changefreq>daily</changefreq>
+                    <priority>0.7</priority>
+                </url>";
+            }
+            $calCategories = ArrayHelper::index($calCategories, 'id');
+            // Продукты
+            $products = Product::find()->where(['approve' => 1])->all();
+            foreach ($products as $product){
+                $link = Url::to(['calory/view',
+                    'category' => $calCategories[$product->category]->url,
+                    'product' => $product->alt_name,
+                ]);
+                $xml_map .= "
+                <url>
+                    <loc>" . $baseUrl . $link . "</loc>
+                    <lastmod>" . $xml_date . "</lastmod>
+                    <changefreq>daily</changefreq>
+                    <priority>0.6</priority>
+                </url>";
+            }
+
+            // Статьи
+            $posts = Post::find()
+                ->where(['approve' => '1'])
+                ->andWhere(['<=', 'date', time()])
+                ->andWhere(['!=', 'category_art', 1])
+                ->orderBy('date')
+                ->all();
+
+            //var_dump($posts);
+            foreach ($posts as $post) {
+                $xml_map .= "
 		<url>
 			<loc>" . $post->absoluteLink . "</loc>
 			<lastmod>" . date("Y-m-d", $post->date) . "</lastmod>
 			<changefreq>weekly</changefreq>
 			<priority>0.6</priority>
 		</url>";
-        }
+            }
 
-        $xml_map .= "
+            $xml_map .= "
 </urlset>";
 
-        return $xml_map;
+            return $xml_map;
+        } catch (\Exception $e) {
+            echo YII_DEBUG ? $e->getMessage() : 'Error';
+        }
     }
 
 
