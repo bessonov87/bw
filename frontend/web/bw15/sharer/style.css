@@ -25,6 +25,9 @@
 .sharer-go { background-color: #dd4b39; }
 .sharer-go:hover { background-color: #f35340; }
 
+.sharer-mr { background-color: #168de2; }
+.sharer-mr:hover { background-color: #169bf6; }
+
 .sharer-fa { background-color: #3b5998; }
 .sharer-fa:hover { background-color: #436bb2; }
 
@@ -41,4 +44,44 @@
     display: inline-block;
     vertical-align: middle;
     margin-top: 5px;
+}
+
+.sharer-shares {
+    position: relative;
+    background: #ffffff;
+    border: 1px solid #d4d4d4;
+    width: 42px;
+    margin-top: 6px;
+    padding: 5px 0px;
+}
+.sharer-shares:after, .sharer-shares:before {
+    bottom: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.sharer-shares:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-bottom-color: #ffffff;
+    border-width: 5px;
+    margin-left: -5px;
+}
+.sharer-shares:before {
+    border-color: rgba(212, 212, 212, 0);
+    border-bottom-color: #d4d4d4;
+    border-width: 6px;
+    margin-left: -6px;
+}
+
+.shares-count {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
 }
