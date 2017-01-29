@@ -1,0 +1,44 @@
+.sharer {
+    float: left;
+    width: 42px;
+    border: 1px #ededed solid;
+    margin-left: -7px;
+}
+
+.sharer-item {
+    width: 42px;
+    height: 42px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.sharer-white {
+    color: white;
+}
+
+.sharer-vk { background-color: #45668e; }
+.sharer-vk:hover { background-color: #5078a7; }
+
+.sharer-go { background-color: #dd4b39; }
+.sharer-go:hover { background-color: #f35340; }
+
+.sharer-fa { background-color: #3b5998; }
+.sharer-fa:hover { background-color: #436bb2; }
+
+.sharer-ok { background-color: #ed812b; }
+.sharer-ok:hover { background-color: #f6882d; }
+
+.sharer-tw { background-color: #00aced; }
+.sharer-tw:hover { background-color: #00b5fa; }
+
+.sharer-fv { background-color: #EB4823; }
+.sharer-fv:hover { background-color: #f94c24; }
+
+.sharer-item i {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 5px;
+}

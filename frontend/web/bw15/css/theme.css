@@ -156,6 +156,10 @@ body {
 }
 /********************************************************/
 
+.content-box {
+    padding-left: 45px;
+}
+
 #content{
     width: 894px;
     margin: 0;

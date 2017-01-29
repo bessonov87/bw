@@ -25,7 +25,8 @@ class SocialButtonsWidget extends Widget
      * @inheritdoc
      */
     public function run(){
-        return $this->render('social');
+        return '';
+        //return $this->render('social');
     }
 
     /**

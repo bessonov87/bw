@@ -19,6 +19,7 @@ use app\components\widgets\PopularWidget;
 use app\components\widgets\SearchWidget;
 use app\components\widgets\FlashWidget;
 use app\components\widgets\ActualHoroscopesWidget;
+use app\components\widgets\SharerWidget;
 
 AppAsset::register($this);
 IeAsset::register($this);
@@ -96,43 +97,49 @@ $calendarsYear = date('m') == 12 && date('j') > 15 ? date('Y') + 1 : date('Y');
         </div>
         <div id="content">
 
-            <?= Breadcrumbs::widget([
-                'itemTemplate' => '<span>{link}</span>',
-                'activeItemTemplate' => '<span class="breadcrumbs_active">{link}</span>',
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                'options' => ['class' => 'breadcrumbs'],
-                'tag' => 'div',
-            ]) ?>
+            <?= SharerWidget::widget() ?>
 
-            <?= AdvertWidget::widget(
-                ['block_number' => 4]
-            ) ?>
+            <div class="content-box clear-after">
 
-            <!-- Таблица контент-->
-            <?= Alert::widget() ?>
-            <?= $content ?>
-            <!-- Таблица контент-->
+                <?= Breadcrumbs::widget([
+                    'itemTemplate' => '<span>{link}</span>',
+                    'activeItemTemplate' => '<span class="breadcrumbs_active">{link}</span>',
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                    'options' => ['class' => 'breadcrumbs'],
+                    'tag' => 'div',
+                ]) ?>
 
-            <!-- Блок Реклама Низ -->
-            <div id="content-item">
-                <div id="content-item-top" class="content-item-ads">Реклама</div>
-                <div id="content-item-content">
-                    <div id="content-center-10">
-                        <script type="text/javascript"><!--
-                        google_ad_client = "ca-pub-6721896084353188";
-                        /* Beauty-New */
-                        google_ad_slot = "1627586855";
-                        google_ad_width = 336;
-                        google_ad_height = 280;
-                        //-->
-                        </script>
-                        <script type="text/javascript"
-                                src="//pagead2.googlesyndication.com/pagead/show_ads.js">
-                        </script>
+                <?= AdvertWidget::widget(
+                    ['block_number' => 4]
+                ) ?>
+
+                <!-- Таблица контент-->
+                <?= Alert::widget() ?>
+                <?= $content ?>
+                <!-- Таблица контент-->
+
+                <!-- Блок Реклама Низ -->
+                <div id="content-item">
+                    <div id="content-item-top" class="content-item-ads">Реклама</div>
+                    <div id="content-item-content">
+                        <div id="content-center-10">
+                            <script type="text/javascript"><!--
+                            google_ad_client = "ca-pub-6721896084353188";
+                            /* Beauty-New */
+                            google_ad_slot = "1627586855";
+                            google_ad_width = 336;
+                            google_ad_height = 280;
+                            //-->
+                            </script>
+                            <script type="text/javascript"
+                                    src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+                            </script>
+                        </div>
                     </div>
                 </div>
+                <!-- Конец Блок Реклама Низ -->
+
             </div>
-            <!-- Конец Блок Реклама Низ -->
 
 
         </div>
