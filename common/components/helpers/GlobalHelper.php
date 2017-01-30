@@ -1,6 +1,7 @@
 <?php
 namespace common\components\helpers;
 
+use common\models\ar\Advert;
 use common\models\ar\Countries;
 use backend\models\Log;
 use common\models\ar\Comment;
@@ -596,6 +597,46 @@ class GlobalHelper
      */
     public static function getSunday($week, $year=""){
         return static::getMonday($week, $year) + 6 * 86400;
+    }
+
+    /**
+     * Вставка рекламных материалов в текст статьи
+     *
+     * Рекламные материалы задаются в базе данных в таблице 'advert'. Они могут иметь 3 варианта расположения:
+     * bottom (под текстом статьи), top (над текстом статьи) и inside (в середине текста статьи), а также выводиться
+     * в любом месте статьи при помощи тэга подстановки, указываемого в виде произвольной строки (напр. [yandex]) или
+     * конструкцией вида [advert-<block_number>] (где block_number - номер рекламного блока), если не указан строковый
+     * тэг подстановки.
+     *
+     * @param $text
+     * @return mixed
+     */
+    public static function insertAdvert($text) {
+        $adverts = Advert::find()
+            ->where(['approve' => 1])
+            ->asArray()
+            ->all();
+
+        if(is_null($adverts))
+            return $text;
+
+        foreach($adverts as $advert) {
+            if(!$advert['replacement_tag']) {
+                $advert['replacement_tag'] = 'none';
+            }
+            if($advert['location'] != 'various'){
+                if($advert['replacement_tag'] != 'none' && strstr($text, "[{$advert['replacement_tag']}]"))
+                {
+                    $text = str_replace("[{$advert['replacement_tag']}]", $advert['code'], $text);
+                }
+                else if($advert['replacement_tag'] == "none" && strstr($text, "[advert-{$advert['block_number']}]"))
+                {
+                    $text = str_replace("[advert-{$advert['block_number']}]", $advert['code'], $text);
+                }
+            }
+        }
+
+        return $text;
     }
 
 }

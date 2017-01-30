@@ -45,7 +45,8 @@ use app\components\widgets\FavoriteWidget;
                 <div class="clear"></div>
             </div>
             <div align="justify" style="color:#000000; font-size:14px; line-height: 1.5;" id="art_full">
-                <?=$options['content']?>
+                <?=GlobalHelper::insertAdvert($options['content'])?>
+                <p>&nbsp;</p>
                 <?php if(isset($options['similar']) && is_array($options['similar'])): ?>
                     <div class="related_posts">
                         <strong>Другие публикации по теме:</strong><br/><?=SimilarPostsWidget::widget(['links' => $options['similar'], 'list' => true, 'listType' => 'ol'])?>
