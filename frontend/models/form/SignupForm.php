@@ -79,6 +79,9 @@ class SignupForm extends Model
             if (!$user->save()) {
                 \Yii::error("Can not save User {$user->email}. Errors: ".json_encode($user->getErrors()), __METHOD__);
             } else {
+                if(Yii::$app->params['emailActivation'] == true){
+                    $user->sendEmailConfirm();
+                }
                 return $user;
             }
         } else {
