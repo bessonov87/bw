@@ -33,7 +33,7 @@ class m170218_085508_mod_user_add_profile_columns extends Migration
         $profiles = \common\models\UserProfile::find();
         foreach ($profiles->each() as $profile){
             /** @var $profile \common\models\UserProfile */
-            $sql = 'UPDATE user SET '.
+            $sql = 'UPDATE "user" SET '.
               '"sex" = \''.$profile->sex.'\', 
               "name" = \''.$profile->name.'\', 
               "surname" = \''.$profile->surname.'\', 
