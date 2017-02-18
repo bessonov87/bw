@@ -26,7 +26,7 @@ $this->title = "Профиль пользователя ".$user->username.". ".Y
 
                 </div>
                 <h2 class="user_login"><?= $user->username ?></h2>
-                <p class="user_name"><?= $user->name ?></p>
+                <p class="user_name"><?= $user->name ?> <?= ($user->surname ?: '') ?></p>
             </div>
 
             <div class="user_about">
