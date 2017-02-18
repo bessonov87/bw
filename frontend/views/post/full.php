@@ -65,9 +65,15 @@ $this->registerLinkTag(['rel' => 'canonical', 'href' => $post->absoluteLink]);
                 <div class="clear"></div>
             </div>
             <div align="justify" style="color:#000000; font-size:14px; line-height: 1.5;" id="art_full"><?=$post->full?></div>
-            <div class="related_posts">
-                <strong>Другие публикации по теме:</strong><br/><?=SimilarPostsWidget::widget(['posts' => $post->similarPosts, 'list' => true, 'listType' => 'ol'])?>
-            </div>
+            <?php
+                $similar = $post->similarPosts;
+                if($similar){
+                    echo '<div class="related_posts">
+                        <strong>Другие публикации по теме:</strong><br/>
+                        '.SimilarPostsWidget::widget(['posts' => $similar, 'list' => true, 'listType' => 'ol']).'
+                    </div>';
+                }
+            ?>
         </div>
         <div class="clear"></div>
         <div id="content-item-rating">
