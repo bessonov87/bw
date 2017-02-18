@@ -241,6 +241,7 @@ class User extends BaseUser implements IdentityInterface
     public function generateEmailConfirmToken()
     {
         $this->email_confirm_token = Yii::$app->security->generateRandomString() . '_' . time();
+        return $this->save(false);
     }
 
     /**
