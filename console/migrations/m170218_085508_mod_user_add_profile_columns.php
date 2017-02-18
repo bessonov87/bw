@@ -37,7 +37,7 @@ class m170218_085508_mod_user_add_profile_columns extends Migration
               '"sex" = \''.$profile->sex.'\', 
               "name" = \''.$profile->name.'\', 
               "surname" = \''.$profile->surname.'\', 
-              "birth_date" = \''.$profile->birth_date.'\', 
+              "birth_date" = '.($profile->birth_date) ? '\''.$profile->birth_date.'\'' : null .', 
               "country" = \''.$profile->country.'\', 
               "city" = \''.$profile->city.'\', 
               "avatar" = \''.$profile->avatar.'\', 
