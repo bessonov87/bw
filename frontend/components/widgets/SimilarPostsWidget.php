@@ -83,6 +83,9 @@ class SimilarPostsWidget extends Widget {
     {
         if($this->list === true){
             $list = [];
+            if(!is_array($this->links)){
+                return '';
+            }
             foreach($this->links as $link){
                 $list[] = Html::a($this->cutTitle($link['title']), $link['url']);
             }
@@ -110,6 +113,9 @@ class SimilarPostsWidget extends Widget {
     {
         if($this->list === true){
             $list = [];
+            if(!is_array($this->posts)){
+                return '';
+            }
             foreach($this->posts as $post){
                 $link = (!$this->manual) ? $post->link : $link = $post->url;
                 $list[] = Html::a($this->cutTitle($post->title), $link);
