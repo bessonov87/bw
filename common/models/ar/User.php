@@ -289,6 +289,18 @@ class User extends BaseUser implements IdentityInterface
     }
 
     /**
+     * Аватар пользователя
+     */
+    public function getUserAvatar(){
+        if(!$this->avatar){
+            $avatar = ($this->sex == 'm') ? 'noavatar_male.png' : 'noavatar_female.png';
+        } else {
+            $avatar = $this->avatar;
+        }
+        return Yii::$app->params['paths']['avatar'].$avatar;
+    }
+
+    /**
      * Возвращает город/страну пользователя (выводится в профиле)
      * @return string
      */

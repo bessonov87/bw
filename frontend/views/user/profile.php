@@ -30,7 +30,7 @@ $this->title = "Профиль пользователя ".$user->username.". ".Y
             </div>
 
             <div class="user_about">
-                <div class="img_square" style="background: url('<?= $user->avatar ?>') 50% 0"></div>
+                <div class="img_square" style="background: url('<?= $user->userAvatar ?>') 50% 0"></div>
                 <h3>О себе</h3>
                 <p class="user_info"><?= $user->info ?></p>
             </div>
