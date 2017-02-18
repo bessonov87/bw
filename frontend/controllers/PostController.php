@@ -270,19 +270,19 @@ class PostController extends Controller{
                 {
                     if(!$advert['on_request'])
                     {
-                        $dlina_full = strlen($post->full);
+                        $dlina_full = mb_strlen($post->full);
                         $seredina_full = round($dlina_full/2);
                         $diapazon_start = $seredina_full - 100;
                         $diapazon_finish = $seredina_full + 100;
 
-                        $perv_chast = substr($post->full, 0, $diapazon_start-1);
-                        $sred_chast = substr($post->full, $diapazon_start, 201);
-                        $vtor_chast = substr($post->full, $diapazon_finish+1);
+                        $perv_chast = mb_substr($post->full, 0, $diapazon_start-1);
+                        $sred_chast = mb_substr($post->full, $diapazon_start, 201);
+                        $vtor_chast = mb_substr($post->full, $diapazon_finish+1);
 
-                        $pos_tochka = strpos($sred_chast, ".");
+                        $pos_tochka = mb_strpos($sred_chast, ".");
 
-                        $sred_1 = substr($sred_chast, 0, $pos_tochka);
-                        $sred_2 = substr($sred_chast, $pos_tochka+1);
+                        $sred_1 = mb_substr($sred_chast, 0, $pos_tochka);
+                        $sred_2 = mb_substr($sred_chast, $pos_tochka+1);
 
                         $post->full = $perv_chast.$sred_1.'.<br />' . $advert['code'] . '<br>'.$sred_2.$vtor_chast;
                     }
