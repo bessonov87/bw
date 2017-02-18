@@ -19,8 +19,8 @@ if(is_array($messages)):
     <div class="message">
         <div class="row message_header">
             <div class="col-md-3 message_time"><?= date('d.m.Y H:i:s', round($message->log_time)) ?></div>
-            <div class="col-md-4 message_title"><?= $message->category ?></div>
-            <div class="col-md-5 message_prefix"><?= $message->prefix ?></div>
+            <div class="col-md-4 message_title"><?= Html::encode($message->category) ?></div>
+            <div class="col-md-5 message_prefix"><?= Html::encode($message->prefix) ?></div>
         </div>
         <div class="panel-group">
             <div class="panel panel-default">
@@ -30,7 +30,7 @@ if(is_array($messages)):
                     </h4>
                 </div>
                 <div id="collapse-<?=$message->id?>" class="panel-collapse collapse">
-                    <div class="panel-body"><?= nl2br($message->message) ?></div>
+                    <div class="panel-body"><?= nl2br(Html::encode($message->message)) ?></div>
                 </div>
             </div>
         </div>
