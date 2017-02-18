@@ -162,7 +162,7 @@ class HoroscopeController extends Controller
         else if($znaki_blago == 3) $znaki_blago = "<span style=\"font-style:italic; font-weight:bold;\">Нейтральное влияние</span>";
 
         $lunar_day = $month_array[$date]['moon_day'];
-        $moonDni = MoonDni::find()->where(['num' => $lunar_day])->asArray()->one();
+        $moonDni = MoonDni::find()->where(['num' => intval($lunar_day)])->asArray()->one();
         $dni_text = $moonDni['text'];
         $dni_blago = $moonDni['blago'];
         if($dni_blago == 1) $dni_blago = "<span style=\"font-style:italic; font-weight:bold; color:#090;\">Положительное влияние</span>";
