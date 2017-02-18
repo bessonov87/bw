@@ -26,19 +26,19 @@ $this->title = "Профиль пользователя ".$user->username.". ".Y
 
                 </div>
                 <h2 class="user_login"><?= $user->username ?></h2>
-                <p class="user_name"><?= $user->profile->name ?></p>
+                <p class="user_name"><?= $user->name ?></p>
             </div>
 
             <div class="user_about">
                 <div class="img_square" style="background: url('<?= $user->avatar ?>') 50% 0"></div>
                 <h3>О себе</h3>
-                <p class="user_info"><?= $user->profile->info ?></p>
+                <p class="user_info"><?= $user->info ?></p>
             </div>
 
             <div class="user_personal">
                 <h2>Личное:</h2>
-                <p class="user_sex"><div>Пол:</div><span><?= ($user->profile->sex == "m") ? "Мужской" : "Женский" ?></span></p>
-                <p class="user_birth"><div>Дата рождения:</div><span><?= ($user->profile->birth_date) ? $user->profile->birth_date : "не указана" ?></span></p>
+                <p class="user_sex"><div>Пол:</div><span><?= ($user->sex == "m") ? "Мужской" : "Женский" ?></span></p>
+                <p class="user_birth"><div>Дата рождения:</div><span><?= ($user->birth_date) ? $user->birth_date : "не указана" ?></span></p>
                 <p class="user_location"><div>Страна/город:</div><span><?= $user->location ?></span></p>
             </div>
 

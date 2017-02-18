@@ -39,7 +39,6 @@ class UserWidget extends Widget
     public function run(){
         $user = User::find()
             ->where(['username' => \Yii::$app->request->get('username')])
-            ->joinWith('profile')
             ->limit(1)
             ->one();
 

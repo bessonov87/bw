@@ -122,7 +122,6 @@ class UserController extends Controller{
     public function getUser(){
         $user = User::find()
             ->where(['username' => \Yii::$app->request->get('username')])
-            ->joinWith('profile')
             ->limit(1)
             ->one();
 

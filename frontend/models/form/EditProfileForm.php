@@ -3,12 +3,8 @@
 namespace frontend\models\form;
 
 use common\models\ar\User;
-use common\models\ar\UserProfile;
 use common\models\BwImage;
 use Imagine\Image\Box;
-use Imagine\Image\Point;
-use Imagine\Image\ManipulatorInterface;
-use yii\base\Model;
 use Yii;
 use yii\imagine\Image;
 use app\components\StartPoint;
@@ -19,7 +15,7 @@ use app\components\StartPoint;
  * @author Sergey Bessonov <bessonov87@gmail.com>
  * @since 1.0
  */
-class EditProfileForm extends UserProfile
+class EditProfileForm extends User
 {
     public $birthYear;
     public $birthMonth;

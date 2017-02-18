@@ -2,7 +2,6 @@
 namespace frontend\models\form;
 
 use common\models\ar\User;
-use common\models\ar\UserProfile;
 use yii\base\Model;
 use Yii;
 
@@ -77,24 +76,8 @@ class SignupForm extends Model
             if(Yii::$app->params['emailActivation'] == true){
                 $user->status = $user::STATUS_NOT_ACTIVE;
             }
-            $transaction = Yii::$app->db->beginTransaction();
-            if ($r = $user->save()) {
-                $profile = new UserProfile();
-                $profile->user_id = $user->id;
-                if($profile->save()){
-                    $transaction->commit();
-                    // Генерируем токен для подтверждения email
-                    $user->generateEmailConfirmToken();
-                    // Сохраняем его в базе
-                    $user->save();
-                    // Отправляем письмо
-                    $user->sendEmailConfirm();
-                    return $user;
-                } else {
-                    $transaction->rollBack();
-                }
-            } else {
-                $transaction->rollBack();
+            if (!$user->save()) {
+                \Yii::error("Can not save User {$user->email}. Errors: ".json_encode($user->getErrors()), __METHOD__);
             }
         }
 

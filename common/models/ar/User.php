@@ -51,7 +51,7 @@ class User extends BaseUser implements IdentityInterface
             ->where(['id' => $id])
             ->andWhere(['not in', 'status', [self::STATUS_DELETED, self::STATUS_BANNED]])
             ->one();
-        static::registerLastVisit($identity->id);
+        static::registerLastVisit($identity);
         return $identity;
     }
 
@@ -280,10 +280,10 @@ class User extends BaseUser implements IdentityInterface
      * Аватар пользователя
      */
     public function getAvatar(){
-        if(!$this->profile->avatar){
-            $avatar = ($this->profile->sex == 'm') ? 'noavatar_male.png' : 'noavatar_female.png';
+        if(!$this->avatar){
+            $avatar = ($this->sex == 'm') ? 'noavatar_male.png' : 'noavatar_female.png';
         } else {
-            $avatar = $this->profile->avatar;
+            $avatar = $this->avatar;
         }
         return Yii::$app->params['paths']['avatar'].$avatar;
     }
@@ -293,18 +293,18 @@ class User extends BaseUser implements IdentityInterface
      * @return string
      */
     public function getLocation(){
-        if($this->profile->country){
-            if(strlen($this->profile->country) == 2){
+        if($this->country){
+            if(strlen($this->country) == 2){
                 // НАЗВАНИЕ СТРАНЫ ПО ДВУХБУКВЕННОМУ КОДУ
-                $country = $this->profile->country;
+                $country = $this->country;
             } else {
-                $country = $this->profile->country;
+                $country = $this->country;
             }
         } else {
             $country = "Не указана";
         }
 
-        $city = ($this->profile->city) ? Html::encode($this->profile->city) : "Не указан";
+        $city = ($this->city) ? Html::encode($this->city) : "Не указан";
 
         return $country.'/'.$city;
     }
@@ -319,12 +319,11 @@ class User extends BaseUser implements IdentityInterface
 
     /**
      * Регистрирует последний визит в профиле пользователя
-     * @param $user_id
+     * @param User $user
      */
-    public static function registerLastVisit($user_id){
-        $profile = UserProfile::findOne($user_id);
-        $profile->last_visit = time();
-        $profile->last_ip = Yii::$app->request->getUserIP();
-        $profile->save();
+    public static function registerLastVisit($user){
+        $user->last_visit = time();
+        $user->last_ip = Yii::$app->request->getUserIP();
+        $user->save();
     }
 }

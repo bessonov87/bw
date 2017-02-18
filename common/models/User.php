@@ -19,6 +19,17 @@ use Yii;
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $last_login_at
+ * @property string $sex
+ * @property string $name
+ * @property string $surname
+ * @property string $birth_date
+ * @property string $country
+ * @property string $city
+ * @property string $avatar
+ * @property string $info
+ * @property string $signature
+ * @property integer $last_visit
+ * @property string $last_ip
  *
  * @property Auth[] $auths
  * @property Comment[] $comments
@@ -46,9 +57,12 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             [['username', 'auth_key', 'password_hash', 'email', 'created_at'], 'required'],
-            [['status', 'user_group', 'created_at', 'updated_at', 'last_login_at'], 'integer'],
-            [['username', 'password_hash', 'password_reset_token', 'email_confirm_token', 'email'], 'string', 'max' => 255],
+            [['status', 'user_group', 'created_at', 'updated_at', 'last_login_at', 'last_visit'], 'integer'],
+            [['birth_date'], 'safe'],
+            [['info'], 'string'],
+            [['username', 'password_hash', 'password_reset_token', 'email_confirm_token', 'email', 'name', 'surname', 'country', 'city', 'avatar', 'signature', 'last_ip'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
+            [['sex'], 'string', 'max' => 1],
             [['email_confirm_token'], 'unique'],
             [['email'], 'unique'],
             [['password_reset_token'], 'unique'],
@@ -74,6 +88,17 @@ class User extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'last_login_at' => 'Last Login At',
+            'sex' => 'Sex',
+            'name' => 'Name',
+            'surname' => 'Surname',
+            'birth_date' => 'Birth Date',
+            'country' => 'Country',
+            'city' => 'City',
+            'avatar' => 'Avatar',
+            'info' => 'Info',
+            'signature' => 'Signature',
+            'last_visit' => 'Last Visit',
+            'last_ip' => 'Last Ip',
         ];
     }
 

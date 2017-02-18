@@ -894,15 +894,13 @@ class SiteController extends Controller
                     $user->generatePasswordResetToken();
                     $transaction = $user->getDb()->beginTransaction();
                     if ($user->save()) {
-                        $profile = new UserProfile();
-                        $profile->user_id = $user->id;
-                        $profile->name = $userInfo['name'];
-                        $profile->surname = $userInfo['surname'];
-                        $profile->birth_date = $userInfo['birth_date'];
+                        $user->name = $userInfo['name'];
+                        $user->surname = $userInfo['surname'];
+                        $user->birth_date = $userInfo['birth_date'];
                         if(isset($userInfo['sex'])){
-                            $profile->sex = $userInfo['sex'];
+                            $user->sex = $userInfo['sex'];
                         }
-                        $profile->save();
+                        $user->save();
 
                         $auth = new Auth([
                             'user_id' => $user->id,
