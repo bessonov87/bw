@@ -4,8 +4,9 @@ use yii\widgets\ActiveForm;
 use common\components\helpers\GlobalHelper;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\ar\Comment */
+/* @var $model \frontend\models\form\EditProfileForm */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $user \common\models\ar\User */
 
 $this->title = "Редактирование профиля пользователя";
 ?>
@@ -58,6 +59,7 @@ $this->title = "Редактирование профиля пользовате
             <?= $form->field($model, 'signature') ?>
 
             <div class="form-group">
+                <?= Html::a('< Вернуться', '/user/'.$user->username.'/', ['class' => 'btn btn-default']) ?>
                 <?= Html::submitButton('Редактировать', ['class' => 'btn btn-primary']) ?>
             </div>
 
