@@ -31,7 +31,7 @@ class Post extends BasePost
             'meta_keywords' => 'Meta Keywords',
             'url' => 'Url',
             'related' => 'Похожие',
-            'views' => 'Views',
+            'views' => 'Просмотры',
             'edit_date' => 'Edit Date',
             'edit_user' => 'Edit User',
             'edit_reason' => 'Edit Reason',
@@ -141,6 +141,24 @@ class Post extends BasePost
             $similarPosts = $query2
                 ->limit(5)
                 ->all();
+        }
+
+        if(!$similarPosts){
+            $someSimilarPosts = Post::find()
+                ->andWhere(['approve' => static::APPROVED])
+                ->andWhere( 'id != '.$this->id )
+                ->andWhere(['not_in_related' => 0])
+                ->andWhere(['category_art' => 0])
+                ->andWhere(['category_id' => $this->category_id])
+                ->orderBy(['views' => SORT_DESC])
+                ->limit(30)
+                ->all();
+
+            $randKeys = array_rand($someSimilarPosts, 5);
+            $similarPosts = [];
+            foreach ($randKeys as $key){
+                $similarPosts[] = $someSimilarPosts[$key];
+            }
         }
 
         return $similarPosts;
