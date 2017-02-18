@@ -1,5 +1,12 @@
 <?php
 return [
+    [ // Redirect
+      // from https://beauty-women.ru/horoscope/lunnyj-kalendar-na-god/18_oktjabrja_2014_goda.html
+      // to   https://beauty-women.ru/horoscope/lunnyj-kalendar-na-god/2014/oktjabr/18/
+        'pattern' => 'horoscope/lunnyj-kalendar-na-god/<day:[0-9]+>_<monthr:[a-z]+>_<year:[0-9]+>_goda',
+        'suffix' => '.html',
+        'route' => 'horoscope/redirect-moon-calendar',
+    ],
     //
     [
         'pattern' => 'tablica-kalorijnosti/<category>/<product>',

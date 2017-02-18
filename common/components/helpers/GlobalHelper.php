@@ -262,8 +262,12 @@ class GlobalHelper
             // Возвращаем название месяца
             return $rootMonth[(int)$monthNum] . $endMonth[(int)$monthNum][$case];
         } else {
+            $months = [];
+            for($i=1;$i<=12;$i++){
+                $months[$i] = $rootMonth[$i].$endMonth[$i][$case];
+            }
             // Ищем и возвращаем номер месяца
-            foreach($rootMonth as $key => $root){
+            foreach($months as $key => $root){
                 if(strpos($root, $monthNum) !== false){
                     return $key;
                 }

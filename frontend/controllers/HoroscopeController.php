@@ -9,6 +9,7 @@ use common\models\MoonDni;
 use common\models\MoonFazy;
 use common\models\MoonZnaki;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -147,6 +148,10 @@ class HoroscopeController extends Controller
         $date = $year.'-'.sprintf('%02d', $monthNum).'-'.sprintf('%02d', $day);
 
         $month_array = $this->getMonthData($year, $monthNum);
+
+        if(!array_key_exists($date, $month_array)){
+            throw new NotFoundHttpException("Страница не найдена!");
+        }
 
         $moon_zodiak = $month_array[$date]['moon_zodiak'];
         $moonZnaki = MoonZnaki::find()->where(['num' => GlobalHelper::rusZodiac($moon_zodiak, 'i', true)])->asArray()->one();
@@ -296,6 +301,34 @@ class HoroscopeController extends Controller
         }
 
         return ArrayHelper::index($month_array, 'date');
+    }
+
+    /**
+     * Редиректы со старых страниц лунного календаря на день
+     * вида https://beauty-women.ru/horoscope/lunnyj-kalendar-na-god/18_oktjabrja_2014_goda.html
+     * на новые вида https://beauty-women.ru/horoscope/lunnyj-kalendar-na-god/2014/oktjabr/18/
+     * @param $day
+     * @param $monthr
+     * @param $year
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     */
+    public function actionRedirectMoonCalendar($day, $monthr, $year)
+    {
+        if(!$year || !$monthr || !$day){
+            throw new NotFoundHttpException("Страница не найдена");
+        }
+        $monthNum = GlobalHelper::engMonth($monthr, 'r', true);
+        $engMonth = GlobalHelper::engMonth($monthNum);
+        if(!$year || !$engMonth || !$day){
+            throw new NotFoundHttpException("Страница не найдена");
+        }
+
+        $newLink = Url::to(['horoscope/moon-day-calendar', 'year' => $year, 'month' => $engMonth, 'day' => $day]);
+        if(!$newLink){
+            throw new NotFoundHttpException("Страница не найдена");
+        }
+        return $this->redirect($newLink, 301);
     }
 
 }
