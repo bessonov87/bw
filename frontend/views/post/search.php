@@ -4,10 +4,6 @@
 /** @var \common\models\ar\Post $post */
 /** @var \frontend\models\form\SearchForm $searchModel */
 
-//use yii\jui\DatePicker;
-//use yii\widgets\LinkPager;
-use app\components\MyLinkPager;
-//use Yii;
 use yii\helpers\Html;
 use app\components\widgets\SearchWidget;
 use common\components\helpers\GlobalHelper;

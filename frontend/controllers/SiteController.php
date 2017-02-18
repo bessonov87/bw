@@ -346,6 +346,7 @@ class SiteController extends Controller
         $posts = [];
         //$date = date('Y-m-d H:i:s');
         $searchModel = new SearchForm();
+        $q = '';
         if ($searchModel->load(Yii::$app->request->post()) && $searchModel->validate()) {
             $log_info = "Raw query: {$searchModel->story}\n";
             $q = strip_tags($searchModel->story);
