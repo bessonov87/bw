@@ -9,6 +9,9 @@ use common\components\helpers\GlobalHelper;
 use app\components\widgets\CommentsWidget;
 use app\components\widgets\RatingWidget;
 use app\components\widgets\FavoriteWidget;
+use frontend\assets\FancyboxAsset;
+
+FancyboxAsset::register($this);
 
 foreach(GlobalHelper::getCategoryBreadcrumb(Yii::$app->params['category'][0]) as $cBreadcrumb) {
     $this->params['breadcrumbs'][] = ['label' => Html::a($cBreadcrumb['label'], $cBreadcrumb['link']), 'encode' => false];

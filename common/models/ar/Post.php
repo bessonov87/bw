@@ -154,14 +154,16 @@ class Post extends BasePost
                 ->limit(30)
                 ->all();
 
-            $randKeys = array_rand($someSimilarPosts, 5);
-            $similarPosts = [];
-            foreach ($randKeys as $key){
-                $similarPosts[] = $someSimilarPosts[$key];
+            if($someSimilarPosts) {
+                $randKeys = array_rand($someSimilarPosts, 5);
+                $similarPosts = [];
+                foreach ($randKeys as $key) {
+                    $similarPosts[] = $someSimilarPosts[$key];
+                }
             }
         }
 
-        return $similarPosts;
+        return $similarPosts ?: [];
     }
 
     /**

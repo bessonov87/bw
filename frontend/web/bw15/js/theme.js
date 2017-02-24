@@ -5,6 +5,8 @@ $(document).ready(function() {
     //<a class="fancybox"><img src="image.jpg" /></a>
     //<a class="fancybox" data-fancybox-group="group"><img src="image.jpg" /></a>
     $(".fancybox").fancybox();
+    $(".fancybox_image").fancybox();
+    $('a[rel="imagebox"]').fancybox();
 
     //Плавный скролл до блока .div по клику на .scroll
     //Документация: https://github.com/flesler/jquery.scrollTo
