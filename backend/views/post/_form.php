@@ -26,7 +26,7 @@ if (!$model->id) {
 
     <?= $form->field($model, 'author_id')->textInput(['style' => 'width: 150px;']) ?>
 
-    <?= $form->field($model, 'date')->textInput(['style' => 'width: 150px;', 'id' => 'calendar-field']) ?>
+    <?= $form->field($model, 'date')->textInput(['style' => 'width: 150px;', 'id' => 'calendar-field', 'value' => (new \DateTime($model->date, new \DateTimeZone('Europe/Moscow')))->format('Y-m-d H:i:s')]) ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
