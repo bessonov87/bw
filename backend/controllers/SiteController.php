@@ -97,6 +97,8 @@ class SiteController extends Controller
      * Получение токена Яндекс API
      * Нужно передать логи и пароль Яндекса
      * ID и Secret берутся из параметров (params-local.php)
+     *
+     * НЕ РАБОТАЕТ!!!
      */
     public function actionToken($user, $pass){
         $yandex_get_token_url = "https://oauth.yandex.ru/token";

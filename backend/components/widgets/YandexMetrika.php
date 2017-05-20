@@ -31,10 +31,13 @@ class YandexMetrika extends Widget
      * @inheritdoc
      */
     public function run(){
-        return $this->render('metrika-graph', [
+
+        return 'График Метрики Временно недоступен';
+
+        /*return $this->render('metrika-graph', [
             'data' => $this->getData($this->period),
             'type' => $this->graphType,
-        ]);
+        ]);*/
     }
 
     /**
