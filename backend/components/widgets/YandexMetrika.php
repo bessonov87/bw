@@ -60,6 +60,7 @@ class YandexMetrika extends Widget
         }
         $metrikaUrl = "http://api-metrika.yandex.ru/stat/traffic/summary.json?id=".Yii::$app->params['YandexCounterID']."&pretty=1&date1=$start&date2=$end&oauth_token=".Yii::$app->params['YandexToken'];
         //var_dump($metrikaUrl);
+        $metrikaUrl = "https://api-metrika.yandex.ru/stat/v1/data?metrics=ym:s:visits&id=".Yii::$app->params['YandexCounterID']."&oauth_token=".Yii::$app->params['YandexToken'];
 
         $ch = curl_init();
         curl_setopt ($ch, CURLOPT_URL,$metrikaUrl);

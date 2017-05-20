@@ -95,15 +95,17 @@ class SiteController extends Controller
 
     /**
      * Получение токена Яндекс API
+     * Нужно передать логи и пароль Яндекса
+     * ID и Secret берутся из параметров (params-local.php)
      */
-    public function actionToken(){
+    public function actionToken($user, $pass){
         $yandex_get_token_url = "https://oauth.yandex.ru/token";
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $yandex_get_token_url);
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, 'grant_type=password&username=lenchic-77&password=a077756745&client_id='.Yii::$app->params['YandexID'].'&client_secret='.Yii::$app->params['YandexPassword']);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, 'grant_type=password&username='.$user.'&password='.$pass.'&client_id='.Yii::$app->params['YandexID'].'&client_secret='.Yii::$app->params['YandexPassword']);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $token = curl_exec($ch);
         curl_close($ch);
