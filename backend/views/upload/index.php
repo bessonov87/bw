@@ -125,7 +125,8 @@ function insertfile(selectedFileId) {
         <?php
         // Изображения
         foreach($images as $image):
-        /** @var $image common\models\ar\Images */
+
+            /** @var $image common\models\ar\Images */
             /*// Для старых статей все немного по-другому
             if(mb_stristr($image->image_name, '|||')){
 
@@ -134,6 +135,9 @@ function insertfile(selectedFileId) {
             $imageUrl = Yii::$app->params['frontendBaseUrl'].'uploads/'.$image->folder.'/'.$image->image_name;
             $imagePath = Yii::getAlias(Yii::$app->params['admin']['uploadsPathAlias']).$image->folder.'/'.$image->image_name;
             $thumbPath = Yii::getAlias(Yii::$app->params['admin']['uploadsPathAlias']).$image->folder.'/thumbs/'.$image->image_name;
+            if(!file_exists($imagePath)){
+                continue;
+            }
             $imageSize = getimagesize($imagePath);
             $imageM = '<img src="'.$imageUrl.'" width="50" height="30">';
             if(is_file($thumbPath)){
