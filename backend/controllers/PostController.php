@@ -64,7 +64,7 @@ class PostController extends Controller
     {
         $model = new Post();
         if ($model->load(Yii::$app->request->post())) {
-            $model->date = $model->date ? strtotime($model->date) : null;
+            //$model->date = $model->date ? strtotime($model->date) : null;
             if($model->save()) {
                 // Привязка загруженных файлов к id статьи
                 $post_id = $model->id;
@@ -96,7 +96,7 @@ class PostController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->date = $model->date ? strtotime($model->date) : null;
+            //$model->date = $model->date ? strtotime($model->date) : null;
             if($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
